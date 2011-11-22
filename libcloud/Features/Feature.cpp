@@ -14,6 +14,9 @@ Feature::setInputCloud (const PointCloud& _cloud)
   if (cloud != &_cloud) {
     cloud = &_cloud;
   }
+  if (search) {
+    search->setInputCloud (*cloud);
+  }
 }
 
 void
@@ -21,6 +24,9 @@ Feature::setSearchMethod (Search& _search)
 {
   if (search != &_search) {
     search = &_search;
+  }
+  if (cloud) {
+    search->setInputCloud (*cloud);
   }
 }
 

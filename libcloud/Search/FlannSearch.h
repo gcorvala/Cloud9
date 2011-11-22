@@ -9,10 +9,11 @@ class FlannSearch : public Search {
   public:
     FlannSearch ();
     virtual ~FlannSearch ();
-//    int nearestKSearch (const Point& p, unsigned int k, std::vector<unsigned int>& k_indices, std::vector<float>& k_squared_distances);
-//    int radiusSearch (const Point& p, double radius, std::vector<unsigned int>& k_indices, std::vector<float>& k_squared_distances);
+    void setInputCloud (const PointCloud& _cloud);
+    int nearestKSearch (const Point& p, unsigned int k, std::vector<unsigned int>& k_indices, std::vector<float>& k_squared_distances);
+    int radiusSearch (const Point& p, double radius, std::vector<unsigned int>& k_indices, std::vector<float>& k_squared_distances);
   protected:
-    //FLANNIndex* flann_index;
+    flann::Index<flann::L2<float> > *index; // FIXME : L2 ?
 };
 
 #endif

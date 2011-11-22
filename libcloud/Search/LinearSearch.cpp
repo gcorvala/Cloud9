@@ -1,5 +1,7 @@
 #include "LinearSearch.h"
 
+#include <iostream> // FIXME
+
 LinearSearch::LinearSearch ()
 {
 }
