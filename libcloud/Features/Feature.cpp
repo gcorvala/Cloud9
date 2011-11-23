@@ -1,6 +1,7 @@
 #include "Feature.h"
 
 Feature::Feature ()
+  : cloud (NULL), search (NULL), k (1), radius (1)
 {
 }
 

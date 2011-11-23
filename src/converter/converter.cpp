@@ -19,8 +19,8 @@ main (int argc, char** argv)
   char* input;
   char* output;
   char* exec;
-  bool input_binary;
-  bool output_binary;
+  bool input_binary = false;
+  bool output_binary = false;
 
   exec = *argv;
 

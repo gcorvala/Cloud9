@@ -8,7 +8,7 @@ class Search {
   public:
     Search ();
     virtual ~Search ();
-    void setInputCloud (const PointCloud& _cloud);
+    virtual void setInputCloud (const PointCloud& _cloud);
     virtual int nearestKSearch (const Point& p, unsigned int k, std::vector<unsigned int>& k_indices, std::vector<float>& k_squared_distances) = 0;
     virtual int radiusSearch (const Point& p, double radius, std::vector<unsigned int>& k_indices, std::vector<float>& k_squared_distances) = 0;
   protected:

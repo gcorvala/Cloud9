@@ -13,6 +13,7 @@ class FlannSearch : public Search {
     int nearestKSearch (const Point& p, unsigned int k, std::vector<unsigned int>& k_indices, std::vector<float>& k_squared_distances);
     int radiusSearch (const Point& p, double radius, std::vector<unsigned int>& k_indices, std::vector<float>& k_squared_distances);
   protected:
+    void initIndex ();
     flann::Index<flann::L2<float> > *index; // FIXME : L2 ?
 };
 
