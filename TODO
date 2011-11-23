@@ -1,0 +1,40 @@
+- libcloud
+	- Common
+		[ ] Point class
+		[ ] Color attribute
+		[ ] Normal attribute
+		[ ] Cloud class
+		[ ] Refactor methods in Utils.h
+	- Features
+		[ ] Density estimators
+		[ ] Normal estimators
+		[ ] Kernels
+		[ ] Mean shift
+	- Filters
+		[ ] Generic filter class
+		[ ] Basic filters (scale, translate, rotate)
+	- IO
+		[ ] PCD read
+		[ ] PCD write
+		[ ] XYZ read
+		[ ] XYZ write
+		[ ] OBJ read
+		[ ] OBJ write
+	- Kdtree
+	- Octree
+		[ ] iterator
+		[ ] leafs (vectors, means)
+	- Search
+		[ ] linear search
+		[ ] kdtree search
+		[ ] flann integration
+	- Reconstruction
+		[ ] Cocone
+		[ ] Tight-Cocone
+		[ ] Poisson
+		[ ] RANSAC
+	- Meshes
+		[ ] Vertex, Face and Edge classes
+- libcloudui
+	[ ] nodal interface
+	[ ] refactor code
