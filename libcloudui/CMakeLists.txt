@@ -10,6 +10,7 @@ include_directories (${QT_QTOPENGL_INCLUDE_DIR})
 set (MOC_HEADERS
 	CloudWindow.h
 	GLWidget.h
+	ImageViewer.h
 )
 qt4_wrap_cpp (MOC_SOURCES ${MOC_HEADERS})
 

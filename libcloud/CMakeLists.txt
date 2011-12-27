@@ -5,6 +5,7 @@ aux_source_directory (IO libcloud_sources)
 aux_source_directory (Kdtree libcloud_sources)
 aux_source_directory (Octree libcloud_sources)
 aux_source_directory (Search libcloud_sources)
+aux_source_directory (2D libcloud_sources)
 
 # FIXME : add new cmake module
 find_library (FLANN_LIBRARY flann_cpp)

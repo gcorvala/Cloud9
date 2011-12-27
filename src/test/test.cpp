@@ -10,11 +10,14 @@
 #include <libcloud/Common/Utils.h>
 #include <libcloud/Search/LinearSearch.h>
 #include <libcloud/Search/FlannSearch.h>
+#include <libcloud/2D/Matrix.h>
+#include <libcloud/Common/Color.h>
 
 int
 main (int argc, char** argv)
 {
-  clock_t start, end;
+  
+  /*clock_t start, end;
   std::cout << "> test start" << std::endl;
 
   PointCloud cloud;
@@ -27,7 +30,7 @@ main (int argc, char** argv)
   std::cout << "cloud size : " << cloud.size () << std::endl;
 
   std::cout << "search method comparaison :" << std::endl;
-  double linear_time, flann_time;
+  double linear_time, flann_time;*/
 
   /*start = clock ();
   NormalEstimator estimator_linear;
@@ -43,7 +46,7 @@ main (int argc, char** argv)
   linear_time = double (end - start) / CLOCKS_PER_SEC;
   std::cout << "compute_linear : " << linear_time << " seconds" << std::endl;*/
 
-  start = clock ();
+  /*start = clock ();
   NormalEstimator estimator_flann;
   FlannSearch s;
   estimator_flann.setSearchMethod (s);
@@ -61,7 +64,7 @@ main (int argc, char** argv)
 
   std::cout << "linear vs flann ratio : " << linear_time / flann_time << std::endl;
 
-  std::cout << "< test end" << std::endl;
+  std::cout << "< test end" << std::endl;*/
 
   return 0;
 }
