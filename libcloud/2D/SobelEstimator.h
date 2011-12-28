@@ -8,7 +8,7 @@ class SobelEstimator : public Estimator {
   public:
     SobelEstimator ();
     ~SobelEstimator ();
-    void compute (Matrix& output) const;
+    void compute (Matrix<SInt8>& output) const;
   protected:
 };
 

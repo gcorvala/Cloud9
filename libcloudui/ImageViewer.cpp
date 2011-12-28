@@ -2,7 +2,7 @@
  #include <QtGui>
 
  #include "ImageViewer.h"
- #include "libcloud/2D/Matrix.h"
+ #include "libcloud/2D/Image.h"
  #include "libcloud/2D/SobelEstimator.h"
 
  ImageViewer::ImageViewer()
@@ -36,24 +36,26 @@
              return;
          }
 
-         Matrix m(image.height (), image.width ());
+//         Image im(image.height (), image.width ());
+         Matrix<SInt8> m (image.height (), image.width ());
 
          for (unsigned int i = 0; i < image.height (); ++i) {
            for (unsigned int j = 0; j < image.width (); ++j) {
              QRgb c = image.pixel (j, i);
-             m(i,j) = Color (qRed (c), qGreen (c), qBlue (c));
-//             image.setPixel (j, i, qRgb (m(i,j).getY (), m(i,j).getY (), m(i,j).getY ()));
+//             im.setPixel(i,j, Color (qRed (c), qGreen (c), qBlue (c)));
+             m(i,j) = Color (qRed (c), qGreen (c), qBlue (c)).getY();
+//             image.setPixel (j, i, qRgb (im.getPixel(i,j).getY (), im.getPixel(i,j).getY (), im.getPixel(i,j).getY ()));
            }
          }
 
          SobelEstimator sobel;
          sobel.setInputMatrix (m);
-         Matrix mm(1,1);
-         sobel.compute (mm);
-         
-         for (unsigned int i = 0; i < mm.getRows (); ++i) {
-           for (unsigned int j = 0; j < mm.getCols (); ++j) {
-             image.setPixel (j, i, qRgb (mm(i,j).getR (), mm(i,j).getR (), mm(i,j).getR ()));
+         Matrix<SInt8> out(1,1);
+         sobel.compute (out);
+
+         for (unsigned int i = 0; i < out.getRows (); ++i) {
+           for (unsigned int j = 0; j < out.getCols (); ++j) {
+             image.setPixel (i, j, qRgb (out(i,j), out(i,j), out(i,j)));
            }
          }
 

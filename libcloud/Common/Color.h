@@ -1,26 +1,28 @@
 #ifndef __COLOR_H__
 #define __COLOR_H__
 
+#include "Types.h"
+
 class Color {
   public:
     Color ();
-    Color (double _r, double _g, double _b);
+    Color (UInt8 _r, UInt8 _g, UInt8 _b);
     virtual ~Color ();
 
     Color operator* (double s) const;
     Color operator* (const Color c) const;
     Color operator+= (const Color c);
 
-    double getR () const;
-    double getG () const;
-    double getB () const;
-    double getY () const;
-    double getU () const;
-    double getV () const;
+    UInt8 getR () const;
+    UInt8 getG () const;
+    UInt8 getB () const;
+    UInt8 getY () const;
+    UInt8 getU () const;
+    UInt8 getV () const;
 
-    double r;
-    double g;
-    double b;
+    UInt8 r;
+    UInt8 g;
+    UInt8 b;
 };
 
 #endif

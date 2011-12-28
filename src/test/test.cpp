@@ -12,11 +12,49 @@
 #include <libcloud/Search/FlannSearch.h>
 #include <libcloud/2D/Matrix.h>
 #include <libcloud/Common/Color.h>
+#include <libcloud/Common/Types.h>
 
 int
 main (int argc, char** argv)
 {
-  
+  Matrix<UInt8> M (5, 5);
+  M(0,0) = 1;
+  M(0,1) = 2;
+  M(0,2) = 3;
+  M(1,0) = 6;
+  M(1,1) = 7;
+  M(1,2) = 8;
+  M(2,0) = 50;
+  M(2,1) = 100;
+  M(2,2) = 150;
+
+  Matrix<SInt8> Sx (3, 3);
+  Sx(0, 0) = -1;
+  Sx(0, 1) = 0;
+  Sx(0, 2) = 1;
+  Sx(1, 0) = -2;
+  Sx(1, 1) = 0;
+  Sx(1, 2) = 2;
+  Sx(2, 0) = -1;
+  Sx(2, 1) = 0;
+  Sx(2, 2) = 1;
+
+  for (int i = 0; i < M.getRows (); ++i) {
+    for (int j = 0; j < M.getCols (); ++j) {
+      std::cout << (SInt16) M(i,j) << ' ';
+    }
+    std::cout << std::endl;
+  }
+
+  std::cout << std::endl;
+  std::cout << std::endl;
+
+  Matrix<SInt16> Gx = Sx.convolve<SInt16> (M);
+
+  for (Matrix<SInt16>::const_iterator it = Gx.begin (); it != Gx.end (); ++it)
+      std::cout << (int) *it << ' ';
+  std::cout << std::endl;
+
   /*clock_t start, end;
   std::cout << "> test start" << std::endl;
 

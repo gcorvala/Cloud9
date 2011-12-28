@@ -7,10 +7,10 @@ class Estimator {
   public:
     Estimator ();
     virtual ~Estimator ();
-    void setInputMatrix (const Matrix& _matrix);
-    virtual void compute (Matrix& output) const = 0;
+    void setInputMatrix (const Matrix<SInt8>& _matrix);
+    virtual void compute (Matrix<SInt8>& output) const = 0;
   protected:
-    const Matrix *matrix;
+    const Matrix<SInt8>* matrix;
 };
 
 #endif
