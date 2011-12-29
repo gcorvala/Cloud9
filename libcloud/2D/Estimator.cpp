@@ -10,7 +10,7 @@ Estimator::~Estimator ()
 }
 
 void
-Estimator::setInputMatrix (const Matrix<SInt8>& _matrix)
+Estimator::setInputMatrix (const Matrix<UInt8>& _matrix)
 {
   if (matrix != &_matrix) {
     matrix = &_matrix;

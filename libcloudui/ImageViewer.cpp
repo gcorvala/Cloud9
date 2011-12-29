@@ -37,7 +37,7 @@
          }
 
 //         Image im(image.height (), image.width ());
-         Matrix<SInt8> m (image.height (), image.width ());
+         Matrix<UInt8> m (image.height (), image.width ());
 
          for (unsigned int i = 0; i < image.height (); ++i) {
            for (unsigned int j = 0; j < image.width (); ++j) {
@@ -50,12 +50,12 @@
 
          SobelEstimator sobel;
          sobel.setInputMatrix (m);
-         Matrix<SInt8> out(1,1);
+         Matrix<UInt8> out;
          sobel.compute (out);
 
          for (unsigned int i = 0; i < out.getRows (); ++i) {
            for (unsigned int j = 0; j < out.getCols (); ++j) {
-             image.setPixel (i, j, qRgb (out(i,j), out(i,j), out(i,j)));
+             image.setPixel (j, i, qRgb (out(i,j), out(i,j), out(i,j)));
            }
          }
 

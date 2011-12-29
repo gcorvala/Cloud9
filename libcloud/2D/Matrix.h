@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <iostream> // FIXME
+#include <math.h>
 #include "../Common/Types.h"
 
 template <typename T>
@@ -11,7 +12,7 @@ class Matrix {
     typedef typename std::vector<T>::iterator iterator;
     typedef typename std::vector<T>::const_iterator const_iterator;
 
-    Matrix (UInt32 rows, UInt32 cols);
+    Matrix (UInt32 rows = 0, UInt32 cols = 0);
     virtual ~Matrix ();
 
     T& operator() (UInt32 row, UInt32 col);
@@ -33,12 +34,27 @@ class Matrix {
 
     void resize (UInt32 _rows, UInt32 _cols);
 
+    template <typename U>
+    Matrix<T> operator= (const Matrix<U>& m);
     Matrix operator* (double s) const;
-
+    Matrix operator*= (double s);
+    Matrix operator/ (double s) const;
+    Matrix operator/= (double s);
     Matrix operator* (const Matrix& m) const;
+    template <typename U>
+    Matrix operator+ (const Matrix<U>& m) const;
 
-    template <typename U, typename V>
-    Matrix<U> convolve (const Matrix<V>& kernel) const;
+    template <typename KernelType, typename OutputType>
+    void convolve (const Matrix<KernelType>& kernel, Matrix<OutputType>& output) const;
+
+    // FIXME : rename to mul
+    template <typename InputType, typename OutputType>
+    void arrayMultiplication (const Matrix<InputType>& m, Matrix<OutputType>& output) const;
+
+    template <typename U>
+    void sqrt (Matrix<U>& output) const;
+
+    T max () const;
 
   protected:
     UInt32 rows;
@@ -63,6 +79,7 @@ template <typename T>
 T&
 Matrix<T>::operator() (UInt32 row, UInt32 col)
 {
+  if (row < 0 || col < 0) exit (0);
   return data[row*cols+col];
 }
 
@@ -70,6 +87,7 @@ template <typename T>
 const T&
 Matrix<T>::operator() (UInt32 row, UInt32 col) const
 {
+  if (row < 0 || col < 0) exit (0);
   return data[row*cols+col];
 }
 
@@ -77,6 +95,7 @@ template <typename T>
 T&
 Matrix<T>::at (UInt32 row, UInt32 col)
 {
+  if (row < 0 || col < 0) exit (0);
   return data[row*cols+col];
 }
 
@@ -84,6 +103,7 @@ template <typename T>
 const T&
 Matrix<T>::at (UInt32 row, UInt32 col) const
 {
+  if (row < 0 || col < 0) exit (0);
   return data[row*cols+col];
 }
 
@@ -167,16 +187,69 @@ Matrix<T>::resize (UInt32 _rows, UInt32 _cols)
 }
 
 template <typename T>
+template <typename U>
+Matrix<T>
+Matrix<T>::operator= (const Matrix<U>& m)
+{
+  rows = m.getRows ();
+  cols = m.getCols ();
+  data.resize (rows*cols);
+  for (UInt32 i = 0; i < rows; ++i) {
+    for (UInt32 j = 0; j < cols; ++j) {
+      at(i,j) = m(i,j);
+    }
+  }
+
+  return *this;
+}
+
+
+template <typename T>
 Matrix<T>
 Matrix<T>::operator* (double s) const
 {
   Matrix<T> result (rows, cols);
 
-  for (UInt32 i = 0; i <= rows*cols; ++i) {
-    result.data[i] *= s;
+  for (UInt32 i = 0; i < rows*cols; ++i) {
+    result.data[i] = data[i]*s;
   }
 
   return result;
+}
+
+template <typename T>
+Matrix<T>
+Matrix<T>::operator*= (double s)
+{
+  for (UInt32 i = 0; i < rows*cols; ++i) {
+    data[i] *= s;
+  }
+
+  return *this;
+}
+
+template <typename T>
+Matrix<T>
+Matrix<T>::operator/ (double s) const
+{
+  Matrix<T> result (rows, cols);
+
+  for (UInt32 i = 0; i < rows*cols; ++i) {
+    result.data[i] = data[i]/s;
+  }
+
+  return result;
+}
+
+template <typename T>
+Matrix<T>
+Matrix<T>::operator/= (double s)
+{
+  for (UInt32 i = 0; i < rows*cols; ++i) {
+    data[i] /= s;
+  }
+
+  return *this;
 }
 
 template <typename T>
@@ -197,26 +270,80 @@ Matrix<T>::operator* (const Matrix& m) const
 }
 
 template <typename T>
-template <typename U, typename V>
-Matrix<U>
-Matrix<T>::convolve (const Matrix<V>& kernel) const
+template <typename U>
+Matrix<T>
+Matrix<T>::operator+ (const Matrix<U>& m) const
 {
-  Matrix<U> result (rows, cols);
+  Matrix<T> result (rows, cols);
 
-  for (UInt32 m = 0; m < cols; ++m) {
-    for (UInt32 n = 0; n < rows; ++n) {
-      result(m,n) = 0;
-      for (UInt32 j = 0; j < cols; ++j) {
-        for (UInt32 i = 0; i < rows; ++i) {
-          result(m,n) += at(i,j)*kernel(m-i,n-j);
-          std::cout << "at = " << at(i,j) << std::endl;
-          std::cout << "kernel = " << (unsigned int) kernel(m-i,n-j) << std::endl;
-          std::cout << "result = " << result(m,n) << std::endl;
-        }
-      }
+  for (UInt32 i = 0; i < result.rows; ++i) {
+    for (UInt32 j = 0; j < result.cols; ++j) {
+      result(i,j) = at(i,j)+m(i,j);
     }
   }
 
   return result;
 }
+
+template <typename T>
+template <typename KernelType, typename OutputType>
+void
+Matrix<T>::convolve (const Matrix<KernelType>& kernel, Matrix<OutputType>& output) const
+{
+  output.resize (rows, cols);
+
+  UInt32 kernel_center_x = kernel.getCols () / 2;
+  UInt32 kernel_center_y = kernel.getRows () / 2;
+
+  for (UInt32 i = 0; i < rows; ++i) {
+    for (UInt32 j = 0; j < cols; ++j) {
+      output(i,j) = 0;
+      for (UInt32 m = 0; m < kernel.getRows (); ++m) {
+        UInt32 mm = kernel.getRows ()-1-m;
+        for (UInt32 n = 0; n < kernel.getCols (); ++n) {
+          UInt32 nn = kernel.getCols ()-1-n;
+          UInt32 ii = i+(m-kernel_center_y);
+          UInt32 jj = j+(n-kernel_center_x);
+          if (ii >= 0 && ii < rows && jj >= 0 && jj < cols)
+            output(i,j) += at(ii,jj)*kernel(mm,nn);
+        }
+      }
+    }
+  }
+}
+
+template <typename T>
+template <typename InputType, typename OutputType>
+void
+Matrix<T>::arrayMultiplication (const Matrix<InputType>& m, Matrix<OutputType>& output) const
+{
+  // FIXME : check sizes !
+  output.resize (rows, cols);
+  for (UInt32 i = 0; i < rows; ++i) {
+    for (UInt32 j = 0; j < cols; ++j) {
+      output(i,j) = at(i,j)*m(i,j);
+    }
+  }
+}
+
+template <typename T>
+template <typename U>
+void
+Matrix<T>::sqrt (Matrix<U>& output) const
+{
+  output.resize (rows, cols);
+  for (UInt32 i = 0; i < rows; ++i) {
+    for (UInt32 j = 0; j < cols; ++j) {
+      output(i,j) = ::sqrt (at(i,j));
+    }
+  }
+}
+
+template <typename T>
+T
+Matrix<T>::max () const
+{
+  return *max_element (data.begin (), data.end ());
+}
+
 #endif

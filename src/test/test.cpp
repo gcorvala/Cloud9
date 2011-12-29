@@ -11,49 +11,76 @@
 #include <libcloud/Search/LinearSearch.h>
 #include <libcloud/Search/FlannSearch.h>
 #include <libcloud/2D/Matrix.h>
+#include <libcloud/2D/SobelEstimator.h>
 #include <libcloud/Common/Color.h>
 #include <libcloud/Common/Types.h>
 
 int
 main (int argc, char** argv)
 {
-  Matrix<UInt8> M (5, 5);
+  Matrix<UInt8> M (4, 4);
   M(0,0) = 1;
-  M(0,1) = 2;
-  M(0,2) = 3;
-  M(1,0) = 6;
-  M(1,1) = 7;
-  M(1,2) = 8;
-  M(2,0) = 50;
-  M(2,1) = 100;
-  M(2,2) = 150;
+  M(0,1) = 1;
+  M(0,2) = 0;
+  M(0,3) = 0;
+  M(1,0) = 1;
+  M(1,1) = 1;
+  M(1,2) = 0;
+  M(1,3) = 0;
+  M(2,0) = 1;
+  M(2,1) = 1;
+  M(2,2) = 0;
+  M(2,3) = 0;
+  M(3,0) = 1;
+  M(3,1) = 1;
+  M(3,2) = 0;
+  M(3,3) = 0;
 
-  Matrix<SInt8> Sx (3, 3);
-  Sx(0, 0) = -1;
-  Sx(0, 1) = 0;
-  Sx(0, 2) = 1;
-  Sx(1, 0) = -2;
-  Sx(1, 1) = 0;
-  Sx(1, 2) = 2;
-  Sx(2, 0) = -1;
-  Sx(2, 1) = 0;
-  Sx(2, 2) = 1;
+  Matrix<SInt8> kernel1 (3, 3);
+  kernel1(0, 0) = -1;
+  kernel1(0, 1) = 0;
+  kernel1(0, 2) = 1;
+  kernel1(1, 0) = -2;
+  kernel1(1, 1) = 0;
+  kernel1(1, 2) = 2;
+  kernel1(2, 0) = -1;
+  kernel1(2, 1) = 0;
+  kernel1(2, 2) = 1;
 
-  for (int i = 0; i < M.getRows (); ++i) {
-    for (int j = 0; j < M.getCols (); ++j) {
-      std::cout << (SInt16) M(i,j) << ' ';
-    }
-    std::cout << std::endl;
-  }
+  Matrix<SInt8> kernel2 (3, 3);
+  kernel2(0, 0) = -1;
+  kernel2(0, 1) = -2;
+  kernel2(0, 2) = -1;
+  kernel2(1, 0) = 0;
+  kernel2(1, 1) = 0;
+  kernel2(1, 2) = 0;
+  kernel2(2, 0) = 1;
+  kernel2(2, 1) = 2;
+  kernel2(2, 2) = 1;
 
-  std::cout << std::endl;
-  std::cout << std::endl;
-
-  Matrix<SInt16> Gx = Sx.convolve<SInt16> (M);
-
-  for (Matrix<SInt16>::const_iterator it = Gx.begin (); it != Gx.end (); ++it)
+  Matrix<SInt8> result1;
+  M.convolve (kernel1, result1);
+  Matrix<SInt8> result2;
+  M.convolve (kernel2, result2);
+  Matrix<UInt8> gx1;
+  result1.arrayMultiplication (result1, gx1);
+  Matrix<UInt8> gx2;
+  result2.arrayMultiplication (result2, gx2);
+  Matrix<UInt8> t = gx1+gx2;
+  t.sqrt (t);
+  for (Matrix<UInt8>::const_iterator it = t.begin (); it != t.end (); ++it)
       std::cout << (int) *it << ' ';
-  std::cout << std::endl;
+    std::cout << "\n\n";
+
+  SobelEstimator sobel;
+
+  sobel.setInputMatrix (M);
+  Matrix<UInt8> out;
+  sobel.compute (out);
+  
+  for (Matrix<UInt8>::const_iterator it = out.begin (); it != out.end (); ++it)
+      std::cout << (int) *it << ' ';
+  
 
   /*clock_t start, end;
   std::cout << "> test start" << std::endl;
