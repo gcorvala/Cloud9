@@ -4,7 +4,7 @@
 #include "Estimator.h"
 #include "Matrix.h"
 
-class SobelEstimator : public Estimator {
+class SobelEstimator : public Estimator<UInt8, UInt8> {
   public:
     SobelEstimator ();
     ~SobelEstimator ();

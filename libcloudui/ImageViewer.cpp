@@ -4,6 +4,8 @@
  #include "ImageViewer.h"
  #include "libcloud/2D/Image.h"
  #include "libcloud/2D/SobelEstimator.h"
+ #include "libcloud/2D/ThresholdEstimator.h"
+ #include "libcloud/2D/HoughEstimator.h"
 
  ImageViewer::ImageViewer()
  {
@@ -50,8 +52,20 @@
 
          SobelEstimator sobel;
          sobel.setInputMatrix (m);
-         Matrix<UInt8> out;
-         sobel.compute (out);
+         Matrix<UInt8> out1;
+         sobel.compute (out1);
+
+         ThresholdEstimator threshold;
+         threshold.setInputMatrix (out1);
+         Matrix<UInt8> out2;
+         threshold.compute (out2);
+
+         HoughEstimator hough;
+         hough.setInputMatrix (out1);
+         Matrix<UInt8> out3;
+         hough.compute (out3);
+         
+        Matrix<UInt8> out = out3;
 
          for (unsigned int i = 0; i < out.getRows (); ++i) {
            for (unsigned int j = 0; j < out.getCols (); ++j) {

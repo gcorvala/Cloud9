@@ -47,14 +47,14 @@ class Matrix {
     template <typename KernelType, typename OutputType>
     void convolve (const Matrix<KernelType>& kernel, Matrix<OutputType>& output) const;
 
-    // FIXME : rename to mul
     template <typename InputType, typename OutputType>
-    void arrayMultiplication (const Matrix<InputType>& m, Matrix<OutputType>& output) const;
+    void mul (const Matrix<InputType>& m, Matrix<OutputType>& output) const;
 
     template <typename U>
     void sqrt (Matrix<U>& output) const;
 
     T max () const;
+    T max (UInt32& row, UInt32& col) const;
 
   protected:
     UInt32 rows;
@@ -315,7 +315,7 @@ Matrix<T>::convolve (const Matrix<KernelType>& kernel, Matrix<OutputType>& outpu
 template <typename T>
 template <typename InputType, typename OutputType>
 void
-Matrix<T>::arrayMultiplication (const Matrix<InputType>& m, Matrix<OutputType>& output) const
+Matrix<T>::mul (const Matrix<InputType>& m, Matrix<OutputType>& output) const
 {
   // FIXME : check sizes !
   output.resize (rows, cols);
@@ -344,6 +344,20 @@ T
 Matrix<T>::max () const
 {
   return *max_element (data.begin (), data.end ());
+}
+
+template <typename T>
+T
+Matrix<T>::max (UInt32& row, UInt32& col) const
+{
+  const_iterator max = max_element (data.begin (), data.end ());
+
+  UInt32 idx = std::distance (data.begin (), max);
+
+  row = idx/cols;
+  col = idx%cols;
+
+  return *max;
 }
 
 #endif

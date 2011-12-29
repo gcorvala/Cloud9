@@ -63,9 +63,9 @@ main (int argc, char** argv)
   Matrix<SInt8> result2;
   M.convolve (kernel2, result2);
   Matrix<UInt8> gx1;
-  result1.arrayMultiplication (result1, gx1);
+  result1.mul (result1, gx1);
   Matrix<UInt8> gx2;
-  result2.arrayMultiplication (result2, gx2);
+  result2.mul (result2, gx2);
   Matrix<UInt8> t = gx1+gx2;
   t.sqrt (t);
   for (Matrix<UInt8>::const_iterator it = t.begin (); it != t.end (); ++it)

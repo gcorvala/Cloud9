@@ -36,19 +36,19 @@ SobelEstimator::compute (Matrix<UInt8>& output) const
   matrix->convolve (sobel_y, gy);
 
   Matrix<SInt32> gx2, gy2;
-  gx.arrayMultiplication (gx, gx2);
-  gy.arrayMultiplication (gy, gy2);
+  gx.mul (gx, gx2);
+  gy.mul (gy, gy2);
 
   Matrix<SInt32> r = gx2+gy2;
   Matrix<double> t;
   r.sqrt (t);
   // FIXME : normalize or cut > 255 ? (Gimp normalize)
-  t = (t/t.max ())*255;
-  /*for (UInt32 i = 0; i < t.getRows (); ++i) {
+  //t = (t/t.max ())*255;
+  for (UInt32 i = 0; i < t.getRows (); ++i) {
     for (UInt32 j = 0; j < t.getCols (); ++j) {
       if (t(i,j) > 255)
         t(i,j) = 255;
     }
-  }*/
+  }
   output = t;
 }
