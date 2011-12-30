@@ -1,4 +1,8 @@
+- all
+	[ ] Rename member variables to m_*
 - libcloud
+	- 2D
+		[ ] Rewrite convolution method
 	- Common
 		[ ] Point class
 		[ ] Color attribute

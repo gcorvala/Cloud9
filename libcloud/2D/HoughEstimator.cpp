@@ -1,8 +1,8 @@
 #include "HoughEstimator.h"
 
 HoughEstimator::HoughEstimator ()
-  :n_theta(512)
-  ,n_rho(512)
+  :n_theta(1024)
+  ,n_rho(1024)
 {
 }
 
@@ -50,6 +50,28 @@ HoughEstimator::compute (Matrix<UInt8>& output) const
 
   output = t;
 }
+
+void
+HoughEstimator::getLines (Matrix<UInt8>& hough, std::vector<Line>& lines) const
+{
+  lines.clear ();
+
+  UInt32 rho_max = 2*sqrt (matrix->getRows ()*matrix->getRows ()+matrix->getCols ()*matrix->getCols ());
+  UInt32 rho_step = rho_max/(n_rho-1);
+  double theta_step = M_PI/(n_theta-1);
+
+  UInt32 row, col;
+  hough.max (row, col);
+  //hough(row, col) = 0;
+
+  std::cout << "theta = " << row << std::endl;
+  std::cout << "rho = " << col << std::endl;
+  std::cout << "theta = " << row*theta_step << std::endl;
+  std::cout << "rho = " << col*rho_step << std::endl;
+
+  lines.push_back (Line (col*rho_step, row*theta_step));
+}
+
 
 UInt32
 HoughEstimator::getNTheta () const

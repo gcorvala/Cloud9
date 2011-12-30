@@ -38,6 +38,8 @@ SobelEstimator::compute (Matrix<UInt8>& output) const
   Matrix<SInt32> gx2, gy2;
   gx.mul (gx, gx2);
   gy.mul (gy, gy2);
+  //gx2 = gx2.getSubMatrix (1, 1, gx2.getRows ()-2, gx2.getCols ()-2);
+  //gy2 = gy2.getSubMatrix (1, 1, gy2.getRows ()-2, gy2.getCols ()-2);
 
   Matrix<SInt32> r = gx2+gy2;
   Matrix<double> t;
