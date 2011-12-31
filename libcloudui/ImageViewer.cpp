@@ -61,15 +61,15 @@
          Matrix<UInt8> out2;
          threshold.compute (out2);
 
-         HoughEstimator hough;
+         /*HoughEstimator hough;
          hough.setInputMatrix (out2);
          Matrix<UInt8> out3;
          hough.compute (out3);
 
-         /*std::vector<Line> lines;
+         std::vector<Line> lines;
          hough.getLines (out3, lines);*/
          
-        Matrix<UInt8> out = out3;
+        Matrix<UInt8> out = out2;
         image = QImage (out.getCols (), out.getRows (), QImage::Format_RGB32);
 
          for (unsigned int i = 0; i < out.getRows (); ++i) {
