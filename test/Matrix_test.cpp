@@ -98,9 +98,28 @@ TEST_F (MatrixTest, GetSubMatrixWorks) {
   ASSERT_EQ (9, s(1,1));
 }
 
-TEST_F (MatrixTest, OperatorsWork) {
+TEST_F (MatrixTest, AssignationWorks) {
   Matrix<SInt8> s;
   s = m2;
+}
+
+TEST_F (MatrixTest, ScalarMultiplicationWorks) {
+  Matrix<SInt8> m;
+  m = m2;
+  m *= -2;
+
+  ASSERT_EQ (-2, m(0,0));
+  ASSERT_EQ (-4, m(0,1));
+  ASSERT_EQ (-6, m(0,2));
+  ASSERT_EQ (-8, m(1,0));
+  ASSERT_EQ (-10, m(1,1));
+  ASSERT_EQ (-12, m(1,2));
+  ASSERT_EQ (-14, m(2,0));
+  ASSERT_EQ (-16, m(2,1));
+  ASSERT_EQ (-18, m(2,2));
+}
+
+TEST_F (MatrixTest, MatrixMultiplicationWorks) {
 }
 
 TEST_F (MatrixTest, ConvolveWorks) {
@@ -117,6 +136,21 @@ TEST_F (MatrixTest, ConvolveWorks) {
   ASSERT_EQ (134, result(2,0));
   ASSERT_EQ (236, result(2,1));
   ASSERT_EQ (186, result(2,2));
+}
+
+TEST_F (MatrixTest, MulWorks) {
+  m1 = m2;
+  m1.mul (m2, m3);
+
+  ASSERT_EQ (1, m3(0,0));
+  ASSERT_EQ (4, m3(0,1));
+  ASSERT_EQ (9, m3(0,2));
+  ASSERT_EQ (16, m3(1,0));
+  ASSERT_EQ (25, m3(1,1));
+  ASSERT_EQ (36, m3(1,2));
+  ASSERT_EQ (49, m3(2,0));
+  ASSERT_EQ (64, m3(2,1));
+  ASSERT_EQ (81, m3(2,2));
 }
 
 int main(int argc, char **argv) {
