@@ -22,6 +22,8 @@ class Matrix {
 
     T* getData () const;
 
+    void fill (const T& value);
+
     iterator begin ();
     const_iterator begin () const;
     iterator end ();
@@ -30,9 +32,9 @@ class Matrix {
     UInt32 getRows () const;
     UInt32 getCols () const;
 
-    Matrix getSubMatrix (UInt32 row, UInt32 col, UInt32 height, UInt32 width) const;
-
     void resize (UInt32 _rows, UInt32 _cols);
+
+    Matrix getSubMatrix (UInt32 row, UInt32 col, UInt32 height, UInt32 width) const;
 
     template <typename U>
     Matrix<T> operator= (const Matrix<U>& m);
@@ -108,10 +110,20 @@ Matrix<T>::at (UInt32 row, UInt32 col) const
 }
 
 template <typename T>
+void
+Matrix<T>::fill (const T& value)
+{
+  for (UInt32 i = 0; i < rows*cols; ++i) {
+    data[i] = value;
+  }
+}
+
+
+template <typename T>
 T*
 Matrix<T>::getData () const
 {
-  UInt8* result = new T[rows*cols];
+  T* result = new T[rows*cols];
 
   for (UInt32 i = 0; i < rows*cols; ++i) {
     result[i] = data[i];
