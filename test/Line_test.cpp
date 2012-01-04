@@ -1,0 +1,50 @@
+#include <gtest/gtest.h>
+
+#include <libcloud/2D/Line.h>
+#include <math.h>
+
+class LineTest : public ::testing::Test {
+ protected:
+  virtual void SetUp() {
+    l1 = Line (0, 0);
+    l2 = Line (1, M_PI/4);
+    l3 = Line (2, M_PI/2);
+    l4 = Line (3, 3*M_PI/4);
+    l5 = Line (4, M_PI);
+  }
+
+  Line l1;
+  Line l2;
+  Line l3;
+  Line l4;
+  Line l5;
+};
+
+TEST_F (LineTest, GetRhoWorks) {
+  ASSERT_EQ (0, l1.getRho ());
+  ASSERT_EQ (1, l2.getRho ());
+  ASSERT_EQ (2, l3.getRho ());
+  ASSERT_EQ (3, l4.getRho ());
+  ASSERT_EQ (4, l5.getRho ());
+}
+
+TEST_F (LineTest, GetThetaWorks) {
+  ASSERT_EQ (0, l1.getTheta ());
+  ASSERT_EQ (M_PI/4, l2.getTheta ());
+  ASSERT_EQ (M_PI/2, l3.getTheta ());
+  ASSERT_EQ (3*M_PI/4, l4.getTheta ());
+  ASSERT_EQ (M_PI, l5.getTheta ());
+}
+
+TEST_F (LineTest, GetSlopeWorks) {
+  ASSERT_DOUBLE_EQ (std::numeric_limits<double>::infinity (), l1.getSlope ());
+  ASSERT_DOUBLE_EQ (-1, l2.getSlope ());
+  EXPECT_NEAR (0, l3.getSlope (), 1e-10);
+  ASSERT_DOUBLE_EQ (1, l4.getSlope ());
+  ASSERT_LT (1e10, l5.getSlope ());
+}
+
+int main(int argc, char **argv) {
+  ::testing::InitGoogleTest (&argc, argv);
+  return RUN_ALL_TESTS ();
+}

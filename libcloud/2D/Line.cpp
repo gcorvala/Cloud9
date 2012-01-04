@@ -1,6 +1,8 @@
 #include "Line.h"
 
 #include <math.h>
+#include <limits>
+#include <iostream>
 
 Line::Line ()
   :a(1)
@@ -10,9 +12,9 @@ Line::Line ()
 }
 
 Line::Line (double rho, double theta)
-  :a(-1/tan (theta))
-  ,b(1)
-  ,c(rho*sin (theta)+rho*(1/sin (theta)))
+  :a(cos (theta))
+  ,b(sin (theta))
+  ,c(-rho)
 {
 }
 
@@ -30,7 +32,15 @@ Line::~Line ()
 double
 Line::getSlope () const
 {
-  return -a/b;
+  double slope;
+
+  slope = -a/b;
+
+  if (slope == -std::numeric_limits<double>::infinity ()) {
+    slope = std::numeric_limits<double>::infinity ();
+  }
+
+  return slope;
 }
 
 double
@@ -48,18 +58,11 @@ Line::getXIntercept () const
 double
 Line::getRho () const
 {
-  double theta = getTheta ();
-  return c/(sin (theta)+sin (theta)*sin (theta));
+  return -c;
 }
 
 double
 Line::getTheta () const
 {
-  return atan (b/a);
+  return atan2 (b, a);
 }
-
-/*bool contains (const Point& p) const;
-bool isVertical () const;
-bool isHorizontal () const;
-
-Point getIntersection () const;*/
