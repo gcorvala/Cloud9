@@ -8,7 +8,7 @@ class ThresholdEstimator : public Estimator<UInt8, UInt8> {
   public:
     ThresholdEstimator ();
     ~ThresholdEstimator ();
-    void compute (Matrix<UInt8>& output) const;
+    void compute (const Matrix<UInt8>& input, Matrix<UInt8>& output) const;
 
     UInt8 getThreshold () const;
     void setThreshold (UInt8 t);

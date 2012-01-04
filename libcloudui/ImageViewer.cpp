@@ -4,8 +4,11 @@
  #include "ImageViewer.h"
  #include "libcloud/2D/Image.h"
  #include "libcloud/2D/SobelEstimator.h"
+ #include "libcloud/2D/ScharrEstimator.h"
  #include "libcloud/2D/ThresholdEstimator.h"
  #include "libcloud/2D/HoughEstimator.h"
+ #include "libcloud/2D/GaussianEstimator.h"
+ #include "libcloud/2D/CannyEstimator.h"
 
  ImageViewer::ImageViewer()
  {
@@ -51,25 +54,33 @@
          }
 
          SobelEstimator sobel;
-         sobel.setInputMatrix (m);
-         Matrix<UInt8> out1;
-         sobel.compute (out1);
+         Matrix<double> out1;
+         sobel.compute (m, out1);
+         ScharrEstimator scharr;
+         scharr.compute (m, out1);
 
          ThresholdEstimator threshold;
-         threshold.setInputMatrix (out1);
-         threshold.setThreshold (50);
+         threshold.setThreshold (80);
          Matrix<UInt8> out2;
-         threshold.compute (out2);
+         //threshold.compute (out1, out2);
 
-         /*HoughEstimator hough;
-         hough.setInputMatrix (out2);
+         GaussianEstimator gaussian;
          Matrix<UInt8> out3;
-         hough.compute (out3);
+         gaussian.compute (m, out3);
 
-         std::vector<Line> lines;
-         hough.getLines (out3, lines);*/
+         HoughEstimator hough;
+         Matrix<UInt8> out4;
+         //hough.compute (out2, out4);
+
+         CannyEstimator canny;
+         Matrix<UInt8> out5;
+         canny.compute (m, out5);
+         threshold.compute (out5, out2);
+
+         /*std::vector<Line> lines;
+         hough.getLines (out4, lines);*/
          
-        Matrix<UInt8> out = out2;
+           Matrix<UInt8> out = out5;
         image = QImage (out.getCols (), out.getRows (), QImage::Format_RGB32);
 
          for (unsigned int i = 0; i < out.getRows (); ++i) {

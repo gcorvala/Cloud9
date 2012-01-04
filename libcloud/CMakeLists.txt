@@ -1,8 +1,11 @@
 set(2D_SRCS 
 	2D/CannyEstimator.cpp
+	2D/GaussianEstimator.cpp
+	2D/GradientEstimator.cpp
 	2D/HoughEstimator.cpp
 	2D/Image.cpp
 	2D/Line.cpp
+	2D/ScharrEstimator.cpp
 	2D/SobelEstimator.cpp
 	2D/ThresholdEstimator.cpp
 	)
@@ -10,10 +13,13 @@ set(2D_SRCS
 set(2D_INCS
 	2D/CannyEstimator.h
 	2D/Estimator.h
+	2D/GaussianEstimator.h
+	2D/GradientEstimator.h
 	2D/HoughEstimator.h
 	2D/Image.h
 	2D/Line.h
 	2D/Matrix.h
+	2D/ScharrEstimator.h
 	2D/SobelEstimator.h
 	2D/ThresholdEstimator.h
 	)

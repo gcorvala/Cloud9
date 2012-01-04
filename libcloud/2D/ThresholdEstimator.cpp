@@ -10,13 +10,13 @@ ThresholdEstimator::~ThresholdEstimator ()
 }
 
 void
-ThresholdEstimator::compute (Matrix<UInt8>& output) const
+ThresholdEstimator::compute (const Matrix<UInt8>& input, Matrix<UInt8>& output) const
 {
-  output.resize (matrix->getRows (), matrix->getCols ());
+  output.resize (input.getRows (), input.getCols ());
 
-  for (UInt32 i = 0; i < matrix->getRows (); ++i) {
-    for (UInt32 j = 0; j < matrix->getCols (); ++j) {
-      if (matrix->at(i,j) >= threshold) {
+  for (UInt32 i = 0; i < input.getRows (); ++i) {
+    for (UInt32 j = 0; j < input.getCols (); ++j) {
+      if (input(i,j) >= threshold) {
         output(i,j) = 255;
       }
       else {

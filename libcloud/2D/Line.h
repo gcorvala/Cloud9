@@ -18,7 +18,7 @@ class Line {
     double getRho () const;
     double getTheta () const;
 
-    bool contains (const Point& p) const;
+    bool contains (const Point& p, double epsilon = 0) const;
     bool isVertical () const;
     bool isHorizontal () const;
 
