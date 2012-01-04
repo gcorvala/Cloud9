@@ -37,11 +37,27 @@ TEST_F (LineTest, GetThetaWorks) {
 }
 
 TEST_F (LineTest, GetSlopeWorks) {
-  ASSERT_DOUBLE_EQ (std::numeric_limits<double>::infinity (), l1.getSlope ());
+  ASSERT_TRUE (isinf (l1.getSlope ()));
   ASSERT_DOUBLE_EQ (-1, l2.getSlope ());
   EXPECT_NEAR (0, l3.getSlope (), 1e-10);
   ASSERT_DOUBLE_EQ (1, l4.getSlope ());
   ASSERT_LT (1e10, l5.getSlope ());
+}
+
+TEST_F (LineTest, GetXInterceptWorks) {
+  ASSERT_EQ (0, l1.getXIntercept ());
+  ASSERT_DOUBLE_EQ (sqrt (2), l2.getXIntercept ());
+  ASSERT_LT (1e10, l3.getXIntercept ());
+  ASSERT_EQ (-3*sqrt (2), l4.getXIntercept ());
+  ASSERT_EQ (-4, l5.getXIntercept ());
+}
+
+TEST_F (LineTest, GetYInterceptWorks) {
+  ASSERT_TRUE (isnan (l1.getYIntercept ()));
+  ASSERT_EQ (sqrt (2), l2.getYIntercept ());
+  ASSERT_EQ (2, l3.getYIntercept ());
+  ASSERT_DOUBLE_EQ (3*sqrt (2), l4.getYIntercept ());
+  ASSERT_LT (1e10, l5.getYIntercept ());
 }
 
 int main(int argc, char **argv) {

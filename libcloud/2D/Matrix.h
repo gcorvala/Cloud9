@@ -182,7 +182,7 @@ Matrix<T>::getSubMatrix (UInt32 row, UInt32 col, UInt32 height, UInt32 width) co
 
   for (UInt32 i = 0; i < height; ++i) {
     for (UInt32 j = 0; j < width; ++j) {
-      sub_matrix->at (i, j) = at (row+i, col+i);
+      sub_matrix->at (i, j) = at (row+i, col+j);
     }
   }
 

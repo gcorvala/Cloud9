@@ -36,10 +36,6 @@ Line::getSlope () const
 
   slope = -a/b;
 
-  if (slope == -std::numeric_limits<double>::infinity ()) {
-    slope = std::numeric_limits<double>::infinity ();
-  }
-
   return slope;
 }
 
