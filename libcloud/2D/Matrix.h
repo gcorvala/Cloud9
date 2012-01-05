@@ -2,6 +2,7 @@
 #define __MATRIX_H__
 
 #include <vector>
+#include <algorithm>
 #include <iostream> // FIXME
 #include <math.h>
 #include "../Common/Types.h"
@@ -60,6 +61,12 @@ class Matrix {
     T max () const;
     T max (UInt32& row, UInt32& col) const;
 
+    template <typename U>
+    Matrix<U> forEach (U (*unary_operation) (const T&)) const;
+
+    template <typename U, typename V>
+    Matrix<U> forEach (U (*binary_operation) (const T&, const V&), const Matrix<V>& m) const;
+
   protected:
     UInt32 rows;
     UInt32 cols;
@@ -83,7 +90,6 @@ template <typename T>
 T&
 Matrix<T>::operator() (UInt32 row, UInt32 col)
 {
-  if (row < 0 || col < 0) exit (0);
   return data[row*cols+col];
 }
 
@@ -91,7 +97,6 @@ template <typename T>
 const T&
 Matrix<T>::operator() (UInt32 row, UInt32 col) const
 {
-  if (row < 0 || col < 0) exit (0);
   return data[row*cols+col];
 }
 
@@ -99,7 +104,6 @@ template <typename T>
 T&
 Matrix<T>::at (UInt32 row, UInt32 col)
 {
-  if (row < 0 || col < 0) exit (0);
   return data[row*cols+col];
 }
 
@@ -107,7 +111,6 @@ template <typename T>
 const T&
 Matrix<T>::at (UInt32 row, UInt32 col) const
 {
-  if (row < 0 || col < 0) exit (0);
   return data[row*cols+col];
 }
 
@@ -372,6 +375,38 @@ Matrix<T>::max (UInt32& row, UInt32& col) const
   col = idx%cols;
 
   return *max;
+}
+
+template <typename T>
+template <typename U>
+Matrix<U>
+Matrix<T>::forEach (U (*unary_operation) (const T&)) const
+{
+  Matrix<U> result (rows, cols);
+
+  for (UInt32 i = 0; i < rows; ++i) {
+    for (UInt32 j = 0; j < cols; ++j) {
+      result (i, j) = unary_operation (at (i, j));
+    }
+  }
+
+  return result;
+}
+
+template <typename T>
+template <typename U, typename V>
+Matrix<U>
+Matrix<T>::forEach (U (*binary_operation) (const T&, const V&), const Matrix<V>& m) const
+{
+  Matrix<U> result (rows, cols);
+
+  for (UInt32 i = 0; i < rows; ++i) {
+    for (UInt32 j = 0; j < cols; ++j) {
+      result (i, j) = binary_operation (at (i, j), m (i, j));
+    }
+  }
+
+  return result;
 }
 
 #endif

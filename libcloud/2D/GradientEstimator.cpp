@@ -45,4 +45,13 @@ GradientEstimator::compute (const Matrix<UInt8>& input, Matrix<double>& intensit
   }
 
   intensities = root;
+
+  angles.resize (input.getRows (), input.getCols ());
+
+  for (UInt32 i = 0; i < angles.getRows (); ++i) {
+    for (UInt32 j = 0; j < angles.getCols (); ++j) {
+      angles (i, j) = atan2 (gy (i, j), gx (i, j));
+    }
+  }
+
 }

@@ -13,8 +13,9 @@ CannyEstimator::compute (const Matrix<UInt8>& input, Matrix<UInt8>& output) cons
 {
   Matrix<UInt8> tmp;
   gaussian.compute (input, tmp);
-  Matrix<double> intensities;
-  sobel.compute (tmp, intensities);
+  Matrix<double> intensities, angles;
+  sobel.compute (tmp, intensities, angles);
   output = intensities;
-  output = tmp;
+  output = angles;
+  //output = tmp;
 }

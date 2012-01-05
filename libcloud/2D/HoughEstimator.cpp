@@ -1,8 +1,8 @@
 #include "HoughEstimator.h"
 
 HoughEstimator::HoughEstimator ()
-  :n_theta(1024)
-  ,n_rho(1024)
+  :n_theta(256)
+  ,n_rho(256)
 {
 }
 
@@ -13,35 +13,37 @@ HoughEstimator::~HoughEstimator ()
 void
 HoughEstimator::compute (const Matrix<UInt8>& input, Matrix<UInt8>& output) const
 {
+  // FIXME : M_PI is enough
   Matrix<UInt32> accumulator (n_theta, n_rho);
 
-  UInt32 rho_max = 2*sqrt (input.getRows ()*input.getRows ()+input.getCols ()*input.getCols ());
-  UInt32 rho_step = rho_max/(n_rho-1);
+  double rho_max = 2*hypot (input.getRows (), input.getCols ());
+  double rho_step = rho_max/(n_rho-1);
+  double theta_init = 3/2*M_PI;
+  double theta_step = 2*M_PI/(n_theta-1);
 
   for (UInt32 i = 0; i < input.getRows (); ++i) {
     for (UInt32 j = 0; j < input.getCols (); ++j) {
       if (input(i,j) == 255) {
         for (UInt32 k = 0; k < n_theta; ++k) {
-          float theta = k*(M_PI/(n_theta-1));
-          UInt32 rho = j*cos (theta)+i*sin (theta);
-          UInt32 theta_idx = k;
-          UInt32 rho_idx = rho/rho_step;
-          accumulator(theta_idx, rho_idx)++;
+          double theta = theta_init+k*theta_step;
+          if (theta >= 2*M_PI) {
+            theta -= 2*M_PI;
+          }
+          double rho = j*cos (theta)+i*sin (theta)+hypot (input.getRows (), input.getCols ());
+          UInt32 l = rho/rho_step;
+          accumulator (k, l) += 1;
         }
       }
     }
   }
 
-  Matrix<double> t;
-  t = accumulator;
-  for (UInt32 i = 0; i < t.getRows (); ++i) {
-    for (UInt32 j = 0; j < t.getCols (); ++j) {
-      if (t(i,j) > 255)
-        t(i,j) = 255;
+  double max = accumulator.max ();
+  output.resize (accumulator.getRows (), accumulator.getCols ());
+  for (UInt32 i = 0; i < accumulator.getRows (); ++i) {
+    for (UInt32 j = 0; j < accumulator.getCols (); ++j) {
+      output (i, j) = sqrt (accumulator (i, j))/sqrt (max)*255;
     }
   }
-
-  output = t;
 }
 
 void
