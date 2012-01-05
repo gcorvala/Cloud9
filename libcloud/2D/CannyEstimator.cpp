@@ -16,6 +16,4 @@ CannyEstimator::compute (const Matrix<UInt8>& input, Matrix<UInt8>& output) cons
   Matrix<double> intensities, angles;
   sobel.compute (tmp, intensities, angles);
   output = intensities;
-  output = angles;
-  //output = tmp;
 }

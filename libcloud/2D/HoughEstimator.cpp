@@ -47,24 +47,30 @@ HoughEstimator::compute (const Matrix<UInt8>& input, Matrix<UInt8>& output) cons
 }
 
 void
-HoughEstimator::getLines (Matrix<UInt8>& hough, std::vector<Line>& lines) const
+HoughEstimator::getLines (const Matrix<UInt8>& input, const Matrix<UInt8>& hough, std::vector<Line>& lines) const
 {
-/*  lines.clear ();
+  lines.clear ();
 
-  UInt32 rho_max = 2*sqrt (matrix->getRows ()*matrix->getRows ()+matrix->getCols ()*matrix->getCols ());
-  UInt32 rho_step = rho_max/(n_rho-1);
-  double theta_step = M_PI/(n_theta-1);
+  double rho_max = 2*hypot (input.getRows (), input.getCols ());
+  double rho_step = rho_max/(n_rho-1);
+  double theta_init = 3/2*M_PI;
+  double theta_step = 2*M_PI/(n_theta-1);
 
   UInt32 row, col;
-  hough.max (row, col);
-  //hough(row, col) = 0;
+  Matrix<UInt8> tmp;
+  tmp = hough;
+  tmp.max (row, col);
+  tmp (row, col) = 0;
+  tmp.max (row, col);
+  tmp (row, col) = 0;
+  tmp.max (row, col);
 
   std::cout << "theta = " << row << std::endl;
   std::cout << "rho = " << col << std::endl;
   std::cout << "theta = " << row*theta_step << std::endl;
   std::cout << "rho = " << col*rho_step << std::endl;
 
-  lines.push_back (Line (col*rho_step, row*theta_step));*/
+  lines.push_back (Line (col*rho_step, row*theta_step));
 }
 
 

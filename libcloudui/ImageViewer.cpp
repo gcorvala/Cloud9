@@ -69,8 +69,8 @@
          //for (int i = 0; i < a; i++) out2(i,i) = 255;
          hough.compute (out2, out1);
 
-         /*std::vector<Line> lines;
-         hough.getLines (out4, lines);*/
+         std::vector<Line> lines;
+         hough.getLines (out2, out1, lines);
          
            Matrix<UInt8> out = out1;
         image = QImage (out.getCols (), out.getRows (), QImage::Format_RGB32);

@@ -11,7 +11,7 @@ class HoughEstimator : public Estimator<UInt8, UInt8> {
     ~HoughEstimator ();
     void compute (const Matrix<UInt8>& input, Matrix<UInt8>& output) const;
 
-    void getLines (Matrix<UInt8>& hough, std::vector<Line>& lines) const;
+    void getLines (const Matrix<UInt8>& input, const Matrix<UInt8>& hough, std::vector<Line>& lines) const;
 
     UInt32 getNTheta () const;
     void setNTheta (UInt32 n);
