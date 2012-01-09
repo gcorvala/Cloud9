@@ -1,5 +1,6 @@
 set(2D_SRCS 
 	2D/CannyEstimator.cpp
+	2D/FourierEstimator.cpp
 	2D/GaussianEstimator.cpp
 	2D/GradientEstimator.cpp
 	2D/HoughEstimator.cpp
@@ -13,6 +14,7 @@ set(2D_SRCS
 set(2D_INCS
 	2D/CannyEstimator.h
 	2D/Estimator.h
+	2D/FourierEstimator.h
 	2D/GaussianEstimator.h
 	2D/GradientEstimator.h
 	2D/HoughEstimator.h
@@ -50,12 +52,14 @@ set(FEATURES_INCS
 	)
 
 set(FILTERS_SRCS
+	Filters/CropBoxFilter.cpp
 	Filters/Filter.cpp
 	Filters/ScaleFilter.cpp
 	Filters/TranslateFilter.cpp
 	)
 
 set(FILTERS_INCS
+	Filters/CropBoxFilter.h
 	Filters/Filter.h
 	Filters/ScaleFilter.h
 	Filters/TranslateFilter.h
@@ -126,21 +130,15 @@ set(SEARCH_INCS
 set(SRCS ${2D_SRCS} ${COMMON_SRCS} ${FEATURES_SRCS} ${FILTERS_SRCS} ${IO_SRCS} ${KDTREE_SRCS} ${OCTREE_SRCS} ${SEARCH_SRCS})
 set(INCS ${2D_INCS} ${COMMON_INCS} ${FEATURES_INCS} ${FILTERS_INCS} ${IO_INCS} ${KDTREE_INCS} ${OCTREE_INCS} ${SEARCH_INCS})
 
-# FIXME : add new cmake module
-find_library (FLANN_LIBRARY flann_cpp)
-find_path (FLANN_INCLUDE_DIR flann)
-set (FLANN_LIBRARIES ${FLANN_LIBRARY})
-set (FLANN_INCLUDE_DIRS ${FLANN_INCLUDE_DIR})
-include (FindPackageHandleStandardArgs)
-find_package_handle_standard_args (Flann DEFAULT_MSG FLANN_LIBRARY FLANN_INCLUDE_DIR)
-mark_as_advanced (FLANN_INCLUDE_DIR FLANN_LIBRARY)
+include (../cmake/FindFlann.cmake)
+include (../cmake/FindFftw3.cmake)
 
 #find_package (flann)
 include_directories (${FLANN_INCLUDE_DIRS})
 
 add_library (cloud SHARED ${libcloud_sources} ${SRCS} ${INCS})
 
-target_link_libraries (cloud ${FLANN_LIBRARIES})
+target_link_libraries (cloud ${FLANN_LIBRARIES} ${FFTW3_LIBRARIES})
 
 install (DIRECTORY . DESTINATION include/libcloud FILES_MATCHING PATTERN "*.h")
 install (TARGETS cloud LIBRARY DESTINATION lib)
