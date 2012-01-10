@@ -9,6 +9,8 @@
  #include "libcloud/2D/HoughEstimator.h"
  #include "libcloud/2D/GaussianEstimator.h"
  #include "libcloud/2D/CannyEstimator.h"
+ #include "libcloud/IO/OBJReader.h"
+ #include "libcloud/Common/PointCloud.h"
 
  ImageViewer::ImageViewer()
  {
@@ -74,12 +76,38 @@
          
            Matrix<UInt8> out = out1;
         image = QImage (out.getCols (), out.getRows (), QImage::Format_RGB32);
+        OBJReader reader;
+        PointCloud cloud;
 
-         for (unsigned int i = 0; i < out.getRows (); ++i) {
+        reader.read ("../Code/data/obj/Bunker001.obj", cloud, false);
+        UInt32 s = 1024;
+        Matrix<UInt32> plan (s, s);
+        for (PointCloud::const_iterator it = cloud.begin (); it != cloud.end (); ++it) {
+          const Point& p = *it;
+          plan(round (p.x/4), round (p.y/4))++;
+        }
+        threshold.setThreshold (10);
+        Matrix<UInt8> plan1;
+        plan1 = plan;
+        Matrix<UInt8> plan2 (s, s);
+        threshold.compute (plan1, plan2);
+        hough.compute (plan2, plan1);
+
+  //      std::vector<Line> lines;
+        //hough.getLines (plan1, plan2, lines);
+        //plan2 = plan1;
+        image = QImage (plan2.getCols (), plan2.getRows (), QImage::Format_RGB32);
+        
+        for (unsigned int i = 0; i < plan2.getRows (); ++i) {
+           for (unsigned int j = 0; j < plan2.getCols (); ++j) {
+             image.setPixel (j, i, qRgb (plan2(i,j), plan2(i,j), plan2(i,j)));
+           }
+         }
+         /*for (unsigned int i = 0; i < out.getRows (); ++i) {
            for (unsigned int j = 0; j < out.getCols (); ++j) {
              image.setPixel (j, i, qRgb (out(i,j), out(i,j), out(i,j)));
            }
-         }
+         }*/
 
          imageLabel->setPixmap(QPixmap::fromImage(image));
          scaleFactor = 1.0;

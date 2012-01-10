@@ -1,6 +1,7 @@
 #include "LinearSearch.h"
 
 #include <iostream> // FIXME
+#include "../Common/Vector.h"
 
 LinearSearch::LinearSearch ()
 {
@@ -23,7 +24,8 @@ LinearSearch::nearestKSearch (const Point& p,
 
   if (k > 0) {
     for (it = cloud->begin (); it != cloud->end (); ++it) {
-      double norm2 = (*it - p).norm2 ();
+      Vector v (*it, p);
+      double norm2 = v.norm2 ();
       if (k_indices.empty () && k_sqr_distances.empty ()) {
         k_indices.push_back (std::distance (cloud->begin (), it));
         k_sqr_distances.push_back (norm2);
@@ -61,7 +63,8 @@ LinearSearch::radiusSearch (const Point& p,
   double sqr_radius = radius * radius;
 
   for (it = cloud->begin (); it != cloud->end (); ++it) {
-    double norm2 = (*it - p).norm2 ();
+    Vector v (*it, p);
+    double norm2 = v.norm2 ();
     if (norm2 <= sqr_radius) {
       k_indices.push_back (std::distance (cloud->begin (), it));
       k_squared_distances.push_back (norm2);

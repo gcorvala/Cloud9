@@ -1,5 +1,7 @@
 #include "TranslateFilter.h"
 
+#include "../Common/Vector.h"
+
 TranslateFilter::TranslateFilter (double x, double y, double z)
   : direction(x,y,z)
 {
@@ -19,6 +21,8 @@ TranslateFilter::run (PointCloud& cloud) const {
   PointCloud::iterator it;
 
   for (it = cloud.begin (); it != cloud.end (); ++it) {
-    *it += direction;
+    Vector v (*it);
+    v += direction;
+    *it = v;
   }
 }

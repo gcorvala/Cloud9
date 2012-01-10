@@ -3,7 +3,9 @@
 - libcloud
 	- 2D
 		[ ] Rewrite convolution method
+		[ ] Test Fourier transform
 	- Common
+		[ ] Vector class or Point class ?
 		[ ] Point class
 		[ ] Color attribute
 		[ ] Normal attribute

@@ -28,17 +28,21 @@ set(2D_INCS
 
 set(COMMON_SRCS
 	Common/Color.cpp
+	Common/Plane.cpp
 	Common/Point.cpp
 	Common/PointCloud.cpp
 	Common/Utils.cpp
+	Common/Vector.cpp
 	)
 
 set(COMMON_INCS
 	Common/Color.h
+	Common/Plane.h
 	Common/Point.h
 	Common/PointCloud.h
 	Common/Types.h
 	Common/Utils.h
+	Common/Vector.h
 	)
 
 set(FEATURES_SRCS

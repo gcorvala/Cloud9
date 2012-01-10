@@ -3,21 +3,9 @@
 
 class Point {
   public:
-    Point ();
-    Point (double _x, double _y, double _z);
+    Point (double _x = 0, double _y = 0, double _z = 0);
     virtual ~Point ();
-    void normalize ();
-    double norm () const;
-    double norm2 () const;
-    Point operator+ (const Point& p) const;
-    Point operator- (const Point& p) const;
-    Point operator* (double s) const;
-    Point operator/ (double s) const;
     Point operator= (const Point& p);
-    Point operator+= (const Point& p);
-    Point operator-= (const Point& p);
-    Point operator*= (double s);
-    Point operator/= (double s);
     bool operator== (const Point& p) const;
     bool operator!= (const Point& p) const;
     double x;

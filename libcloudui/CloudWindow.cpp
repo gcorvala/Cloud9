@@ -3,9 +3,10 @@
 #include <QMenuBar>
 #include <QToolBar>
 #include <QFileDialog>
-#include <libcloud/IO/XYZReader.h>
+#include <libcloud/IO/OBJReader.h>
 #include <libcloud/Filters/TranslateFilter.h>
 #include <libcloud/Filters/ScaleFilter.h>
+#include <libcloud/Filters/CropBoxFilter.h>
 #include <libcloud/Common/Utils.h>
 #include <iostream> // FIXME
 #include <algorithm>
@@ -35,12 +36,12 @@ void
 CloudWindow::load ()
 {
   QFileDialog *dialog;
-  XYZReader reader;
+  OBJReader reader;
 
   std::cout << "load" << std::endl;
 
-  QString file = QFileDialog::getOpenFileName (this, "Load a XYZ file", "~", "Point clouds (*.xyz)");
-  reader.read (file.toStdString (), cloud, true);
+  QString file = QFileDialog::getOpenFileName (this, "Load a OBJ file", "~", "Point clouds (*.obj)");
+  reader.read (file.toStdString (), cloud, false);
 
   // FIXME
   TranslateFilter *filter;
@@ -54,10 +55,20 @@ CloudWindow::load ()
   min_z = *min_element (cloud.begin (), cloud.end (), comparePointsByZAxis);
   max_z = *max_element (cloud.begin (), cloud.end (), comparePointsByZAxis);
 
-  filter = new TranslateFilter (-((max_x + min_x) / 2).x,
+  /*filter = new TranslateFilter (-((max_x + min_x) / 2).x,
                                 -((max_y + min_y) / 2).y,
-                                -((max_z + min_z) / 2).z);
-  filter->run (cloud);
+                                -((max_z + min_z) / 2).z);*/
+  CropBoxFilter crop (Point (0, 0, 0), Point (400, 4000, 300));
+  //crop.run (cloud);
+/*
+                              min_x: 32.79
+                              min_y: 13.96
+                              min_z: 105.28
+                              max_x: 3536.63
+                              max_y: 2711.1
+                              max_z: 1150.9
+                              */
+  //filter->run (cloud);
   ScaleFilter scale (8);
   scale.run (cloud);
   // END FIXME
