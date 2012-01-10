@@ -11,11 +11,15 @@ class Plane {
     Plane (const Point& p1, const Point& p2, const Point& p3);
     Plane (double a, double b, double c, double d);
     virtual ~Plane ();
+
+    Vector getNormal () const;
+
   protected:
     // FIXME : Forme ax+by+cz+d=0
     double a;
     double b;
     double c;
+    double d;
 };
 
 #endif

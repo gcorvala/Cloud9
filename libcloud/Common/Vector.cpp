@@ -2,6 +2,13 @@
 
 #include <math.h>
 
+Vector::Vector (double _x, double _y, double _z)
+{
+  x = _x;
+  y = _y;
+  z = _z;
+}
+
 Vector::Vector (const Point& p1, const Point& p2)
 {
   x = p2.x-p1.x;
@@ -119,4 +126,33 @@ Vector::operator/= (double s)
   z /= s;
 
   return *this;
+}
+
+Vector
+Vector::operator- () const
+{
+  return Vector (-x, -y, -z);
+}
+
+
+Vector
+Vector::cross (const Vector& v) const
+{
+  Vector result;
+
+  result.x = (y*v.z-z*v.y);
+  result.y = (z*v.x-x*v.z);
+  result.z = (x*v.y-y*v.x);
+
+  return result;
+}
+
+double
+Vector::dot (const Vector& v) const
+{
+  double result;
+
+	result = x*v.x + y*v.y + z*v.z;
+
+  return result;
 }
