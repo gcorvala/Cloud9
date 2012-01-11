@@ -12,6 +12,7 @@ class CannyEstimator : public Estimator<UInt8, UInt8> {
     ~CannyEstimator ();
     void compute (const Matrix<UInt8>& input, Matrix<UInt8>& output) const;
   protected:
+    void nonMaximaSuppression (Matrix<double>& intensities, const Matrix<double>& angles) const;
     GaussianEstimator gaussian;
     SobelEstimator sobel;
 };

@@ -62,40 +62,44 @@
          ThresholdEstimator threshold;
          CannyEstimator canny;
 
-         //threshold.setThreshold (100);
+         threshold.setThreshold (70);
 
          canny.compute (m, out1);
          threshold.compute (out1, out2);
          //int a = 1000;
          //out2.resize (a, a);
          //for (int i = 0; i < a; i++) out2(i,i) = 255;
-         hough.compute (out2, out1);
+//         hough.compute (out2, out1);
 
-         std::vector<Line> lines;
-         hough.getLines (out2, out1, lines);
+//         std::vector<Line> lines;
+//         hough.getLines (out2, out1, lines);
          
-           Matrix<UInt8> out = out1;
+           Matrix<UInt8> out = out2;
         image = QImage (out.getCols (), out.getRows (), QImage::Format_RGB32);
-        OBJReader reader;
+        /*OBJReader reader;
         PointCloud cloud;
 
         reader.read ("../Code/data/obj/Bunker001.obj", cloud, false);
-        UInt32 s = 1024;
+        UInt32 s = 4096;
         Matrix<UInt32> plan (s, s);
         for (PointCloud::const_iterator it = cloud.begin (); it != cloud.end (); ++it) {
           const Point& p = *it;
-          plan(round (p.x/4), round (p.y/4))++;
+          plan(round (p.y), round (p.z))++;
         }
-        threshold.setThreshold (10);
+        threshold.setThreshold (1);
         Matrix<UInt8> plan1;
         plan1 = plan;
         Matrix<UInt8> plan2 (s, s);
-        threshold.compute (plan1, plan2);
-        hough.compute (plan2, plan1);
+        threshold.compute (plan1, plan2);*/
 
-  //      std::vector<Line> lines;
-        //hough.getLines (plan1, plan2, lines);
-        //plan2 = plan1;
+        //hough.compute (plan2, plan1);
+        //canny.compute (plan1, plan2);
+        //threshold.setThreshold (128);
+        //threshold.compute (plan2, plan1);
+          Matrix<UInt8> plan2;
+        plan2 = out;
+        //hough.getLines (plan2, plan1, lines);
+        
         image = QImage (plan2.getCols (), plan2.getRows (), QImage::Format_RGB32);
         
         for (unsigned int i = 0; i < plan2.getRows (); ++i) {
