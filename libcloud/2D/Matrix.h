@@ -48,6 +48,8 @@ class Matrix {
     Matrix operator* (const Matrix& m) const;
     template <typename U>
     Matrix operator+ (const Matrix<U>& m) const;
+    bool operator== (const Matrix& m) const;
+    bool operator!= (const Matrix& m) const;
 
     template <typename KernelType, typename OutputType>
     void convolve (const Matrix<KernelType>& kernel, Matrix<OutputType>& output) const;
@@ -300,6 +302,25 @@ Matrix<T>::operator+ (const Matrix<U>& m) const
   }
 
   return result;
+}
+
+template <typename T>
+bool
+Matrix<T>::operator== (const Matrix& m) const
+{
+  if (rows == m.rows && cols == m.cols && std::equal (data.begin (), data.end(), m.data.begin ())) {
+    return true;
+  }
+  else {
+    return false;
+  }
+}
+
+template <typename T>
+bool
+Matrix<T>::operator!= (const Matrix& m) const
+{
+  return !(*this == m); 
 }
 
 template <typename T>

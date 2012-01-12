@@ -10,7 +10,7 @@ ThresholdEstimator::~ThresholdEstimator ()
 }
 
 void
-ThresholdEstimator::compute (const Matrix<UInt8>& input, Matrix<UInt8>& output) const
+ThresholdEstimator::compute (const Matrix<double>& input, Matrix<double>& output) const
 {
   output.resize (input.getRows (), input.getCols ());
 
@@ -26,14 +26,14 @@ ThresholdEstimator::compute (const Matrix<UInt8>& input, Matrix<UInt8>& output) 
   }
 }
 
-UInt8
+double
 ThresholdEstimator::getThreshold () const
 {
   return threshold;
 }
 
 void
-ThresholdEstimator::setThreshold (UInt8 t)
+ThresholdEstimator::setThreshold (double t)
 {
   threshold = t;
 }

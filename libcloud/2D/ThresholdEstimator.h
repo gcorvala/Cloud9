@@ -4,16 +4,16 @@
 #include "Estimator.h"
 #include "Matrix.h"
 
-class ThresholdEstimator : public Estimator<UInt8, UInt8> {
+class ThresholdEstimator : public Estimator<double, double> {
   public:
     ThresholdEstimator ();
     ~ThresholdEstimator ();
-    void compute (const Matrix<UInt8>& input, Matrix<UInt8>& output) const;
+    void compute (const Matrix<double>& input, Matrix<double>& output) const;
 
-    UInt8 getThreshold () const;
-    void setThreshold (UInt8 t);
+    double getThreshold () const;
+    void setThreshold (double t);
   protected:
-    UInt8 threshold;
+    double threshold;
 };
 
 #endif

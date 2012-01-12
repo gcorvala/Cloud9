@@ -62,10 +62,10 @@
          ThresholdEstimator threshold;
          CannyEstimator canny;
 
-         threshold.setThreshold (70);
+         threshold.setThreshold (160);
 
          canny.compute (m, out1);
-         threshold.compute (out1, out2);
+         //threshold.compute (out1, out2);
          //int a = 1000;
          //out2.resize (a, a);
          //for (int i = 0; i < a; i++) out2(i,i) = 255;
@@ -74,7 +74,7 @@
 //         std::vector<Line> lines;
 //         hough.getLines (out2, out1, lines);
          
-           Matrix<UInt8> out = out2;
+           Matrix<UInt8> out = out1;
         image = QImage (out.getCols (), out.getRows (), QImage::Format_RGB32);
         /*OBJReader reader;
         PointCloud cloud;
