@@ -4,7 +4,7 @@
 
 CannyEstimator::CannyEstimator ()
   :high_threshold(100)
-  ,low_threshold(10)
+  ,low_threshold(5)
 {
 }
 

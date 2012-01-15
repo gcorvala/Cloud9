@@ -11,6 +11,7 @@
  #include "libcloud/2D/CannyEstimator.h"
  #include "libcloud/IO/OBJReader.h"
  #include "libcloud/Common/PointCloud.h"
+ #include "libcloud/2D/PhaseCongruencyEstimator.h"
 
  ImageViewer::ImageViewer()
  {
@@ -43,15 +44,12 @@
              return;
          }
 
-//         Image im(image.height (), image.width ());
          Matrix<UInt8> m (image.height (), image.width ());
 
          for (unsigned int i = 0; i < image.height (); ++i) {
            for (unsigned int j = 0; j < image.width (); ++j) {
              QRgb c = image.pixel (j, i);
-//             im.setPixel(i,j, Color (qRed (c), qGreen (c), qBlue (c)));
              m(i,j) = Color (qRed (c), qGreen (c), qBlue (c)).getY();
-//             image.setPixel (j, i, qRgb (im.getPixel(i,j).getY (), im.getPixel(i,j).getY (), im.getPixel(i,j).getY ()));
            }
          }
 
@@ -61,21 +59,20 @@
          HoughEstimator hough;
          ThresholdEstimator threshold;
          CannyEstimator canny;
+         PhaseCongruencyEstimator phase;
 
-         threshold.setThreshold (160);
+//         threshold.setThreshold (170);
 
-         canny.compute (m, out1);
-         //threshold.compute (out1, out2);
-         //int a = 1000;
-         //out2.resize (a, a);
-         //for (int i = 0; i < a; i++) out2(i,i) = 255;
-//         hough.compute (out2, out1);
-
-//         std::vector<Line> lines;
-//         hough.getLines (out2, out1, lines);
-         
-           Matrix<UInt8> out = out1;
+         //canny.compute (m, out1);
+         phase.compute (m, out1);
+         Matrix<double> dout1;
+         Matrix<double> dout2;
+         dout1 = out1;
+         threshold.compute (dout1, dout2);
+         Matrix<UInt8> out;
+         out = dout2;
         image = QImage (out.getCols (), out.getRows (), QImage::Format_RGB32);
+
         /*OBJReader reader;
         PointCloud cloud;
 
@@ -86,17 +83,11 @@
           const Point& p = *it;
           plan(round (p.y), round (p.z))++;
         }
-        threshold.setThreshold (1);
-        Matrix<UInt8> plan1;
-        plan1 = plan;
-        Matrix<UInt8> plan2 (s, s);
-        threshold.compute (plan1, plan2);*/
+        CannyEstimator canny;
+        Matrix<UInt8> plan2;
+        canny.compute (plan, plan2);*/
 
-        //hough.compute (plan2, plan1);
-        //canny.compute (plan1, plan2);
-        //threshold.setThreshold (128);
-        //threshold.compute (plan2, plan1);
-          Matrix<UInt8> plan2;
+        Matrix<UInt8> plan2;
         plan2 = out;
         //hough.getLines (plan2, plan1, lines);
         

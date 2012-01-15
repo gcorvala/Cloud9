@@ -30,13 +30,27 @@ FourierEstimator::compute (const Matrix<double>& input, Matrix<std::complex<doub
 
   fftw_execute(p);
 
-  output.resize (input.getRows (), input.getCols ()/2+1);
+  output.resize (input.getRows (), input.getCols ());
+
+  UInt32 offset = 0;
 
   for (UInt32 i = 0; i < output.getRows (); ++i) {
+    UInt32 pos = input.getCols ()/2;
+
     for (UInt32 j = 0; j < output.getCols (); ++j) {
-      double c1 = *out[2*i*output.getCols ()+2*j];
-      double c2 = *out[2*i*output.getCols ()+2*j+1];
-      output (i, j) = std::complex<double> (c1, c2);
+      if (j < input.getCols ()/2+1) {
+        fftw_complex& c = out[offset++];
+        output (i, j) = std::complex<double> (c[0], c[1]);
+      }
+      else {
+        UInt32 col = pos--;
+        if (i == 0) {
+          output (i, j) = conj (output (i, col));
+        }
+        else {
+          output (i, j) = conj (output (input.getRows ()-i, col));
+        }
+      }
     }
   }
 

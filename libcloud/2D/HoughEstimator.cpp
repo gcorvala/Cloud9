@@ -1,8 +1,8 @@
 #include "HoughEstimator.h"
 
 HoughEstimator::HoughEstimator ()
-  :n_theta(2048)
-  ,n_rho(2048)
+  :n_theta(180)
+  ,n_rho(256)
 {
 }
 

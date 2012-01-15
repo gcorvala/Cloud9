@@ -6,6 +6,7 @@ set(2D_SRCS
 	2D/HoughEstimator.cpp
 	2D/Image.cpp
 	2D/Line.cpp
+	2D/PhaseCongruencyEstimator.cpp
 	2D/ScharrEstimator.cpp
 	2D/SobelEstimator.cpp
 	2D/ThresholdEstimator.cpp
@@ -21,6 +22,7 @@ set(2D_INCS
 	2D/Image.h
 	2D/Line.h
 	2D/Matrix.h
+	2D/PhaseCongruencyEstimator.h
 	2D/ScharrEstimator.h
 	2D/SobelEstimator.h
 	2D/ThresholdEstimator.h

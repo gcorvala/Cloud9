@@ -45,6 +45,7 @@ class Matrix {
     Matrix operator*= (double s);
     Matrix operator/ (double s) const;
     Matrix operator/= (double s);
+    Matrix operator-= (double s);
     Matrix operator* (const Matrix& m) const;
     template <typename U>
     Matrix operator+ (const Matrix<U>& m) const;
@@ -62,6 +63,9 @@ class Matrix {
 
     T max () const;
     T max (UInt32& row, UInt32& col) const;
+    T min () const;
+
+    T sum () const;
 
     template <typename U>
     Matrix<U> forEach (U (*unary_operation) (const T&)) const;
@@ -185,11 +189,17 @@ template <typename T>
 Matrix<T>
 Matrix<T>::getSubMatrix (UInt32 row, UInt32 col, UInt32 height, UInt32 width) const
 {
+  // FIXME : zero padding !
   Matrix<T> *sub_matrix = new Matrix (height, width);
 
   for (UInt32 i = 0; i < height; ++i) {
     for (UInt32 j = 0; j < width; ++j) {
-      sub_matrix->at (i, j) = at (row+i, col+j);
+      if (row+i < 0 || col+j < 0 || row+i > rows-1 || col+j > cols-1) {
+        sub_matrix->at (i, j) = T();
+      }
+      else {
+        sub_matrix->at (i, j) = at (row+i, col+j);
+      }
     }
   }
 
@@ -266,6 +276,17 @@ Matrix<T>::operator/= (double s)
 {
   for (UInt32 i = 0; i < rows*cols; ++i) {
     data[i] /= s;
+  }
+
+  return *this;
+}
+
+template <typename T>
+Matrix<T>
+Matrix<T>::operator-= (double s)
+{
+  for (UInt32 i = 0; i < rows*cols; ++i) {
+    data[i] -= s;
   }
 
   return *this;
@@ -397,6 +418,29 @@ Matrix<T>::max (UInt32& row, UInt32& col) const
 
   return *max;
 }
+
+template <typename T>
+T
+Matrix<T>::min () const
+{
+  return *min_element (data.begin (), data.end ());
+}
+
+template <typename T>
+T
+Matrix<T>::sum () const
+{
+  T sum = 0;
+
+  for (UInt32 i = 0; i < rows; ++i) {
+    for (UInt32 j = 0; j < cols; ++j) {
+      sum += at (i, j);
+    }
+  }
+
+  return sum;
+}
+
 
 template <typename T>
 template <typename U>
