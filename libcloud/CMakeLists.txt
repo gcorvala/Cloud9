@@ -3,10 +3,13 @@ set(2D_SRCS
 	2D/FourierEstimator.cpp
 	2D/GaussianEstimator.cpp
 	2D/GradientEstimator.cpp
+	2D/HilbertEstimator.cpp
 	2D/HoughEstimator.cpp
+	2D/HysteresisThresholdEstimator.cpp
 	2D/Image.cpp
 	2D/Line.cpp
 	2D/PhaseCongruencyEstimator.cpp
+	2D/RemoveDCEstimator.cpp
 	2D/ScharrEstimator.cpp
 	2D/SobelEstimator.cpp
 	2D/ThresholdEstimator.cpp
@@ -18,11 +21,14 @@ set(2D_INCS
 	2D/FourierEstimator.h
 	2D/GaussianEstimator.h
 	2D/GradientEstimator.h
+	2D/HilbertEstimator.h
 	2D/HoughEstimator.h
+	2D/HysteresisThresholdEstimator.h
 	2D/Image.h
 	2D/Line.h
 	2D/Matrix.h
 	2D/PhaseCongruencyEstimator.h
+	2D/RemoveDCEstimator.h
 	2D/ScharrEstimator.h
 	2D/SobelEstimator.h
 	2D/ThresholdEstimator.h

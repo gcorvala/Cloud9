@@ -14,8 +14,8 @@ class Matrix {
     typedef typename std::vector<T>::const_iterator const_iterator;
 
     Matrix (UInt32 rows = 0, UInt32 cols = 0);
-    //template <typename U>
-    //Matrix (const Matrix<U>& m);
+    template <typename U>
+    Matrix (const Matrix<U>& m);
     virtual ~Matrix ();
 
     T& operator() (UInt32 row, UInt32 col);
@@ -85,6 +85,20 @@ Matrix<T>::Matrix (UInt32 rows, UInt32 cols)
   ,cols(cols)
   ,data(rows*cols)
 {
+}
+
+template <typename T>
+template <typename U>
+Matrix<T>::Matrix (const Matrix<U>& m)
+  :rows(m.getRows ())
+  ,cols(m.getCols ())
+  ,data(m.getRows ()*m.getCols ())
+{
+  for (UInt32 i = 0; i < rows; ++i) {
+    for (UInt32 j = 0; j < cols; ++j) {
+      at (i, j) = (T) m (i, j);
+    }
+  }
 }
 
 template <typename T>

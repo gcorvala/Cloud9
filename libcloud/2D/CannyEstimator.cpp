@@ -1,6 +1,7 @@
 #include "CannyEstimator.h"
 
 #include "ThresholdEstimator.h"
+#include "HysteresisThresholdEstimator.h"
 
 CannyEstimator::CannyEstimator ()
   :high_threshold(100)
@@ -15,12 +16,15 @@ CannyEstimator::~CannyEstimator ()
 void
 CannyEstimator::compute (const Matrix<UInt8>& input, Matrix<UInt8>& output) const
 {
+  HysteresisThresholdEstimator hysteresis;
   Matrix<UInt8> tmp;
   gaussian.compute (input, tmp);
   Matrix<double> intensities, angles;
   sobel.compute (tmp, intensities, angles);
   nonMaximaSuppression (intensities, angles);
-  hysteresisThresholding (intensities);
+  hysteresis.setHighThreshold (high_threshold);
+  hysteresis.setLowThreshold (low_threshold);
+  hysteresis.compute (intensities, intensities);
   output = intensities;
 }
 
@@ -79,40 +83,4 @@ CannyEstimator::nonMaximaSuppression (Matrix<double>& intensities, const Matrix<
   }
 
   intensities = tmp;
-}
-
-void
-CannyEstimator::hysteresisThresholding (Matrix<double>& intensities) const
-{
-  ThresholdEstimator threshold;
-  Matrix<double> high;
-  Matrix<double> low;
-
-  threshold.setThreshold (high_threshold);
-
-  threshold.compute (intensities, high);
-
-  threshold.setThreshold (low_threshold);
-
-  threshold.compute (intensities, low);
-
-  bool modified = true;
-
-  while (modified) {
-    modified = false;
-    for (UInt32 i = 0; i < high.getRows (); ++i) {
-      for (UInt32 j = 0; j < high.getCols (); ++j) {
-        if (low (i, j) && !high (i, j)) {
-          if (high (i-1, j-1) || high (i-1, j) || high (i-1, j+1)
-            || high (i, j-1) || high (i, j) || high (i, j+1)
-            || high (i+1, j-1) || high (i+1, j) || high (i+1, j+1)) {
-            high (i, j) = 255;
-            modified = true;
-          }
-        }
-      }
-    }
-  }
-
-  intensities = high;
 }

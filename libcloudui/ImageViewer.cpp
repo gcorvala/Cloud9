@@ -68,9 +68,9 @@
          Matrix<double> dout1;
          Matrix<double> dout2;
          dout1 = out1;
-         threshold.compute (dout1, dout2);
+         //threshold.compute (dout1, dout2);
          Matrix<UInt8> out;
-         out = dout2;
+         out = dout1;
         image = QImage (out.getCols (), out.getRows (), QImage::Format_RGB32);
 
         /*OBJReader reader;

@@ -20,7 +20,6 @@ class CannyEstimator : public Estimator<UInt8, UInt8> {
 
   protected:
     void nonMaximaSuppression (Matrix<double>& intensities, const Matrix<double>& angles) const;
-    void hysteresisThresholding (Matrix<double>& intensities) const;
 
     GaussianEstimator gaussian;
     SobelEstimator sobel;
