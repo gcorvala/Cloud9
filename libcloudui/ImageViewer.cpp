@@ -59,14 +59,14 @@
          HoughEstimator hough;
          ThresholdEstimator threshold;
          CannyEstimator canny;
+         SobelEstimator sobel;
          PhaseCongruencyEstimator phase;
 
 //         threshold.setThreshold (170);
 
-         phase.compute (m, out1);
-         //canny.compute (out1, out2);
          Matrix<double> dout1;
          Matrix<double> dout2;
+         phase.compute (m, out1);
          dout1 = out1;
          //threshold.compute (dout1, dout2);
          Matrix<UInt8> out;

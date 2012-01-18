@@ -1,17 +1,17 @@
 #include "Edge.h"
-#include <iostream>
-Edge::Edge (Node& _source, Node& _sink)
+
+Edge::Edge (Anchor& _source, Anchor& _sink)
   :source(&_source)
   ,sink(&_sink)
 {
   setFlag (QGraphicsItem::ItemSendsGeometryChanges);
   setFlag (QGraphicsItem::ItemSendsScenePositionChanges);
 
-  QObject::connect (source, SIGNAL (posChanged ()), this, SLOT (nodePosChanged ()));
-  QObject::connect (sink, SIGNAL (posChanged ()), this, SLOT (nodePosChanged ()));
+  QObject::connect (source->parentObject (), SIGNAL (posChanged ()), this, SLOT (anchorPosChanged ()));
+  QObject::connect (sink->parentObject (), SIGNAL (posChanged ()), this, SLOT (anchorPosChanged ()));
 
-  pen.setWidth (10);
-  pen.setColor (QColor (145, 170, 157));
+  pen.setWidth (5);
+  pen.setColor (QColor (0, 47, 47));
 }
 
 Edge::~Edge ()
@@ -23,17 +23,18 @@ Edge::paint (QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget*
 {
   painter->setPen (pen);
 
-  painter->drawLine (source->pos (), sink->pos ());
+  painter->drawLine (source->scenePos (), sink->scenePos ());
 }
 
 QRectF
 Edge::boundingRect () const
 {
-  return QRectF (source->pos (), QSizeF (sink->pos ().x ()-source->pos ().x (), sink->pos ().y ()-source->pos ().y ())).normalized ().adjusted (-pen.width ()/2, -pen.width ()/2, pen.width ()/2, pen.width ()/2);
+  return QRectF (source->scenePos (), QSizeF (sink->scenePos ().x ()-source->scenePos ().x (), sink->scenePos ().y ()-source->scenePos ().y ())).normalized ().adjusted (-pen.width ()/2, -pen.width ()/2, pen.width ()/2, pen.width ()/2);
 }
 
 void
-Edge::nodePosChanged ()
+Edge::anchorPosChanged ()
 {
+  qDebug ("Edge::anchorPosChanged");
   prepareGeometryChange ();
 }

@@ -8,9 +8,11 @@ include (${QT_USE_FILE})
 include_directories (${QT_QTOPENGL_INCLUDE_DIR})
 
 set (MOC_HEADERS
+	Anchor.h
 	CloudWindow.h
 	Edge.h
 	GLWidget.h
+	Graph.h
 	ImageViewer.h
 	Node.h
 )
