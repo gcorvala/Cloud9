@@ -63,8 +63,8 @@
 
 //         threshold.setThreshold (170);
 
-         //canny.compute (m, out1);
          phase.compute (m, out1);
+         //canny.compute (out1, out2);
          Matrix<double> dout1;
          Matrix<double> dout2;
          dout1 = out1;
