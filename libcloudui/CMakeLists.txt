@@ -19,7 +19,9 @@ set (GRAPH_EDITOR_SRCS
 	GraphEditor/Graph.cpp
 	GraphEditor/GraphEditorWidget.cpp
 	GraphEditor/GraphToolBar.cpp
+	GraphEditor/InputAnchor.cpp
 	GraphEditor/Node.cpp
+	GraphEditor/OutputAnchor.cpp
 	)
 
 set (GRAPH_EDITOR_INCS
@@ -28,7 +30,9 @@ set (GRAPH_EDITOR_INCS
 	GraphEditor/Graph.h
 	GraphEditor/GraphEditorWidget.h
 	GraphEditor/GraphToolBar.h
+	GraphEditor/InputAnchor.h
 	GraphEditor/Node.h
+	GraphEditor/OutputAnchor.h
 	)
 
 qt4_wrap_cpp (MOC_SOURCES ${MOC_HEADERS} ${GRAPH_EDITOR_INCS})
