@@ -24,8 +24,7 @@ class Anchor : public QGraphicsWidget {
     QVariant itemChange (GraphicsItemChange change, const QVariant& value);
     virtual void hoverEnterEvent (QGraphicsSceneHoverEvent* event);
     virtual void hoverLeaveEvent (QGraphicsSceneHoverEvent* event);
-    virtual void mouseReleaseEvent (QGraphicsSceneMouseEvent* event);
-//    void mousePressEvent (QGraphicsSceneMouseEvent* event);
+    virtual void mousePressEvent (QGraphicsSceneMouseEvent* event) = 0;
 
   private:
     qreal radius;

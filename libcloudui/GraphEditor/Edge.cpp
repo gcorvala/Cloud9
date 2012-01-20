@@ -65,6 +65,7 @@ Edge::setSource (OutputAnchor& src)
 {
   source = &src;
   QObject::connect (source, SIGNAL (scenePositionChanged ()), this, SLOT (anchorPosChanged ()));
+  prepareGeometryChange ();
 }
 
 void
@@ -72,6 +73,7 @@ Edge::setDestination (InputAnchor& dst)
 {
   destination = &dst;
   QObject::connect (destination, SIGNAL (scenePositionChanged ()), this, SLOT (anchorPosChanged ()));
+  prepareGeometryChange ();
 }
 
 void

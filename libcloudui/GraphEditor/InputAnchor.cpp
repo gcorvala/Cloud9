@@ -16,8 +16,15 @@ InputAnchor::~InputAnchor ()
 void
 InputAnchor::mousePressEvent (QGraphicsSceneMouseEvent* event)
 {
-  qDebug ("InputAnchor::mousePressEvent");
-
+  Edge* edge;
   Graph* graph = (Graph*) scene ();
-  graph->drawEdgeFromInputAnchor (this);
+
+  if (graph->isDrawingEdgeFromOutputAnchor ()) {
+    edge = graph->getDrawingEdge ();
+    edge->setDestination (*this);
+    graph->setDrawingEdgeFromOutputAnchor (false);
+  }
+  else if (!graph->isDrawingEdgeFromInputAnchor ()) {
+    graph->drawEdgeFromInputAnchor (this);
+  }
 }

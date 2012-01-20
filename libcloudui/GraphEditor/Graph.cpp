@@ -18,7 +18,6 @@ Graph::~Graph ()
 void
 Graph::drawEdgeFromInputAnchor (InputAnchor* anchor)
 {
-  qDebug ("Graph::drawEdgeFromInputAnchor");
   drawing_edge_from_input_anchor = true;
   drawing_edge = new Edge (*anchor);
   addItem (drawing_edge);
@@ -27,10 +26,15 @@ Graph::drawEdgeFromInputAnchor (InputAnchor* anchor)
 void
 Graph::drawEdgeFromOutputAnchor (OutputAnchor* anchor)
 {
-  qDebug ("Graph::drawEdgeFromOutputAnchor");
   drawing_edge_from_output_anchor = true;
   drawing_edge = new Edge (*anchor);
   addItem (drawing_edge);
+}
+
+bool
+Graph::isDrawingEdge () const
+{
+  return drawing_edge_from_input_anchor | drawing_edge_from_output_anchor;
 }
 
 bool
@@ -39,10 +43,28 @@ Graph::isDrawingEdgeFromInputAnchor () const
   return drawing_edge_from_input_anchor;
 }
 
+void
+Graph::setDrawingEdgeFromInputAnchor (bool b)
+{
+  drawing_edge_from_input_anchor = b;
+}
+
 bool
 Graph::isDrawingEdgeFromOutputAnchor () const
 {
   return drawing_edge_from_output_anchor;
+}
+
+void
+Graph::setDrawingEdgeFromOutputAnchor (bool b)
+{
+  drawing_edge_from_output_anchor = b;
+}
+
+Edge*
+Graph::getDrawingEdge () const
+{
+  return drawing_edge;
 }
 
 void
@@ -57,22 +79,21 @@ void
 Graph::mouseMoveEvent (QGraphicsSceneMouseEvent* mouseEvent)
 {
   if (drawing_edge_from_input_anchor) {
-    qDebug ("drawing edge from input anchor");
     drawing_edge->setSourcePoint (mouseEvent->scenePos ());
   }
   else if (drawing_edge_from_output_anchor) {
-    qDebug ("drawing edge from output anchor");
     drawing_edge->setDestinationPoint (mouseEvent->scenePos ());
   }
   QGraphicsScene::mouseMoveEvent (mouseEvent);
 }
 
 void
-Graph::mouseReleaseEvent (QGraphicsSceneMouseEvent* mouseEvent)
+Graph::mousePressEvent (QGraphicsSceneMouseEvent* event)
 {
-  if (drawing_edge_from_input_anchor || drawing_edge_from_output_anchor) {
+  bool before = isDrawingEdge ();
+  QGraphicsScene::mousePressEvent (event);
+  if (before & isDrawingEdge ()) {
     drawing_edge_from_input_anchor = drawing_edge_from_output_anchor = false;
     delete drawing_edge;
   }
-  QGraphicsScene::mouseReleaseEvent (mouseEvent);
 }

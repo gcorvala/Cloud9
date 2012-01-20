@@ -34,8 +34,6 @@ class Node : public QGraphicsWidget {
 
   protected:
     virtual void moveEvent (QGraphicsSceneMoveEvent* event);
-    virtual void hoverEnterEvent (QGraphicsSceneHoverEvent* event);
-    virtual void hoverLeaveEvent (QGraphicsSceneHoverEvent* event);
     void placeAnchors ();
 
   private:

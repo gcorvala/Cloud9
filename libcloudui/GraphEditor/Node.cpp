@@ -96,18 +96,6 @@ Node::moveEvent (QGraphicsSceneMoveEvent* event)
 }
 
 void
-Node::hoverEnterEvent (QGraphicsSceneHoverEvent* event)
-{
-  QGraphicsWidget::hoverEnterEvent (event);
-}
-
-void
-Node::hoverLeaveEvent (QGraphicsSceneHoverEvent* event)
-{
-  QGraphicsWidget::hoverLeaveEvent (event);
-}
-
-void
 Node::placeAnchors ()
 {
   quint32 nb = input_anchors.size ();

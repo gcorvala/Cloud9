@@ -59,7 +59,6 @@ QVariant
 Anchor::itemChange (GraphicsItemChange change, const QVariant& value)
 {
   if (change == QGraphicsItem::ItemScenePositionHasChanged) {
-    qDebug ("Anchor::itemScenePositionHasChanged");
     emit scenePositionChanged ();
   }
   return value;
@@ -68,7 +67,6 @@ Anchor::itemChange (GraphicsItemChange change, const QVariant& value)
 void
 Anchor::hoverEnterEvent (QGraphicsSceneHoverEvent* event)
 {
-  qDebug ("Anchor::hoverEnterEvent");
   background_color = QColor (255, 0, 0);
   update ();
 }
@@ -76,13 +74,6 @@ Anchor::hoverEnterEvent (QGraphicsSceneHoverEvent* event)
 void
 Anchor::hoverLeaveEvent (QGraphicsSceneHoverEvent* event)
 {
-  qDebug ("Anchor::hoverLeaveEvent");
   background_color = QColor (209, 219, 189);
   update ();
-}
-
-void
-Anchor::mouseReleaseEvent (QGraphicsSceneMouseEvent* event)
-{
-  Graph* graph = (Graph*) scene ();
 }

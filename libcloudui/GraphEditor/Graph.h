@@ -14,8 +14,12 @@ class Graph : public QGraphicsScene {
     virtual ~Graph ();
     void drawEdgeFromInputAnchor (InputAnchor* anchor);
     void drawEdgeFromOutputAnchor (OutputAnchor* anchor);
+    bool isDrawingEdge () const;
     bool isDrawingEdgeFromInputAnchor () const;
+    void setDrawingEdgeFromInputAnchor (bool b);
     bool isDrawingEdgeFromOutputAnchor () const;
+    void setDrawingEdgeFromOutputAnchor (bool b);
+    Edge* getDrawingEdge () const;
 
   public slots:
     void addNode ();
@@ -24,11 +28,11 @@ class Graph : public QGraphicsScene {
 
   protected:
     virtual void mouseMoveEvent (QGraphicsSceneMouseEvent* mouseEvent);
-    virtual void mouseReleaseEvent (QGraphicsSceneMouseEvent* mouseEvent);
+    virtual void mousePressEvent (QGraphicsSceneMouseEvent* event);
 
   private:
     QColor background_color;
-    Edge *drawing_edge;
+    Edge* drawing_edge;
     bool drawing_edge_from_input_anchor;
     bool drawing_edge_from_output_anchor;
 };
