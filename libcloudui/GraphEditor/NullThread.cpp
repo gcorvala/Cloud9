@@ -13,8 +13,5 @@ NullThread::~NullThread ()
 void
 NullThread::run ()
 {
-  qDebug ("NullThread::run");
-  msleep (3000);
-  output = new UInt32(10); 
-  qDebug ("NullThread::run");
+  msleep (500);
 }

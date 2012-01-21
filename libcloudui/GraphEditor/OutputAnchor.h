@@ -7,12 +7,13 @@ class OutputAnchor : public Anchor {
   Q_OBJECT
 
   public:
-    OutputAnchor (QGraphicsItem* parent = 0);
+    OutputAnchor (QGraphicsItem* parent);
     virtual ~OutputAnchor ();
 
   public slots:
 
   signals:
+    void outputReady ();
 
   protected:
     virtual void mousePressEvent (QGraphicsSceneMouseEvent* event);

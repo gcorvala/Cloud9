@@ -9,6 +9,7 @@ Anchor::Anchor (QGraphicsItem* parent)
   ,hover_color(255, 0, 0)
   ,border_color(38, 50, 72)
   ,radius(8)
+  ,edge(NULL)
 {
   setFlag (QGraphicsItem::ItemSendsGeometryChanges);
   setFlag (QGraphicsItem::ItemSendsScenePositionChanges);
@@ -24,6 +25,18 @@ Anchor::Anchor (QGraphicsItem* parent)
 
 Anchor::~Anchor ()
 {
+}
+
+void
+Anchor::setEdge (Edge* _edge)
+{
+  edge = _edge;
+}
+
+Edge*
+Anchor::getEdge () const
+{
+  return edge;
 }
 
 void

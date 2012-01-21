@@ -7,6 +7,7 @@
 OutputAnchor::OutputAnchor (QGraphicsItem* parent)
   :Anchor(parent)
 {
+  connect ((QGraphicsWidget*) parent, SIGNAL (processFinished ()), this, SIGNAL (outputReady ()));
 }
 
 OutputAnchor::~OutputAnchor ()

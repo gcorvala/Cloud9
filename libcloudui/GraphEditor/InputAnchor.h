@@ -10,9 +10,12 @@ class InputAnchor : public Anchor {
     InputAnchor (QGraphicsItem* parent = 0);
     virtual ~InputAnchor ();
 
+    void setEdge (Edge* _edge);
+
   public slots:
 
   signals:
+    void inputReady ();
 
   protected:
     virtual void mousePressEvent (QGraphicsSceneMouseEvent* event);

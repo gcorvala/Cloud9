@@ -29,11 +29,13 @@ class Node : public QGraphicsWidget {
     QList<OutputAnchor*>& getOutputAnchors ();
 
   public slots:
+    void startProcess ();
     void setRunning ();
     void unsetRunning ();
 
   signals:
     void posChanged ();
+    void processFinished ();
 
   protected:
     virtual void moveEvent (QGraphicsSceneMoveEvent* event);

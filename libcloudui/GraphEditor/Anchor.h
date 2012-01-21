@@ -1,9 +1,10 @@
 #ifndef __ANCHOR_H__
 #define __ANCHOR_H__
 
-//#include "Edge.h"
 #include <QGraphicsWidget>
 #include <QPainter>
+
+class Edge;
 
 class Anchor : public QGraphicsWidget {
   Q_OBJECT
@@ -11,6 +12,9 @@ class Anchor : public QGraphicsWidget {
   public:
     Anchor (QGraphicsItem* parent = 0);
     virtual ~Anchor ();
+
+    void setEdge (Edge* _edge);
+    Edge* getEdge () const;
 
     void paint (QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget);
     QRectF boundingRect () const;
@@ -27,13 +31,12 @@ class Anchor : public QGraphicsWidget {
     virtual void hoverLeaveEvent (QGraphicsSceneHoverEvent* event);
     virtual void mousePressEvent (QGraphicsSceneMouseEvent* event) = 0;
 
-  private:
     qreal radius;
     QPen pen;
     QColor background_color;
     QColor border_color;
     QColor hover_color;
-    //Edge* edge;
+    Edge* edge;
 };
 
 #endif

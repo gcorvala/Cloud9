@@ -7,7 +7,6 @@ Edge::Edge (InputAnchor& dst)
   ,destination_point(dst.scenePos ())
 {
   init ();
-  QObject::connect (destination, SIGNAL (scenePositionChanged ()), this, SLOT (anchorPosChanged ()));
 }
 
 Edge::Edge (OutputAnchor& src)
@@ -17,7 +16,6 @@ Edge::Edge (OutputAnchor& src)
   ,destination_point(src.scenePos ())
 {
   init ();
-  QObject::connect (source, SIGNAL (scenePositionChanged ()), this, SLOT (anchorPosChanged ()));
 }
 
 Edge::Edge (OutputAnchor& src, InputAnchor& dst)
@@ -27,9 +25,6 @@ Edge::Edge (OutputAnchor& src, InputAnchor& dst)
   ,destination_point(dst.scenePos ())
 {
   init ();
-
-  QObject::connect (source, SIGNAL (scenePositionChanged ()), this, SLOT (anchorPosChanged ()));
-  QObject::connect (destination, SIGNAL (scenePositionChanged ()), this, SLOT (anchorPosChanged ()));
 }
 
 Edge::~Edge ()
@@ -44,6 +39,16 @@ Edge::init ()
 
   pen.setWidth (5);
   pen.setColor (QColor (255, 152, 0));
+
+  if (source) {
+    source->setEdge (this);
+    connect (source, SIGNAL (scenePositionChanged ()), this, SLOT (anchorPosChanged ()));
+    connect (source, SIGNAL (outputReady ()), this, SIGNAL (inputReady ()));
+  }
+  if (destination) {
+    destination->setEdge (this);
+    connect (destination, SIGNAL (scenePositionChanged ()), this, SLOT (anchorPosChanged ()));
+  }
 }
 
 void
@@ -64,7 +69,9 @@ void
 Edge::setSource (OutputAnchor& src)
 {
   source = &src;
-  QObject::connect (source, SIGNAL (scenePositionChanged ()), this, SLOT (anchorPosChanged ()));
+  connect (source, SIGNAL (scenePositionChanged ()), this, SLOT (anchorPosChanged ()));
+  connect (source, SIGNAL (outputReady ()), this, SIGNAL (inputReady ()));
+  source->setEdge (this);
   prepareGeometryChange ();
 }
 
@@ -73,7 +80,8 @@ Edge::setDestination (InputAnchor& dst)
 {
   prepareGeometryChange ();
   destination = &dst;
-  QObject::connect (destination, SIGNAL (scenePositionChanged ()), this, SLOT (anchorPosChanged ()));
+  destination->setEdge (this);
+  connect (destination, SIGNAL (scenePositionChanged ()), this, SLOT (anchorPosChanged ()));
 }
 
 void

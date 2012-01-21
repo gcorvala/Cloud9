@@ -14,6 +14,14 @@ InputAnchor::~InputAnchor ()
 }
 
 void
+InputAnchor::setEdge (Edge* _edge)
+{
+  Anchor::setEdge (_edge);
+
+  connect (edge, SIGNAL (inputReady ()), this, SIGNAL (inputReady ()));
+}
+
+void
 InputAnchor::mousePressEvent (QGraphicsSceneMouseEvent* event)
 {
   Edge* edge;

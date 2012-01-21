@@ -44,6 +44,7 @@ Node::Node (const QString& _title)
 
   connect (&thread, SIGNAL (started ()), this, SLOT (setRunning ()));
   connect (&thread, SIGNAL (finished ()), this, SLOT (unsetRunning ()));
+  connect (a, SIGNAL (inputReady ()), this, SLOT (startProcess ()));
 }
 
 Node::~Node ()
@@ -100,7 +101,7 @@ Node::moveEvent (QGraphicsSceneMoveEvent* event)
 void
 Node::mouseDoubleClickEvent (QGraphicsSceneMouseEvent* event)
 {
-  thread.start ();
+  startProcess ();
 }
 
 void
@@ -129,6 +130,12 @@ Node::placeAnchors ()
 }
 
 void
+Node::startProcess ()
+{
+  thread.start ();
+}
+
+void
 Node::setRunning ()
 {
   background_color = QColor (255, 0, 0);
@@ -140,4 +147,5 @@ Node::unsetRunning ()
 {
   background_color = QColor (126, 138, 162);
   update ();
+  emit processFinished ();
 }

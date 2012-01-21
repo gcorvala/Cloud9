@@ -30,6 +30,7 @@ class Edge : public QGraphicsWidget {
     void anchorPosChanged ();
 
   signals:
+    void inputReady ();
 
   protected:
     QPointF source_point;
