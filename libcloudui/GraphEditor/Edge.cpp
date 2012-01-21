@@ -43,7 +43,7 @@ Edge::init ()
   setFlag (QGraphicsItem::ItemSendsScenePositionChanges);
 
   pen.setWidth (5);
-  pen.setColor (QColor (0, 47, 47));
+  pen.setColor (QColor (255, 152, 0));
 }
 
 void
@@ -71,29 +71,29 @@ Edge::setSource (OutputAnchor& src)
 void
 Edge::setDestination (InputAnchor& dst)
 {
+  prepareGeometryChange ();
   destination = &dst;
   QObject::connect (destination, SIGNAL (scenePositionChanged ()), this, SLOT (anchorPosChanged ()));
-  prepareGeometryChange ();
 }
 
 void
 Edge::setSourcePoint (const QPointF p)
 {
-  source_point = p;
   prepareGeometryChange ();
+  source_point = p;
 }
 
 void
 Edge::setDestinationPoint (const QPointF p)
 {
-  destination_point = p;
   prepareGeometryChange ();
+  destination_point = p;
 }
 
 void
 Edge::anchorPosChanged ()
 {
+  prepareGeometryChange ();
   source_point = source->scenePos ();
   destination_point = destination->scenePos ();
-  prepareGeometryChange ();
 }

@@ -5,9 +5,9 @@
 
 Anchor::Anchor (QGraphicsItem* parent)
   :QGraphicsWidget(parent)
-  ,background_color(230, 226, 175)
-  ,hover_color(0, 47, 47)
-  ,border_color(0, 47, 47)
+  ,background_color(255, 132, 0)
+  ,hover_color(255, 0, 0)
+  ,border_color(38, 50, 72)
   ,radius(8)
 {
   setFlag (QGraphicsItem::ItemSendsGeometryChanges);
@@ -67,13 +67,13 @@ Anchor::itemChange (GraphicsItemChange change, const QVariant& value)
 void
 Anchor::hoverEnterEvent (QGraphicsSceneHoverEvent* event)
 {
-  background_color = QColor (255, 0, 0);
+  background_color = hover_color;
   update ();
 }
 
 void
 Anchor::hoverLeaveEvent (QGraphicsSceneHoverEvent* event)
 {
-  background_color = QColor (209, 219, 189);
+  background_color = background_color;
   update ();
 }

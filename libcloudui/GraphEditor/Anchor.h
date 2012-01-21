@@ -1,6 +1,7 @@
 #ifndef __ANCHOR_H__
 #define __ANCHOR_H__
 
+//#include "Edge.h"
 #include <QGraphicsWidget>
 #include <QPainter>
 
@@ -32,6 +33,7 @@ class Anchor : public QGraphicsWidget {
     QColor background_color;
     QColor border_color;
     QColor hover_color;
+    //Edge* edge;
 };
 
 #endif

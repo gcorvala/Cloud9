@@ -4,7 +4,7 @@
 #include <QGraphicsSceneMouseEvent>
 
 Graph::Graph ()
-  :background_color(239, 236, 202)
+  :background_color(255, 255, 255)
   ,drawing_edge_from_input_anchor(false)
   ,drawing_edge_from_output_anchor(false)
 {
@@ -92,7 +92,7 @@ Graph::mousePressEvent (QGraphicsSceneMouseEvent* event)
 {
   bool before = isDrawingEdge ();
   QGraphicsScene::mousePressEvent (event);
-  if (before & isDrawingEdge ()) {
+  if (before && isDrawingEdge ()) {
     drawing_edge_from_input_anchor = drawing_edge_from_output_anchor = false;
     delete drawing_edge;
   }

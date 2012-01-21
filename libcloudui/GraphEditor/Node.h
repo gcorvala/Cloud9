@@ -3,6 +3,7 @@
 
 #include "InputAnchor.h"
 #include "OutputAnchor.h"
+#include "NullThread.h"
 
 #include <QGraphicsWidget>
 #include <QPainter>
@@ -28,12 +29,15 @@ class Node : public QGraphicsWidget {
     QList<OutputAnchor*>& getOutputAnchors ();
 
   public slots:
+    void setRunning ();
+    void unsetRunning ();
 
   signals:
     void posChanged ();
 
   protected:
     virtual void moveEvent (QGraphicsSceneMoveEvent* event);
+    virtual void mouseDoubleClickEvent (QGraphicsSceneMouseEvent* event);
     void placeAnchors ();
 
   private:
@@ -47,6 +51,8 @@ class Node : public QGraphicsWidget {
     QColor border_color;
     QList<InputAnchor*> input_anchors;
     QList<OutputAnchor*> output_anchors;
+    NullThread thread;
+    bool running;
 };
 
 #endif

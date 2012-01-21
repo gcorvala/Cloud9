@@ -1,14 +1,13 @@
 #include "Node.h"
 
 #include "Anchor.h"
-
 #include <QProgressBar>
 #include <iostream>
 
 Node::Node (const QString& _title)
   :title(_title, this)
-  ,background_color(230, 226, 175)
-  ,border_color(4, 99, 128)
+  ,background_color(126, 138, 162)
+  ,border_color(38, 50, 72)
   ,height(60)
   ,width(100)
   ,x_radius(15)
@@ -42,6 +41,9 @@ Node::Node (const QString& _title)
   placeAnchors ();
 
   setZValue (1);
+
+  connect (&thread, SIGNAL (started ()), this, SLOT (setRunning ()));
+  connect (&thread, SIGNAL (finished ()), this, SLOT (unsetRunning ()));
 }
 
 Node::~Node ()
@@ -96,6 +98,12 @@ Node::moveEvent (QGraphicsSceneMoveEvent* event)
 }
 
 void
+Node::mouseDoubleClickEvent (QGraphicsSceneMouseEvent* event)
+{
+  thread.start ();
+}
+
+void
 Node::placeAnchors ()
 {
   quint32 nb = input_anchors.size ();
@@ -118,4 +126,18 @@ Node::placeAnchors ()
     (*it)->setY (-height/2+pos);
     pos += h_step;
   }
+}
+
+void
+Node::setRunning ()
+{
+  background_color = QColor (255, 0, 0);
+  update ();
+}
+
+void
+Node::unsetRunning ()
+{
+  background_color = QColor (126, 138, 162);
+  update ();
 }
