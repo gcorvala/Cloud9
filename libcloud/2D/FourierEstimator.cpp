@@ -16,7 +16,9 @@ FourierEstimator::compute (const Matrix<double>& input, Matrix<std::complex<doub
   fftw_complex *out;
   fftw_plan p;
 
-  in = (double*) fftw_alloc_real (input.getRows ()*input.getCols ());
+  // FIXME : fftw3.3 on ubuntu ?
+  //in = (double*) fftw_alloc_real (input.getRows ()*input.getCols ());
+  in = (double*) fftw_malloc (sizeof (double)*input.getRows ()*input.getCols ());
 
   for (UInt32 i = 0; i < input.getRows (); ++i) {
     for (UInt32 j = 0; j < input.getCols (); ++j) {
