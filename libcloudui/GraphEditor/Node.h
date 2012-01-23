@@ -7,6 +7,7 @@
 
 #include <QGraphicsWidget>
 #include <QPainter>
+#include <QString>
 
 class Node : public QGraphicsWidget {
   Q_OBJECT
@@ -19,11 +20,8 @@ class Node : public QGraphicsWidget {
     QRectF boundingRect () const;
     QPainterPath shape () const;
 
-    void addInputAnchor (InputAnchor* input);
-    void addOutputAnchor (OutputAnchor* output);
-
-    QList<InputAnchor*>& getInputAnchors ();
-    QList<OutputAnchor*>& getOutputAnchors ();
+    void addInputAnchor (const QString& key, InputAnchor* input);
+    void addOutputAnchor (const QString& key, OutputAnchor* output);
 
     void startProcess ();
 
@@ -51,8 +49,8 @@ class Node : public QGraphicsWidget {
     QPen pen;
     QColor background_color;
     QColor border_color;
-    QList<InputAnchor*> input_anchors;
-    QList<OutputAnchor*> output_anchors;
+    QMap<QString, InputAnchor*> inputs;
+    QMap<QString, OutputAnchor*> outputs;
     NodeThread* thread;
     bool running;
 };

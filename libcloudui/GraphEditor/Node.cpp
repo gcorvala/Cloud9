@@ -27,19 +27,6 @@ Node::Node (const QString& _title)
   QRectF w = title.boundingRect ();
   title.setPos (-w.width ()/2, -height/2+10);
 
-/*  InputAnchor *a = new InputAnchor (this);
-  InputAnchor *b = new InputAnchor (this);
-  InputAnchor *c = new InputAnchor (this);
-  OutputAnchor *d = new OutputAnchor (this);
-  OutputAnchor *e = new OutputAnchor (this);
-
-  addInputAnchor (a);
-  addInputAnchor (b);
-  addInputAnchor (c);
-
-  addOutputAnchor (d);
-  addOutputAnchor (e);*/
-
   setZValue (1);
 
   setNodeThread (new NullThread ());
@@ -79,30 +66,18 @@ Node::shape () const
 }
 
 void
-Node::addInputAnchor (InputAnchor* input)
+Node::addInputAnchor (const QString& key, InputAnchor* input)
 {
-  input_anchors.append (input);
+  inputs[key] = input;
   connect (input, SIGNAL (inputReady ()), this, SLOT (tryToStartProcess ()));
   placeAnchors ();
 }
 
 void
-Node::addOutputAnchor (OutputAnchor* output)
+Node::addOutputAnchor (const QString& key, OutputAnchor* output)
 {
-  output_anchors.append (output);
+  outputs[key] = output;
   placeAnchors ();
-}
-
-QList<InputAnchor*>&
-Node::getInputAnchors ()
-{
-  return input_anchors;
-}
-
-QList<OutputAnchor*>&
-Node::getOutputAnchors ()
-{
-  return output_anchors;
 }
 
 void
@@ -132,24 +107,26 @@ Node::mouseDoubleClickEvent (QGraphicsSceneMouseEvent* event)
 void
 Node::placeAnchors ()
 {
-  quint32 nb = input_anchors.size ();
+  InputAnchor *input;
+  OutputAnchor *output;
+  quint32 nb = inputs.size ();
   qreal h = height-2*y_radius;
   qreal h_step = h/(nb+1);
   qreal pos = y_radius+h_step;
 
-  for (QList<InputAnchor*>::iterator it = input_anchors.begin (); it != input_anchors.end (); ++it) {
-    (*it)->setX (-width/2);
-    (*it)->setY (-height/2+pos);
+  foreach (input, inputs) {
+    input->setX (-width/2);
+    input->setY (-height/2+pos);
     pos += h_step;
   }
 
-  nb = output_anchors.size ();
+  nb = outputs.size ();
   h_step = h/(nb+1);
   pos = y_radius+h_step;
 
-  for (QList<OutputAnchor*>::iterator it = output_anchors.begin (); it != output_anchors.end (); ++it) {
-    (*it)->setX (width/2);
-    (*it)->setY (-height/2+pos);
+  foreach (output, outputs) {
+    output->setX (width/2);
+    output->setY (-height/2+pos);
     pos += h_step;
   }
 }
@@ -168,7 +145,8 @@ Node::tryToStartProcess ()
 {
   InputAnchor* input;
   bool ready = true;
-  foreach (input, input_anchors) {
+
+  foreach (input, inputs) {
     if (!input->isReady ()) {
       ready = false;
     }

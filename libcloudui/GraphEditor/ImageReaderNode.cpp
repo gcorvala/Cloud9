@@ -15,7 +15,7 @@ ImageReaderNode::ImageReaderNode ()
 
   OutputAnchor* out = new OutputAnchor (this);
   out->var.setValue (&image);
-  addOutputAnchor (out);
+  addOutputAnchor ("image", out);
 }
 
 ImageReaderNode::~ImageReaderNode ()
