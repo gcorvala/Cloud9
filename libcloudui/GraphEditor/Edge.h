@@ -22,6 +22,7 @@ class Edge : public QGraphicsWidget {
     QRectF boundingRect () const;
 
     void setSource (OutputAnchor& src);
+    OutputAnchor* getSource () const;
     void setDestination (InputAnchor& dst);
     void setSourcePoint (const QPointF p);
     void setDestinationPoint (const QPointF p);

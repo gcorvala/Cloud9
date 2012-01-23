@@ -6,6 +6,7 @@
 
 InputAnchor::InputAnchor (QGraphicsItem* parent)
   :Anchor(parent)
+  ,ready(false)
 {
 }
 
@@ -13,12 +14,27 @@ InputAnchor::~InputAnchor ()
 {
 }
 
+bool
+InputAnchor::isReady () const
+{
+  return ready;
+}
+
 void
 InputAnchor::setEdge (Edge* _edge)
 {
   Anchor::setEdge (_edge);
 
-  connect (edge, SIGNAL (inputReady ()), this, SIGNAL (inputReady ()));
+  connect (edge, SIGNAL (inputReady ()), this, SLOT (edgeIsReady ()));
+}
+
+void
+InputAnchor::edgeIsReady ()
+{
+  qDebug ("InputAnchor::edgeIsReady");
+  ready = true;
+  var = edge->getSource ()->var;
+  emit inputReady ();
 }
 
 void

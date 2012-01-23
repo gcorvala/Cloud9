@@ -6,7 +6,7 @@
 Anchor::Anchor (QGraphicsItem* parent)
   :QGraphicsWidget(parent)
   ,background_color(255, 132, 0)
-  ,hover_color(255, 0, 0)
+  ,hover_color(0, 255, 0)
   ,border_color(38, 50, 72)
   ,radius(8)
   ,edge(NULL)
@@ -87,6 +87,6 @@ Anchor::hoverEnterEvent (QGraphicsSceneHoverEvent* event)
 void
 Anchor::hoverLeaveEvent (QGraphicsSceneHoverEvent* event)
 {
-  background_color = background_color;
+  background_color = QColor (255, 132, 0);
   update ();
 }

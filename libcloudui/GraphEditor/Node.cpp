@@ -1,8 +1,10 @@
 #include "Node.h"
 
 #include "Anchor.h"
+#include "NullThread.h"
 #include <QProgressBar>
 #include <iostream>
+#include <libcloud/2D/Matrix.h>
 
 Node::Node (const QString& _title)
   :title(_title, this)
@@ -25,26 +27,22 @@ Node::Node (const QString& _title)
   QRectF w = title.boundingRect ();
   title.setPos (-w.width ()/2, -height/2+10);
 
-  InputAnchor *a = new InputAnchor (this);
+/*  InputAnchor *a = new InputAnchor (this);
   InputAnchor *b = new InputAnchor (this);
   InputAnchor *c = new InputAnchor (this);
   OutputAnchor *d = new OutputAnchor (this);
   OutputAnchor *e = new OutputAnchor (this);
 
-  input_anchors.append (a);
-  input_anchors.append (b);
-  input_anchors.append (c);
+  addInputAnchor (a);
+  addInputAnchor (b);
+  addInputAnchor (c);
 
-  output_anchors.append (d);
-  output_anchors.append (e);
-
-  placeAnchors ();
+  addOutputAnchor (d);
+  addOutputAnchor (e);*/
 
   setZValue (1);
 
-  connect (&thread, SIGNAL (started ()), this, SLOT (setRunning ()));
-  connect (&thread, SIGNAL (finished ()), this, SLOT (unsetRunning ()));
-  connect (a, SIGNAL (inputReady ()), this, SLOT (startProcess ()));
+  setNodeThread (new NullThread ());
 }
 
 Node::~Node ()
@@ -80,6 +78,21 @@ Node::shape () const
   return path;
 }
 
+void
+Node::addInputAnchor (InputAnchor* input)
+{
+  input_anchors.append (input);
+  connect (input, SIGNAL (inputReady ()), this, SLOT (tryToStartProcess ()));
+  placeAnchors ();
+}
+
+void
+Node::addOutputAnchor (OutputAnchor* output)
+{
+  output_anchors.append (output);
+  placeAnchors ();
+}
+
 QList<InputAnchor*>&
 Node::getInputAnchors ()
 {
@@ -93,6 +106,18 @@ Node::getOutputAnchors ()
 }
 
 void
+Node::startProcess ()
+{
+  thread->start ();
+}
+
+void
+Node::endProcess ()
+{
+  
+}
+
+void
 Node::moveEvent (QGraphicsSceneMoveEvent* event)
 {
   emit posChanged ();
@@ -101,7 +126,7 @@ Node::moveEvent (QGraphicsSceneMoveEvent* event)
 void
 Node::mouseDoubleClickEvent (QGraphicsSceneMouseEvent* event)
 {
-  startProcess ();
+  tryToStartProcess ();
 }
 
 void
@@ -130,9 +155,27 @@ Node::placeAnchors ()
 }
 
 void
-Node::startProcess ()
+Node::setNodeThread (NodeThread* ptr)
 {
-  thread.start ();
+  thread = ptr;
+  connect (thread, SIGNAL (started ()), this, SLOT (setRunning ()));
+  connect (thread, SIGNAL (finished ()), this, SLOT (unsetRunning ()));
+  connect (thread, SIGNAL (finished ()), this, SLOT (endProcess ()));
+}
+
+void
+Node::tryToStartProcess ()
+{
+  InputAnchor* input;
+  bool ready = true;
+  foreach (input, input_anchors) {
+    if (!input->isReady ()) {
+      ready = false;
+    }
+  }
+  if (ready) {
+    startProcess ();
+  }
 }
 
 void

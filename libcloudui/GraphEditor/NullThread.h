@@ -1,9 +1,9 @@
-#ifndef __ESTIMATOR_THREAD_H__
+#ifndef __NULL_THREAD_H__
 #define __NULL_THREAD_H__
 
-#include "EstimatorThread.h"
+#include "NodeThread.h"
 
-class NullThread : public EstimatorThread<UInt32, UInt32> {
+class NullThread : public NodeThread {
   public:
     NullThread (QObject* parent = 0);
     virtual ~NullThread ();

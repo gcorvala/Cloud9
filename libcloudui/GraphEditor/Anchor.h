@@ -37,6 +37,9 @@ class Anchor : public QGraphicsWidget {
     QColor border_color;
     QColor hover_color;
     Edge* edge;
+  // FIXME
+  public:
+    QVariant var;
 };
 
 #endif

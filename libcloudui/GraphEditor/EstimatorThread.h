@@ -11,13 +11,14 @@ class EstimatorThread : public QThread {
     virtual ~EstimatorThread ();
 
     void run ();
-    void setInput (InputType _input);
+
+    void setInput (InputType* _input);
     OutputType* getOutput () const;
 
   protected:
     Estimator<InputType, OutputType>* estimator;
-    InputType* input;
-    OutputType* output;
+    Matrix<InputType>* input;
+    Matrix<OutputType> output;
 };
 
 template <typename InputType, typename OutputType>
@@ -35,14 +36,14 @@ template <typename InputType, typename OutputType>
 void
 EstimatorThread<InputType, OutputType>::run ()
 {
-  
+  estimator->compute (*input, output);
 }
 
 template <typename InputType, typename OutputType>
 void
-EstimatorThread<InputType, OutputType>::setInput (InputType _input)
+EstimatorThread<InputType, OutputType>::setInput (InputType* _input)
 {
-  input = &_input;
+  input = _input;
 }
 
 template <typename InputType, typename OutputType>

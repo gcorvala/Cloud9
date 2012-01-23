@@ -3,7 +3,7 @@
 
 #include "InputAnchor.h"
 #include "OutputAnchor.h"
-#include "NullThread.h"
+#include "NodeThread.h"
 
 #include <QGraphicsWidget>
 #include <QPainter>
@@ -19,17 +19,17 @@ class Node : public QGraphicsWidget {
     QRectF boundingRect () const;
     QPainterPath shape () const;
 
-    void addInputAnchor (const InputAnchor& input);
-    void removeInputAnchor (const InputAnchor& input);
-
-    void addOutputAnchor (const OutputAnchor& output);
-    void removeOutputAnchor (const OutputAnchor& output);
+    void addInputAnchor (InputAnchor* input);
+    void addOutputAnchor (OutputAnchor* output);
 
     QList<InputAnchor*>& getInputAnchors ();
     QList<OutputAnchor*>& getOutputAnchors ();
 
-  public slots:
     void startProcess ();
+
+  public slots:
+    virtual void endProcess ();
+    void tryToStartProcess ();
     void setRunning ();
     void unsetRunning ();
 
@@ -41,8 +41,8 @@ class Node : public QGraphicsWidget {
     virtual void moveEvent (QGraphicsSceneMoveEvent* event);
     virtual void mouseDoubleClickEvent (QGraphicsSceneMouseEvent* event);
     void placeAnchors ();
+    void setNodeThread (NodeThread* ptr);
 
-  private:
     QGraphicsSimpleTextItem title;
     qreal height;
     qreal width;
@@ -53,7 +53,7 @@ class Node : public QGraphicsWidget {
     QColor border_color;
     QList<InputAnchor*> input_anchors;
     QList<OutputAnchor*> output_anchors;
-    NullThread thread;
+    NodeThread* thread;
     bool running;
 };
 

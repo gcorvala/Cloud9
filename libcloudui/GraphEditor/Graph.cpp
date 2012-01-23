@@ -68,11 +68,10 @@ Graph::getDrawingEdge () const
 }
 
 void
-Graph::addNode ()
+Graph::addNode (Node* node)
 {
-  Node* node_a = new Node ("Node");
-  node_a->setPos (0, 0);
-  addItem (node_a);
+  node->setPos (0, 0);
+  addItem (node);
 }
 
 void

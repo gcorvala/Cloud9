@@ -11,8 +11,10 @@ class InputAnchor : public Anchor {
     virtual ~InputAnchor ();
 
     void setEdge (Edge* _edge);
+    bool isReady () const;
 
   public slots:
+    void edgeIsReady ();
 
   signals:
     void inputReady ();
@@ -21,7 +23,7 @@ class InputAnchor : public Anchor {
     virtual void mousePressEvent (QGraphicsSceneMouseEvent* event);
 
   private:
-
+    bool ready;
 };
 
 #endif

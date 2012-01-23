@@ -2,6 +2,7 @@
 #define __GRAPH_H__
 
 #include "Edge.h"
+#include "Node.h"
 #include "InputAnchor.h"
 #include "OutputAnchor.h"
 #include <QGraphicsScene>
@@ -22,7 +23,7 @@ class Graph : public QGraphicsScene {
     Edge* getDrawingEdge () const;
 
   public slots:
-    void addNode ();
+    void addNode (Node* node = new Node ("Default"));
 
   signals:
 

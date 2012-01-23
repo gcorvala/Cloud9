@@ -2,6 +2,7 @@
 #define __OUTPUT_ANCHOR_H__
 
 #include "Anchor.h"
+#include <QVariant>
 
 class OutputAnchor : public Anchor {
   Q_OBJECT
@@ -19,7 +20,7 @@ class OutputAnchor : public Anchor {
     virtual void mousePressEvent (QGraphicsSceneMouseEvent* event);
 
   private:
-
+    QVariant value;
 };
 
 #endif

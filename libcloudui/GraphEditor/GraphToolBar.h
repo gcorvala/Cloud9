@@ -15,7 +15,9 @@ class GraphToolBar : public QToolBar {
     Graph* getGraph () const;
 
   public slots:
-
+    // FIXME
+    void addNode1 ();
+    void addNode2 ();
   signals:
 
   protected:

@@ -75,6 +75,12 @@ Edge::setSource (OutputAnchor& src)
   prepareGeometryChange ();
 }
 
+OutputAnchor*
+Edge::getSource () const
+{
+  return source;
+}
+
 void
 Edge::setDestination (InputAnchor& dst)
 {

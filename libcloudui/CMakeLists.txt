@@ -19,10 +19,15 @@ set (GRAPH_EDITOR_SRCS
 	GraphEditor/Graph.cpp
 	GraphEditor/GraphEditorWidget.cpp
 	GraphEditor/GraphToolBar.cpp
+	GraphEditor/ImageReaderNode.cpp
+	GraphEditor/ImageReaderThread.cpp
 	GraphEditor/InputAnchor.cpp
 	GraphEditor/Node.cpp
+	GraphEditor/NodeThread.cpp
 	GraphEditor/NullThread.cpp
 	GraphEditor/OutputAnchor.cpp
+	GraphEditor/SobelThread.cpp
+	GraphEditor/TestNode.cpp
 	)
 
 set (GRAPH_EDITOR_INCS
@@ -33,9 +38,14 @@ set (GRAPH_EDITOR_INCS
 	GraphEditor/GraphEditorWidget.h
 	GraphEditor/GraphToolBar.h
 	GraphEditor/InputAnchor.h
+	GraphEditor/ImageReaderNode.h
+	GraphEditor/ImageReaderThread.h
 	GraphEditor/Node.h
+	GraphEditor/NodeThread.h
 	GraphEditor/NullThread.h
 	GraphEditor/OutputAnchor.h
+	GraphEditor/SobelThread.h
+	GraphEditor/TestNode.h
 	)
 
 qt4_wrap_cpp (MOC_SOURCES ${MOC_HEADERS} ${GRAPH_EDITOR_INCS})
