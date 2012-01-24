@@ -1,9 +1,6 @@
 #include "Node.h"
 
 #include "Anchor.h"
-//#include "NullThread.h"
-#include <QProgressBar>
-#include <iostream>
 #include <libcloud/2D/Matrix.h>
 
 Node::Node (const QString& _title)

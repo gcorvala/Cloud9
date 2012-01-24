@@ -1,8 +1,5 @@
 #include "GaussianNode.h"
 
-Q_DECLARE_METATYPE (Image*);
-Q_DECLARE_METATYPE (Matrix<UInt8>*);
-
 GaussianNode::GaussianNode ()
   :Node("Gaussian")
   ,thread(this)
@@ -24,7 +21,7 @@ GaussianNode::~GaussianNode ()
 void
 GaussianNode::process ()
 {
-  Image* image = inputs["image"]->var.value<Image*> ();
+  Image* image = inputs["image"]->var->value<Image*> ();
 
   input = image->getYChannel ();
 

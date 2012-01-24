@@ -11,7 +11,7 @@ class ViewerNode : public Node {
 
     void process ();
   private:
-    Matrix<UInt8> *image;
+    Matrix<UInt8>* image;
 };
 
 #endif

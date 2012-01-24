@@ -31,9 +31,8 @@ InputAnchor::setEdge (Edge* _edge)
 void
 InputAnchor::edgeIsReady ()
 {
-  qDebug ("InputAnchor::edgeIsReady");
   ready = true;
-  var = edge->getSource ()->var;
+  var = &(edge->getSource ()->var);
   emit inputReady ();
 }
 

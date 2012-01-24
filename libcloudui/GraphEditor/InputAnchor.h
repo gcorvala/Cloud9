@@ -24,6 +24,8 @@ class InputAnchor : public Anchor {
 
   private:
     bool ready;
+  public:
+    QVariant* var;
 };
 
 #endif

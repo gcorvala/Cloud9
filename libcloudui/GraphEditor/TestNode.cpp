@@ -11,8 +11,6 @@ TestNode::~TestNode ()
 {
 }
 
-Q_DECLARE_METATYPE (Image*);
-
 void
 TestNode::process ()
 {
@@ -20,7 +18,7 @@ TestNode::process ()
 
   setRunning ();
   qDebug ("TestNode::process");
-  image = inputs["image"]->var.value<Image*> ();
+  image = inputs["image"]->var->value<Image*> ();
   qDebug ("TestNode::image %d:%d", image->getRows (), image->getCols ());
   endProcess ();
   unsetRunning ();

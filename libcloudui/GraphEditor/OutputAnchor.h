@@ -18,9 +18,8 @@ class OutputAnchor : public Anchor {
 
   protected:
     virtual void mousePressEvent (QGraphicsSceneMouseEvent* event);
-
-  private:
-    QVariant value;
+  public:
+    QVariant var;
 };
 
 #endif

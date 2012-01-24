@@ -1,7 +1,5 @@
 #include "ImageReaderNode.h"
 
-Q_DECLARE_METATYPE (Image*);
-
 ImageReaderNode::ImageReaderNode ()
   :Node("Image Reader")
   ,thread(this)

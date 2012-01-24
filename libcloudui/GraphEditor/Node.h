@@ -3,6 +3,7 @@
 
 #include "InputAnchor.h"
 #include "OutputAnchor.h"
+#include "MetaTypes.h"
 
 #include <QGraphicsWidget>
 #include <QThread>

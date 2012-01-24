@@ -20,10 +20,12 @@ set (GRAPH_EDITOR_SRCS
 	GraphEditor/Graph.cpp
 	GraphEditor/GraphEditorWidget.cpp
 	GraphEditor/GraphToolBar.cpp
+	GraphEditor/ImageNode.cpp
 	GraphEditor/ImageReaderNode.cpp
 	GraphEditor/InputAnchor.cpp
 	GraphEditor/Node.cpp
 	GraphEditor/OutputAnchor.cpp
+	GraphEditor/SobelNode.cpp
 	GraphEditor/TestNode.cpp
 	GraphEditor/ViewerNode.cpp
 	)
@@ -37,9 +39,11 @@ set (GRAPH_EDITOR_INCS
 	GraphEditor/GraphEditorWidget.h
 	GraphEditor/GraphToolBar.h
 	GraphEditor/InputAnchor.h
+	GraphEditor/ImageNode.h
 	GraphEditor/ImageReaderNode.h
 	GraphEditor/Node.h
 	GraphEditor/OutputAnchor.h
+	GraphEditor/SobelNode.h
 	GraphEditor/TestNode.h
 	GraphEditor/ViewerNode.h
 	)
