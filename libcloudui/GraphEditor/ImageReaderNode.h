@@ -2,7 +2,6 @@
 #define __IMAGE_READER_NODE_H__
 
 #include "Node.h"
-#include "NodeThread.h"
 #include <libcloud/2D/Image.h>
 
 class ImageReaderNode : public Node {

@@ -14,7 +14,6 @@ Node::Node (const QString& _title)
   ,width(100)
   ,x_radius(15)
   ,y_radius(10)
-//  ,thread(NULL)
 {
   setFlag (QGraphicsItem::ItemIsMovable);
   setFlag (QGraphicsItem::ItemSendsGeometryChanges);
@@ -29,8 +28,6 @@ Node::Node (const QString& _title)
   title.setPos (-w.width ()/2, -height/2+10);
 
   setZValue (1);
-
-//  setNodeThread (new NullThread ());
 }
 
 Node::~Node ()
@@ -142,15 +139,6 @@ Node::placeAnchors ()
   }
 }
 
-/*void
-Node::setNodeThread (NodeThread* ptr)
-{
-  thread = ptr;
-  connect (thread, SIGNAL (started ()), this, SLOT (setRunning ()));
-  connect (thread, SIGNAL (finished ()), this, SLOT (unsetRunning ()));
-  connect (thread, SIGNAL (finished ()), this, SLOT (endProcess ()));
-}*/
-
 void
 Node::setRunning ()
 {
@@ -164,4 +152,17 @@ Node::unsetRunning ()
   background_color = QColor (126, 138, 162);
   update ();
   emit processFinished ();
+}
+
+Node::NodeThread::NodeThread (Node* parent)
+  :QThread(parent)
+{
+  connect (this, SIGNAL (started ()), parent, SLOT (setRunning ()));
+  connect (this, SIGNAL (finished ()), parent, SLOT (unsetRunning ()));
+  connect (this, SIGNAL (finished ()), parent, SLOT (endProcess ()));
+  
+}
+
+Node::NodeThread::~NodeThread ()
+{
 }

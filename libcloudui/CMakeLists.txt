@@ -22,7 +22,6 @@ set (GRAPH_EDITOR_SRCS
 	GraphEditor/ImageReaderNode.cpp
 	GraphEditor/InputAnchor.cpp
 	GraphEditor/Node.cpp
-	GraphEditor/NodeThread.cpp
 	GraphEditor/OutputAnchor.cpp
 	GraphEditor/TestNode.cpp
 	)
@@ -37,7 +36,6 @@ set (GRAPH_EDITOR_INCS
 	GraphEditor/InputAnchor.h
 	GraphEditor/ImageReaderNode.h
 	GraphEditor/Node.h
-	GraphEditor/NodeThread.h
 	GraphEditor/OutputAnchor.h
 	GraphEditor/TestNode.h
 	)

@@ -3,15 +3,22 @@
 
 #include "InputAnchor.h"
 #include "OutputAnchor.h"
-//#include "NodeThread.h"
 
 #include <QGraphicsWidget>
+#include <QThread>
 #include <QPainter>
 #include <QString>
 
 class Node : public QGraphicsWidget {
   Q_OBJECT
+  protected:
+    class NodeThread : public QThread {
+      public:
+        NodeThread (Node* parent);
+        virtual ~NodeThread ();
 
+        void run () = 0;
+    };
   public:
     Node (const QString& title);
     virtual ~Node ();
@@ -40,7 +47,6 @@ class Node : public QGraphicsWidget {
     virtual void moveEvent (QGraphicsSceneMoveEvent* event);
     virtual void mouseDoubleClickEvent (QGraphicsSceneMouseEvent* event);
     void placeAnchors ();
-//    void setNodeThread (NodeThread* ptr);
 
     QGraphicsSimpleTextItem title;
     qreal height;
@@ -52,7 +58,6 @@ class Node : public QGraphicsWidget {
     QColor border_color;
     QMap<QString, InputAnchor*> inputs;
     QMap<QString, OutputAnchor*> outputs;
-//    NodeThread* thread;
     bool running;
 };
 
