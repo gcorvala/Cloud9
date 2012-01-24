@@ -16,6 +16,7 @@ set (MOC_HEADERS
 set (GRAPH_EDITOR_SRCS
 	GraphEditor/Anchor.cpp
 	GraphEditor/Edge.cpp
+	GraphEditor/GaussianNode.cpp
 	GraphEditor/Graph.cpp
 	GraphEditor/GraphEditorWidget.cpp
 	GraphEditor/GraphToolBar.cpp
@@ -24,12 +25,14 @@ set (GRAPH_EDITOR_SRCS
 	GraphEditor/Node.cpp
 	GraphEditor/OutputAnchor.cpp
 	GraphEditor/TestNode.cpp
+	GraphEditor/ViewerNode.cpp
 	)
 
 set (GRAPH_EDITOR_INCS
 	GraphEditor/Anchor.h
 	GraphEditor/Edge.h
 	GraphEditor/EstimatorThread.h
+	GraphEditor/GaussianNode.h
 	GraphEditor/Graph.h
 	GraphEditor/GraphEditorWidget.h
 	GraphEditor/GraphToolBar.h
@@ -38,6 +41,7 @@ set (GRAPH_EDITOR_INCS
 	GraphEditor/Node.h
 	GraphEditor/OutputAnchor.h
 	GraphEditor/TestNode.h
+	GraphEditor/ViewerNode.h
 	)
 
 qt4_wrap_cpp (MOC_SOURCES ${MOC_HEADERS} ${GRAPH_EDITOR_INCS})

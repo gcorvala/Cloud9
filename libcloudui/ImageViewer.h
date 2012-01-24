@@ -41,6 +41,7 @@
  #ifndef IMAGEVIEWER_H
  #define IMAGEVIEWER_H
 
+#include <libcloud/2D/Matrix.h>
  #include <QMainWindow>
  #include <QPrinter>
 
@@ -94,6 +95,8 @@
      QMenu *fileMenu;
      QMenu *viewMenu;
      QMenu *helpMenu;
+   public:
+     Matrix<UInt8> *test;
  };
 
  #endif

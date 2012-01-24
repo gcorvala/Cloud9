@@ -18,6 +18,8 @@ class GraphToolBar : public QToolBar {
     // FIXME
     void addNode1 ();
     void addNode2 ();
+    void addNode3 ();
+    void addNode4 ();
   signals:
 
   protected:

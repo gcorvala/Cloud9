@@ -34,11 +34,12 @@
 
  void ImageViewer::open()
  {
-     QString fileName = QFileDialog::getOpenFileName(this,
-                                     tr("Open File"), QDir::currentPath());
-     if (!fileName.isEmpty()) {
+     //QString fileName = QFileDialog::getOpenFileName(this,
+    //                                 tr("Open File"), QDir::currentPath());
+     //if (!fileName.isEmpty()) {
+   QString fileName = "abc";
          QImage image(fileName);
-         if (image.isNull()) {
+         /*if (image.isNull()) {
              QMessageBox::information(this, tr("Image Viewer"),
                                       tr("Cannot load %1.").arg(fileName));
              return;
@@ -67,10 +68,11 @@
          Matrix<double> dout1;
          Matrix<double> dout2;
          phase.compute (m, out1);
-         dout1 = out1;
+         dout1 = out1;*/
          //threshold.compute (dout1, dout2);
          Matrix<UInt8> out;
-         out = dout1;
+        qDebug("test %d", test->getCols ());
+         out = *test;
         image = QImage (out.getCols (), out.getRows (), QImage::Format_RGB32);
 
         /*OBJReader reader;
@@ -113,7 +115,7 @@
 
          if (!fitToWindowAct->isChecked())
              imageLabel->adjustSize();
-     }
+   //  }
  }
 
  void ImageViewer::print()

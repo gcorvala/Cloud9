@@ -28,7 +28,7 @@ ImageReaderNode::process ()
 ImageReaderNode::ImageReaderThread::ImageReaderThread (Node* parent)
   :NodeThread(parent)
 {
-  path = "building.jpg";
+  path = "test.jpg";
 }
 
 ImageReaderNode::ImageReaderThread::~ImageReaderThread ()
