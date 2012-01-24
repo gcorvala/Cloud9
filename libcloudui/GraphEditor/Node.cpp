@@ -1,7 +1,7 @@
 #include "Node.h"
 
 #include "Anchor.h"
-#include "NullThread.h"
+//#include "NullThread.h"
 #include <QProgressBar>
 #include <iostream>
 #include <libcloud/2D/Matrix.h>
@@ -14,6 +14,7 @@ Node::Node (const QString& _title)
   ,width(100)
   ,x_radius(15)
   ,y_radius(10)
+//  ,thread(NULL)
 {
   setFlag (QGraphicsItem::ItemIsMovable);
   setFlag (QGraphicsItem::ItemSendsGeometryChanges);
@@ -29,7 +30,7 @@ Node::Node (const QString& _title)
 
   setZValue (1);
 
-  setNodeThread (new NullThread ());
+//  setNodeThread (new NullThread ());
 }
 
 Node::~Node ()
@@ -66,15 +67,15 @@ Node::shape () const
 }
 
 void
-Node::addInputAnchor (const QString& key, InputAnchor* input)
+Node::addInputAnchor (InputAnchor* input, const QString& key)
 {
   inputs[key] = input;
-  connect (input, SIGNAL (inputReady ()), this, SLOT (tryToStartProcess ()));
+  connect (input, SIGNAL (inputReady ()), this, SLOT (startProcess ()));
   placeAnchors ();
 }
 
 void
-Node::addOutputAnchor (const QString& key, OutputAnchor* output)
+Node::addOutputAnchor (OutputAnchor* output, const QString& key)
 {
   outputs[key] = output;
   placeAnchors ();
@@ -83,7 +84,17 @@ Node::addOutputAnchor (const QString& key, OutputAnchor* output)
 void
 Node::startProcess ()
 {
-  thread->start ();
+  InputAnchor* input;
+  bool ready = true;
+
+  foreach (input, inputs) {
+    if (!input->isReady ()) {
+      ready = false;
+    }
+  }
+  if (ready) {
+    process ();
+  }
 }
 
 void
@@ -101,7 +112,7 @@ Node::moveEvent (QGraphicsSceneMoveEvent* event)
 void
 Node::mouseDoubleClickEvent (QGraphicsSceneMouseEvent* event)
 {
-  tryToStartProcess ();
+  startProcess ();
 }
 
 void
@@ -131,30 +142,14 @@ Node::placeAnchors ()
   }
 }
 
-void
+/*void
 Node::setNodeThread (NodeThread* ptr)
 {
   thread = ptr;
   connect (thread, SIGNAL (started ()), this, SLOT (setRunning ()));
   connect (thread, SIGNAL (finished ()), this, SLOT (unsetRunning ()));
   connect (thread, SIGNAL (finished ()), this, SLOT (endProcess ()));
-}
-
-void
-Node::tryToStartProcess ()
-{
-  InputAnchor* input;
-  bool ready = true;
-
-  foreach (input, inputs) {
-    if (!input->isReady ()) {
-      ready = false;
-    }
-  }
-  if (ready) {
-    startProcess ();
-  }
-}
+}*/
 
 void
 Node::setRunning ()

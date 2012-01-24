@@ -2,10 +2,11 @@
 #define __NODE_THREAD_H__
 
 #include <QThread>
+#include "Node.h"
 
 class NodeThread : public QThread {
   public:
-    NodeThread (QObject* parent = 0);
+    NodeThread (Node* parent);
     virtual ~NodeThread ();
 
     void run () = 0;

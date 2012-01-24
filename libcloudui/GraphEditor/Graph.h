@@ -23,7 +23,7 @@ class Graph : public QGraphicsScene {
     Edge* getDrawingEdge () const;
 
   public slots:
-    void addNode (Node* node = new Node ("Default"));
+    void addNode (Node* node);
 
   signals:
 

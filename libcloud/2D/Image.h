@@ -6,16 +6,17 @@
 
 class Image {
   public:
-    Image (unsigned int rows, unsigned int cols);
+    Image (UInt32 rows = 0, UInt32 cols = 0);
     virtual ~Image ();
 
-    Color getPixel (unsigned int row, unsigned int col) const;
-    void setPixel (unsigned int row, unsigned int col, const Color c);
+    // FIXME : replace by operator()
+    Color getPixel (UInt32 row, UInt32 col) const;
+    void setPixel (UInt32 row, UInt32 col, const Color c);
 
     unsigned int getRows () const;
     unsigned int getCols () const;
 
-    void resize (unsigned int _rows, unsigned int _cols);
+    void resize (UInt32 _rows, UInt32 _cols);
 
     Matrix<UInt8>& getRedChannel ();
     Matrix<UInt8>& getGreenChannel ();

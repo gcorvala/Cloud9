@@ -3,20 +3,25 @@
 TestNode::TestNode ()
   :Node("Test")
 {
-  addOutputAnchor ("image", new OutputAnchor (this));
-  addInputAnchor ("image", new InputAnchor (this));
+  addOutputAnchor (new OutputAnchor (this), "image");
+  addInputAnchor (new InputAnchor (this), "image");
 }
 
 TestNode::~TestNode ()
 {
 }
 
-Q_DECLARE_METATYPE (Matrix<UInt8> *);
+Q_DECLARE_METATYPE (Image*);
 
 void
-TestNode::endProcess ()
+TestNode::process ()
 {
-  Matrix<UInt8>* image = inputs["image"]->var.value<Matrix<UInt8>*> ();
+  Image* image;
 
+  setRunning ();
+  qDebug ("TestNode::process");
+  image = inputs["image"]->var.value<Image*> ();
   qDebug ("TestNode::image %d:%d", image->getRows (), image->getCols ());
+  endProcess ();
+  unsetRunning ();
 }

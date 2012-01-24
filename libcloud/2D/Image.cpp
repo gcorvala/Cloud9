@@ -1,6 +1,6 @@
 #include "Image.h"
 
-Image::Image (unsigned int rows, unsigned int cols)
+Image::Image (UInt32 rows, UInt32 cols)
   :red_channel(rows, cols)
   ,green_channel(rows, cols)
   ,blue_channel(rows, cols)
@@ -12,13 +12,13 @@ Image::~Image ()
 }
 
 Color
-Image::getPixel (unsigned int row, unsigned int col) const
+Image::getPixel (UInt32 row, UInt32 col) const
 {
   return Color (red_channel(row,col), green_channel(row,col), blue_channel(row,col));
 }
 
 void
-Image::setPixel (unsigned int row, unsigned int col, const Color c)
+Image::setPixel (UInt32 row, UInt32 col, const Color c)
 {
   red_channel(row,col) = c.r;
   green_channel(row,col) = c.g;
@@ -38,7 +38,7 @@ Image::getCols () const
 }
 
 void
-Image::resize (unsigned int _rows, unsigned int _cols)
+Image::resize (UInt32 _rows, UInt32 _cols)
 {
   rows = _rows;
   cols = _cols;
@@ -70,8 +70,8 @@ Image::getYChannel () const
 {
   Matrix<UInt8> result (rows, cols);
 
-  for (unsigned int i = 0; i < rows; ++i) {
-    for (unsigned int j = 0; j < cols; ++j) {
+  for (UInt32 i = 0; i < rows; ++i) {
+    for (UInt32 j = 0; j < cols; ++j) {
       result (i, j) = getPixel (i, j).getY ();
     }
   }
