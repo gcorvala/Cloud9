@@ -4,15 +4,8 @@ SobelNode::SobelNode ()
   :Node("Sobel")
   ,thread(this)
 {
-  OutputAnchor* out;
-
-  thread.setOutputPtr (&output);
-
-  out = new OutputAnchor (this);
-  out->var.setValue (&output);
-  addOutputAnchor (out, "image");
-
-  addInputAnchor (new InputAnchor (this), "image");
+  addOutputAnchor ("image");
+  addInputAnchor ("image");
 }
 
 SobelNode::~SobelNode ()
@@ -20,13 +13,23 @@ SobelNode::~SobelNode ()
 }
 
 void
+SobelNode::preProcess ()
+{
+  Node::preProcess ();
+  thread.input = inputs["image"]->getValue<Matrix<UInt8>*> ();
+}
+
+void
 SobelNode::process ()
 {
-  input = inputs["image"]->var->value<Matrix<UInt8>*> ();
-
-  thread.setInputPtr (input);
-
   thread.start ();
+}
+
+void
+SobelNode::postProcess ()
+{
+  outputs["image"]->setValue (&(thread.output));
+  Node::postProcess ();
 }
 
 SobelNode::SobelThread::SobelThread (Node* parent)
@@ -43,16 +46,5 @@ SobelNode::SobelThread::run ()
 {
   Matrix<double> tmp;
   Sobel.compute (*input, tmp);
-  *output = tmp;
-}
-
-void
-SobelNode::SobelThread::setInputPtr (const Matrix<UInt8>* ptr)
-{
-  input = ptr;
-}
-void
-SobelNode::SobelThread::setOutputPtr (Matrix<UInt8>* ptr)
-{
-  output = ptr;
+  output = tmp;
 }

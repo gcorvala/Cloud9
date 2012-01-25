@@ -11,6 +11,9 @@ class OutputAnchor : public Anchor {
     OutputAnchor (QGraphicsItem* parent);
     virtual ~OutputAnchor ();
 
+    template<typename T>
+    void setValue (T v);
+
   public slots:
 
   signals:
@@ -18,8 +21,16 @@ class OutputAnchor : public Anchor {
 
   protected:
     virtual void mousePressEvent (QGraphicsSceneMouseEvent* event);
+  // FIXME
   public:
     QVariant var;
 };
+
+template<typename T>
+void
+OutputAnchor::setValue (T v)
+{
+  var.setValue (v);
+}
 
 #endif

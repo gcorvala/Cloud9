@@ -3,11 +3,11 @@
 ImageNode::ImageNode ()
   :Node("Image")
 {
-  addInputAnchor (new InputAnchor (this), "image");
+  addInputAnchor ("image");
 
-  addOutputAnchor (new OutputAnchor (this), "red-channel");
-  addOutputAnchor (new OutputAnchor (this), "green-channel");
-  addOutputAnchor (new OutputAnchor (this), "blue-channel");
+  addOutputAnchor ("red-channel");
+  addOutputAnchor ("green-channel");
+  addOutputAnchor ("blue-channel");
 }
 
 ImageNode::~ImageNode ()
@@ -19,11 +19,9 @@ ImageNode::process ()
 {
   Image* image;
 
-  setRunning ();
   image = inputs["image"]->var->value<Image*> ();
-  outputs["red-channel"]->var.setValue (&(image->getRedChannel ()));
-  outputs["green-channel"]->var.setValue (&(image->getGreenChannel ()));
-  outputs["blue-channel"]->var.setValue (&(image->getBlueChannel ()));
-  endProcess ();
-  unsetRunning ();
+  outputs["red-channel"]->setValue (&(image->getRedChannel ()));
+  outputs["green-channel"]->setValue (&(image->getGreenChannel ()));
+  outputs["blue-channel"]->setValue (&(image->getBlueChannel ()));
+  postProcess ();
 }

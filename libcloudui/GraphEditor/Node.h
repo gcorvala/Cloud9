@@ -28,14 +28,15 @@ class Node : public QGraphicsWidget {
     QRectF boundingRect () const;
     QPainterPath shape () const;
 
-    void addInputAnchor (InputAnchor* input, const QString& key);
-    void addOutputAnchor (OutputAnchor* output, const QString& key);
+    void addInputAnchor (const QString& key);
+    void addOutputAnchor (const QString& key);
 
+    virtual void preProcess ();
     virtual void process () = 0;
 
   public slots:
     void startProcess ();
-    virtual void endProcess ();
+    virtual void postProcess ();
 
     void setRunning ();
     void unsetRunning ();

@@ -14,25 +14,21 @@ class SobelNode : public Node {
 
       void run ();
 
-      void setInputPtr (const Matrix<UInt8>* ptr);
-      void setOutputPtr (Matrix<UInt8>* ptr);
-
-    private:
       SobelEstimator Sobel;
-      const Matrix<UInt8>* input;
-      Matrix<UInt8>* output;
+      Matrix<UInt8>* input;
+      Matrix<UInt8> output;
   };
 
   public:
     SobelNode ();
     virtual ~SobelNode ();
 
+    void preProcess ();
     void process ();
+    void postProcess ();
 
   protected:
     SobelThread thread;
-    Matrix<UInt8> output;
-    Matrix<UInt8>* input;
 };
 
 #endif

@@ -61,18 +61,24 @@ Node::shape () const
 }
 
 void
-Node::addInputAnchor (InputAnchor* input, const QString& key)
+Node::addInputAnchor (const QString& key)
 {
-  inputs[key] = input;
-  connect (input, SIGNAL (inputReady ()), this, SLOT (startProcess ()));
+  inputs[key] = new InputAnchor (this);
+  connect (inputs[key], SIGNAL (inputReady ()), this, SLOT (startProcess ()));
   placeAnchors ();
 }
 
 void
-Node::addOutputAnchor (OutputAnchor* output, const QString& key)
+Node::addOutputAnchor (const QString& key)
 {
-  outputs[key] = output;
+  outputs[key] = new OutputAnchor (this);
   placeAnchors ();
+}
+
+void
+Node::preProcess ()
+{
+  setRunning ();
 }
 
 void
@@ -87,14 +93,16 @@ Node::startProcess ()
     }
   }
   if (ready) {
+    preProcess ();
     process ();
   }
 }
 
 void
-Node::endProcess ()
+Node::postProcess ()
 {
-  
+  unsetRunning ();
+  emit processFinished ();
 }
 
 void
@@ -148,16 +156,12 @@ Node::unsetRunning ()
 {
   background_color = QColor (126, 138, 162);
   update ();
-  emit processFinished ();
 }
 
 Node::NodeThread::NodeThread (Node* parent)
   :QThread(parent)
 {
-  connect (this, SIGNAL (started ()), parent, SLOT (setRunning ()));
-  connect (this, SIGNAL (finished ()), parent, SLOT (unsetRunning ()));
-  connect (this, SIGNAL (finished ()), parent, SLOT (endProcess ()));
-  
+  connect (this, SIGNAL (finished ()), parent, SLOT (postProcess ()));
 }
 
 Node::NodeThread::~NodeThread ()

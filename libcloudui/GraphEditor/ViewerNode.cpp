@@ -6,7 +6,7 @@
 ViewerNode::ViewerNode ()
   :Node("Viewer")
 {
-  addInputAnchor (new InputAnchor (this), "image");
+  addInputAnchor ("image");
 }
 
 ViewerNode::~ViewerNode ()
@@ -21,6 +21,6 @@ ViewerNode::process ()
   ImageViewer* w = new ImageViewer ();
   w->test = image;
   w->show ();
-  endProcess ();
+  postProcess ();
   unsetRunning ();
 }

@@ -13,6 +13,9 @@ class InputAnchor : public Anchor {
     void setEdge (Edge* _edge);
     bool isReady () const;
 
+    template<typename T>
+    T getValue ();
+
   public slots:
     void edgeIsReady ();
 
@@ -24,8 +27,16 @@ class InputAnchor : public Anchor {
 
   private:
     bool ready;
+  // FIXME
   public:
     QVariant* var;
 };
+
+template<typename T>
+T
+InputAnchor::getValue ()
+{
+  return var->value<T> ();
+}
 
 #endif

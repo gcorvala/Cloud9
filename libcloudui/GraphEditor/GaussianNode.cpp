@@ -4,14 +4,14 @@ GaussianNode::GaussianNode ()
   :Node("Gaussian")
   ,thread(this)
 {
-  OutputAnchor* out;
+/*  OutputAnchor* out;
   thread.setOutputPtr (&output);
 
   out = new OutputAnchor (this);
-  out->var.setValue (&output);
+  out->setValue<Matrix<UInt8>*> (&output);
   addOutputAnchor (out, "image");
 
-  addInputAnchor (new InputAnchor (this), "image");
+  addInputAnchor (new InputAnchor (this), "image");*/
 }
 
 GaussianNode::~GaussianNode ()
@@ -21,13 +21,13 @@ GaussianNode::~GaussianNode ()
 void
 GaussianNode::process ()
 {
-  Image* image = inputs["image"]->var->value<Image*> ();
+/*  Image* image = inputs["image"]->var->value<Image*> ();
 
   input = image->getYChannel ();
 
   thread.setInputPtr (&input);
 
-  thread.start ();
+  thread.start ();*/
 }
 
 GaussianNode::GaussianThread::GaussianThread (Node* parent)

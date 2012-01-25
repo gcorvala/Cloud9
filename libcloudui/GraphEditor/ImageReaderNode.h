@@ -12,22 +12,20 @@ class ImageReaderNode : public Node {
 
       void run ();
 
-      void setOutputPtr (Image* ptr);
-
-    private:
       QString path;
-      Image* output;
+      Image output;
   };
 
   public:
     ImageReaderNode ();
     virtual ~ImageReaderNode ();
 
+    void preProcess ();
     void process ();
+    void postProcess ();
 
   protected:
     ImageReaderThread thread;
-    Image image;
 };
 
 #endif
