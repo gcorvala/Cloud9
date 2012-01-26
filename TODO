@@ -19,6 +19,11 @@
 	- Filters
 		[ ] Generic filter class
 		[ ] Basic filters (scale, translate, rotate)
+		- Subsampling methods
+			[ ] Random
+			[ ] Voxelgrid center
+			[ ] Voxelgrid centroid
+			[ ] Clusters 
 	- IO
 		[ ] PCD read
 		[ ] PCD write

@@ -48,12 +48,21 @@ set (GRAPH_EDITOR_INCS
 	GraphEditor/ViewerNode.h
 	)
 
-qt4_wrap_cpp (MOC_SOURCES ${MOC_HEADERS} ${GRAPH_EDITOR_INCS})
+set (VIEWERS_SRCS
+	Viewers/ImageViewerWidget.cpp
+	)
+
+set (VIEWERS_INCS
+	Viewers/ImageViewerWidget.h
+	)
+
+qt4_wrap_cpp (MOC_SOURCES ${MOC_HEADERS} ${GRAPH_EDITOR_INCS} ${VIEWERS_INCS})
 
 aux_source_directory (. libcloudui_sources)
 aux_source_directory (GraphEditor libcloudui_sources)
+aux_source_directory (Viewers libcloudui_sources)
 
-add_library (cloudui SHARED ${libcloudui_sources} ${MOC_SOURCES} ${GRAPH_EDITOR_SRCS} ${GRAPH_EDITOR_INCS})
+add_library (cloudui SHARED ${libcloudui_sources} ${MOC_SOURCES} ${GRAPH_EDITOR_SRCS} ${GRAPH_EDITOR_INCS} ${VIEWERS_SRCS} ${VIEWERS_INCS})
 
 target_link_libraries (cloudui cloud)
 target_link_libraries (cloudui ${QT_LIBRARIES})

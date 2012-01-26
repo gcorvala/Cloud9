@@ -2,6 +2,7 @@
 
 #include <QMainWindow>
 #include "../ImageViewer.h"
+#include "../Viewers/ImageViewerWidget.h"
 
 ViewerNode::ViewerNode ()
   :Node("Viewer")
@@ -17,10 +18,10 @@ void
 ViewerNode::process ()
 {
   setRunning ();
-  image = inputs["image"]->var->value<Matrix<UInt8>*> ();
-  ImageViewer* w = new ImageViewer ();
-  w->test = image;
-  w->show ();
+  ImageViewerWidget* viewer = new ImageViewerWidget ();
+  Image* image = inputs["image"]->var->value<Image*> ();
+  viewer->setImage (image);
+  viewer->show ();
   postProcess ();
   unsetRunning ();
 }

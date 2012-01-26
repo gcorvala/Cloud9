@@ -10,8 +10,6 @@ class ViewerNode : public Node {
     virtual ~ViewerNode ();
 
     void process ();
-  private:
-    Matrix<UInt8>* image;
 };
 
 #endif
