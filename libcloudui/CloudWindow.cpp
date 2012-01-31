@@ -12,7 +12,7 @@
 #include <algorithm>
 
 CloudWindow::CloudWindow (QWidget* parent, Qt::WindowFlags flags)
-  : QMainWindow(parent, flags), gl(this)
+  : QMainWindow(parent, flags)
 {
   QMenu *file;
   QToolBar *tools;
@@ -29,7 +29,7 @@ CloudWindow::CloudWindow (QWidget* parent, Qt::WindowFlags flags)
   connect (quit, SIGNAL (triggered ()), this, SLOT (quit ()));
   connect (load, SIGNAL (triggered ()), this, SLOT (load ()));
 
-  setCentralWidget (&gl);
+  setCentralWidget (&viewer);
 }
 
 void
@@ -43,37 +43,7 @@ CloudWindow::load ()
   QString file = QFileDialog::getOpenFileName (this, "Load a OBJ file", "~", "Point clouds (*.obj)");
   reader.read (file.toStdString (), cloud, false);
 
-  // FIXME
-  TranslateFilter *filter;
-  Point min_x, max_x;
-  Point min_y, max_y;
-  Point min_z, max_z;
-  min_x = *min_element (cloud.begin (), cloud.end (), comparePointsByXAxis);
-  max_x = *max_element (cloud.begin (), cloud.end (), comparePointsByXAxis);
-  min_y = *min_element (cloud.begin (), cloud.end (), comparePointsByYAxis);
-  max_y = *max_element (cloud.begin (), cloud.end (), comparePointsByYAxis);
-  min_z = *min_element (cloud.begin (), cloud.end (), comparePointsByZAxis);
-  max_z = *max_element (cloud.begin (), cloud.end (), comparePointsByZAxis);
-
-  /*filter = new TranslateFilter (-((max_x + min_x) / 2).x,
-                                -((max_y + min_y) / 2).y,
-                                -((max_z + min_z) / 2).z);*/
-  CropBoxFilter crop (Point (0, 0, 0), Point (400, 4000, 300));
-  //crop.run (cloud);
-/*
-                              min_x: 32.79
-                              min_y: 13.96
-                              min_z: 105.28
-                              max_x: 3536.63
-                              max_y: 2711.1
-                              max_z: 1150.9
-                              */
-  //filter->run (cloud);
-  ScaleFilter scale (8);
-  scale.run (cloud);
-  // END FIXME
-
-  gl.showCloud (cloud);
+  viewer.addPointCloud ("new", &cloud);
 
   std::cout << file.toStdString () << " " << cloud.size () << std::endl;
 }

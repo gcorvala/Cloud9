@@ -3,7 +3,7 @@
 
 #include <QMainWindow>
 #include <QWidget>
-#include "GLWidget.h"
+#include "Viewers/PointCloudViewerWidget.h"
 #include <libcloud/Common/PointCloud.h>
 
 class CloudWindow : public QMainWindow {
@@ -15,7 +15,7 @@ class CloudWindow : public QMainWindow {
     void load ();
     void quit ();
   private:
-    GLWidget gl;
+    PointCloudViewerWidget viewer;
     PointCloud cloud;
 };
 

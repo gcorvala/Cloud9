@@ -1,7 +1,6 @@
 #include "ViewerNode.h"
 
 #include <QMainWindow>
-#include "../ImageViewer.h"
 #include "../Viewers/ImageViewerWidget.h"
 
 ViewerNode::ViewerNode ()

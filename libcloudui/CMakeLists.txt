@@ -9,9 +9,15 @@ include_directories (${QT_QTOPENGL_INCLUDE_DIR})
 
 set (MOC_HEADERS
 	CloudWindow.h
-	GLWidget.h
-	ImageViewer.h
 )
+
+set (CLOUD_APPLICATION_SRCS
+	CloudApplication/CloudApplication.cpp
+	)
+
+set (CLOUD_APPLICATION_INCS
+	CloudApplication/CloudApplication.h
+	)
 
 set (GRAPH_EDITOR_SRCS
 	GraphEditor/Anchor.cpp
@@ -50,19 +56,22 @@ set (GRAPH_EDITOR_INCS
 
 set (VIEWERS_SRCS
 	Viewers/ImageViewerWidget.cpp
+	Viewers/PointCloudViewerWidget.cpp
 	)
 
 set (VIEWERS_INCS
 	Viewers/ImageViewerWidget.h
+	Viewers/PointCloudViewerWidget.h
 	)
 
-qt4_wrap_cpp (MOC_SOURCES ${MOC_HEADERS} ${GRAPH_EDITOR_INCS} ${VIEWERS_INCS})
+qt4_wrap_cpp (MOC_SOURCES ${MOC_HEADERS} ${CLOUD_APPLICATIONS_INCS} ${GRAPH_EDITOR_INCS} ${VIEWERS_INCS})
 
 aux_source_directory (. libcloudui_sources)
+aux_source_directory (CloudApplication libcloudui_sources)
 aux_source_directory (GraphEditor libcloudui_sources)
 aux_source_directory (Viewers libcloudui_sources)
 
-add_library (cloudui SHARED ${libcloudui_sources} ${MOC_SOURCES} ${GRAPH_EDITOR_SRCS} ${GRAPH_EDITOR_INCS} ${VIEWERS_SRCS} ${VIEWERS_INCS})
+add_library (cloudui SHARED ${libcloudui_sources} ${MOC_SOURCES} ${CLOUD_APPLICATIONS_SRCS} ${GRAPH_EDITOR_SRCS} ${GRAPH_EDITOR_INCS} ${VIEWERS_SRCS} ${VIEWERS_INCS})
 
 target_link_libraries (cloudui cloud)
 target_link_libraries (cloudui ${QT_LIBRARIES})

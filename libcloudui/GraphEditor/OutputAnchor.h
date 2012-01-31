@@ -30,6 +30,7 @@ template<typename T>
 void
 OutputAnchor::setValue (T v)
 {
+  qDebug ("OutputAnchor::typename %s", var.typeName ());
   var.setValue (v);
 }
 

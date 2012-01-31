@@ -1,3 +1,4 @@
+add_subdirectory (cloud)
 add_subdirectory (converter)
 add_subdirectory (hough)
 add_subdirectory (nodal)

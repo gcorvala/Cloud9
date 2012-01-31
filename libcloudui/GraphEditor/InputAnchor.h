@@ -36,6 +36,7 @@ template<typename T>
 T
 InputAnchor::getValue ()
 {
+  qDebug ("InputAnchor::typename %s", var->typeName ());
   return var->value<T> ();
 }
 
