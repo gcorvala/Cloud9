@@ -31,6 +31,7 @@ GraphEditorWidget::GraphEditorWidget (QWidget *parent)
 
   h_layout->addWidget (graph_view);
   properties = new QWidget ();
+  properties->setFixedWidth (400);
   h_layout->addWidget (properties);
 
   layout->addLayout (h_layout);
@@ -45,9 +46,9 @@ GraphEditorWidget::~GraphEditorWidget ()
 void
 GraphEditorWidget::displayProperty (Node* node)
 {
-  qDebug ("GraphEditorWidget::displayProperty");
-  h_layout->removeWidget (properties);
   properties->hide ();
+  h_layout->removeWidget (properties);
   properties = node->getPropertyWidget ();
   h_layout->addWidget (properties);
+  properties->show ();
 }

@@ -11,10 +11,6 @@ class Property : public QWidget {
     Property (const QString& title);
     ~Property ();
 
-  public slots:
-
-  signals:
-
   protected:
     QBoxLayout* layout;
 };

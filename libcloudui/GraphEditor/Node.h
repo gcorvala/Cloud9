@@ -33,7 +33,7 @@ class Node : public QGraphicsWidget {
     void addOutputAnchor (const QString& key);
 
     void addProperty (const QString& name, Property* prop);
-    QWidget* getPropertyWidget () const;
+    QWidget* getPropertyWidget ();
 
     virtual void preProcess ();
     virtual void process () = 0;
@@ -68,6 +68,7 @@ class Node : public QGraphicsWidget {
     QMap<QString, InputAnchor*> inputs;
     QMap<QString, OutputAnchor*> outputs;
     QMap<QString, Property*> properties;
+    QWidget* property_widget;
     bool running;
 };
 

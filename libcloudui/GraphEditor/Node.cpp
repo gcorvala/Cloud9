@@ -12,6 +12,7 @@ Node::Node (const QString& _title)
   ,width(100)
   ,x_radius(15)
   ,y_radius(10)
+  ,property_widget(NULL)
 {
   setFlag (QGraphicsItem::ItemIsMovable);
   setFlag (QGraphicsItem::ItemSendsGeometryChanges);
@@ -85,21 +86,25 @@ Node::addProperty (const QString& name, Property* prop)
 }
 
 QWidget*
-Node::getPropertyWidget () const
+Node::getPropertyWidget ()
 {
-  Property* property;
-  QGroupBox* box = new QGroupBox ("Properties");
-  QVBoxLayout* layout = new QVBoxLayout (box);
+  if (!property_widget) {
+    Property* property;
+    QGroupBox* box = new QGroupBox ("Properties");
+    box->setFixedWidth (400);
+    QVBoxLayout* layout = new QVBoxLayout (box);
 
-  layout->setContentsMargins (0,0,0,0);
+    layout->setContentsMargins (0,0,0,0);
 
-  foreach (property, properties) {
-    layout->addWidget (property);
+    foreach (property, properties) {
+      layout->addWidget (property);
+    }
+
+    layout->addStretch ();
+    property_widget = box;
   }
 
-  layout->addStretch ();
-
-  return box;
+  return property_widget;
 }
 
 void
