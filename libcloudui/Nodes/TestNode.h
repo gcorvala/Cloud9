@@ -1,7 +1,7 @@
 #ifndef __TEST_NODE_H__
 #define __TEST_NODE_H__
 
-#include "Node.h"
+#include "../GraphEditor/Node.h"
 #include <libcloud/2D/Image.h>
 
 class TestNode : public Node {

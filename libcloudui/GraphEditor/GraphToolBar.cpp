@@ -1,12 +1,12 @@
 #include "GraphToolBar.h"
 
 #include <QIcon>
-#include "GaussianNode.h"
-#include "ImageNode.h"
-#include "ImageReaderNode.h"
-#include "SobelNode.h"
-#include "TestNode.h"
-#include "ViewerNode.h"
+#include "../Nodes/GaussianNode.h"
+#include "../Nodes/ImageNode.h"
+#include "../Nodes/ImageReaderNode.h"
+#include "../Nodes/SobelNode.h"
+#include "../Nodes/TestNode.h"
+#include "../Nodes/ViewerNode.h"
 
 GraphToolBar::GraphToolBar ()
   :QToolBar("Graph Tool Bar")

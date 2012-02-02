@@ -72,6 +72,8 @@ Graph::addNode (Node* node)
 {
   node->setPos (0, 0);
   addItem (node);
+
+  connect (node, SIGNAL (nodeSelected (Node*)), this, SIGNAL (nodeSelectedEvent (Node*)));
 }
 
 void

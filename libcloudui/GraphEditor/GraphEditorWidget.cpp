@@ -5,6 +5,8 @@
 
 #include <QGraphicsView>
 #include <QVBoxLayout>
+#include <QHBoxLayout>
+#include <QLabel>
 
 GraphEditorWidget::GraphEditorWidget (QWidget *parent)
   :QWidget(parent)
@@ -14,6 +16,8 @@ GraphEditorWidget::GraphEditorWidget (QWidget *parent)
   GraphToolBar* tool_bar = new GraphToolBar ();
 
   layout->addWidget (tool_bar);
+
+  h_layout = new QHBoxLayout ();
 
   QGraphicsView* graph_view = new QGraphicsView ();
 
@@ -25,9 +29,25 @@ GraphEditorWidget::GraphEditorWidget (QWidget *parent)
 
   graph_view->setScene (graph);
 
-  layout->addWidget (graph_view);
+  h_layout->addWidget (graph_view);
+  properties = new QWidget ();
+  h_layout->addWidget (properties);
+
+  layout->addLayout (h_layout);
+
+  connect (graph, SIGNAL (nodeSelectedEvent (Node*)), this, SLOT (displayProperty (Node*)));
 }
 
 GraphEditorWidget::~GraphEditorWidget ()
 {
+}
+
+void
+GraphEditorWidget::displayProperty (Node* node)
+{
+  qDebug ("GraphEditorWidget::displayProperty");
+  h_layout->removeWidget (properties);
+  properties->hide ();
+  properties = node->getPropertyWidget ();
+  h_layout->addWidget (properties);
 }

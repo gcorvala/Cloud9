@@ -4,6 +4,7 @@
 #include "InputAnchor.h"
 #include "OutputAnchor.h"
 #include "MetaTypes.h"
+#include "Property.h"
 
 #include <QGraphicsWidget>
 #include <QThread>
@@ -31,6 +32,9 @@ class Node : public QGraphicsWidget {
     void addInputAnchor (const QString& key);
     void addOutputAnchor (const QString& key);
 
+    void addProperty (const QString& name, Property* prop);
+    QWidget* getPropertyWidget () const;
+
     virtual void preProcess ();
     virtual void process () = 0;
 
@@ -44,10 +48,13 @@ class Node : public QGraphicsWidget {
   signals:
     void posChanged ();
     void processFinished ();
+    void nodeSelected (Node* node);
 
   protected:
     virtual void moveEvent (QGraphicsSceneMoveEvent* event);
     virtual void mouseDoubleClickEvent (QGraphicsSceneMouseEvent* event);
+    void focusInEvent (QFocusEvent* event);
+    void focusOutEvent (QFocusEvent* event);
     void placeAnchors ();
 
     QGraphicsSimpleTextItem title;
@@ -60,6 +67,7 @@ class Node : public QGraphicsWidget {
     QColor border_color;
     QMap<QString, InputAnchor*> inputs;
     QMap<QString, OutputAnchor*> outputs;
+    QMap<QString, Property*> properties;
     bool running;
 };
 

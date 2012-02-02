@@ -2,6 +2,7 @@
 
 #include "Anchor.h"
 #include <libcloud/2D/Matrix.h>
+#include <QGroupBox>
 
 Node::Node (const QString& _title)
   :title(_title, this)
@@ -15,6 +16,8 @@ Node::Node (const QString& _title)
   setFlag (QGraphicsItem::ItemIsMovable);
   setFlag (QGraphicsItem::ItemSendsGeometryChanges);
   setFlag (QGraphicsItem::ItemSendsScenePositionChanges);
+  setFlag (QGraphicsItem::ItemIsSelectable);
+  setFocusPolicy (Qt::ClickFocus);
 
   setAcceptHoverEvents (true);
 
@@ -76,6 +79,30 @@ Node::addOutputAnchor (const QString& key)
 }
 
 void
+Node::addProperty (const QString& name, Property* prop)
+{
+  properties[name] = prop;
+}
+
+QWidget*
+Node::getPropertyWidget () const
+{
+  Property* property;
+  QGroupBox* box = new QGroupBox ("Properties");
+  QVBoxLayout* layout = new QVBoxLayout (box);
+
+  layout->setContentsMargins (0,0,0,0);
+
+  foreach (property, properties) {
+    layout->addWidget (property);
+  }
+
+  layout->addStretch ();
+
+  return box;
+}
+
+void
 Node::preProcess ()
 {
   setRunning ();
@@ -115,6 +142,23 @@ void
 Node::mouseDoubleClickEvent (QGraphicsSceneMouseEvent* event)
 {
   startProcess ();
+}
+
+void
+Node::focusInEvent (QFocusEvent* event)
+{
+  emit nodeSelected (this);
+  background_color = QColor (0, 255, 0);
+  setSelected (true);
+  update ();
+}
+
+void
+Node::focusOutEvent (QFocusEvent* event)
+{
+  background_color = QColor (126, 138, 162);
+  setSelected (false);
+  update ();
 }
 
 void

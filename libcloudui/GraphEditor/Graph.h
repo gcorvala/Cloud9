@@ -26,6 +26,7 @@ class Graph : public QGraphicsScene {
     void addNode (Node* node);
 
   signals:
+    void nodeSelectedEvent (Node* node);
 
   protected:
     virtual void mouseMoveEvent (QGraphicsSceneMouseEvent* mouseEvent);

@@ -22,36 +22,49 @@ set (CLOUD_APPLICATION_INCS
 set (GRAPH_EDITOR_SRCS
 	GraphEditor/Anchor.cpp
 	GraphEditor/Edge.cpp
-	GraphEditor/GaussianNode.cpp
 	GraphEditor/Graph.cpp
 	GraphEditor/GraphEditorWidget.cpp
 	GraphEditor/GraphToolBar.cpp
-	GraphEditor/ImageNode.cpp
-	GraphEditor/ImageReaderNode.cpp
 	GraphEditor/InputAnchor.cpp
+	GraphEditor/IntegerProperty.cpp
 	GraphEditor/Node.cpp
 	GraphEditor/OutputAnchor.cpp
-	GraphEditor/SobelNode.cpp
-	GraphEditor/TestNode.cpp
-	GraphEditor/ViewerNode.cpp
+	GraphEditor/PathProperty.cpp
+	GraphEditor/Property.cpp
+	GraphEditor/RealProperty.cpp
 	)
 
 set (GRAPH_EDITOR_INCS
 	GraphEditor/Anchor.h
 	GraphEditor/Edge.h
-	GraphEditor/EstimatorThread.h
-	GraphEditor/GaussianNode.h
 	GraphEditor/Graph.h
 	GraphEditor/GraphEditorWidget.h
 	GraphEditor/GraphToolBar.h
 	GraphEditor/InputAnchor.h
-	GraphEditor/ImageNode.h
-	GraphEditor/ImageReaderNode.h
+	GraphEditor/IntegerProperty.h
 	GraphEditor/Node.h
 	GraphEditor/OutputAnchor.h
-	GraphEditor/SobelNode.h
-	GraphEditor/TestNode.h
-	GraphEditor/ViewerNode.h
+	GraphEditor/PathProperty.h
+	GraphEditor/Property.h
+	GraphEditor/RealProperty.h
+	)
+
+set (NODES_SRCS
+	Nodes/ImageNode.cpp
+	Nodes/GaussianNode.cpp
+	Nodes/ImageReaderNode.cpp
+	Nodes/SobelNode.cpp
+	Nodes/TestNode.cpp
+	Nodes/ViewerNode.cpp
+	)
+
+set (NODES_INCS
+	Nodes/ImageNode.h
+	Nodes/GaussianNode.h
+	Nodes/ImageReaderNode.h
+	Nodes/SobelNode.h
+	Nodes/TestNode.h
+	Nodes/ViewerNode.h
 	)
 
 set (VIEWERS_SRCS
@@ -64,14 +77,15 @@ set (VIEWERS_INCS
 	Viewers/PointCloudViewerWidget.h
 	)
 
-qt4_wrap_cpp (MOC_SOURCES ${MOC_HEADERS} ${CLOUD_APPLICATIONS_INCS} ${GRAPH_EDITOR_INCS} ${VIEWERS_INCS})
+qt4_wrap_cpp (MOC_SOURCES ${MOC_HEADERS} ${CLOUD_APPLICATIONS_INCS} ${GRAPH_EDITOR_INCS} ${NODES_INCS} ${VIEWERS_INCS})
 
 aux_source_directory (. libcloudui_sources)
 aux_source_directory (CloudApplication libcloudui_sources)
 aux_source_directory (GraphEditor libcloudui_sources)
+aux_source_directory (Nodes libcloudui_sources)
 aux_source_directory (Viewers libcloudui_sources)
 
-add_library (cloudui SHARED ${libcloudui_sources} ${MOC_SOURCES} ${CLOUD_APPLICATIONS_SRCS} ${GRAPH_EDITOR_SRCS} ${GRAPH_EDITOR_INCS} ${VIEWERS_SRCS} ${VIEWERS_INCS})
+add_library (cloudui SHARED ${libcloudui_sources} ${MOC_SOURCES} ${CLOUD_APPLICATIONS_SRCS} ${GRAPH_EDITOR_SRCS} ${GRAPH_EDITOR_INCS} ${NODES_SRCS} ${NODES_INCS} ${VIEWERS_SRCS} ${VIEWERS_INCS})
 
 target_link_libraries (cloudui cloud)
 target_link_libraries (cloudui ${QT_LIBRARIES})

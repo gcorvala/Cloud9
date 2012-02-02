@@ -1,10 +1,12 @@
 #include "ImageReaderNode.h"
+#include "../GraphEditor/PathProperty.h"
 
 ImageReaderNode::ImageReaderNode ()
   :Node("Image Reader")
   ,thread(this)
 {
   addOutputAnchor ("image");
+  addProperty ("input-file", new PathProperty ("Input file"));
 }
 
 ImageReaderNode::~ImageReaderNode ()
@@ -15,6 +17,7 @@ void
 ImageReaderNode::preProcess ()
 {
   Node::preProcess ();
+  thread.path = ((PathProperty*) properties["input-file"])->getValue ();
 }
 
 void
@@ -33,7 +36,6 @@ ImageReaderNode::postProcess ()
 ImageReaderNode::ImageReaderThread::ImageReaderThread (Node* parent)
   :NodeThread(parent)
 {
-  path = "test.jpg";
 }
 
 ImageReaderNode::ImageReaderThread::~ImageReaderThread ()
