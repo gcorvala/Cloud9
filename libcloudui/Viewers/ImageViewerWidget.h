@@ -4,6 +4,7 @@
 #include <QScrollArea>
 #include <QLabel>
 #include <libcloud/2D/Image.h>
+#include <libcloud/2D/Matrix.h>
 
 class ImageViewerWidget : public QScrollArea {
   Q_OBJECT
@@ -13,6 +14,7 @@ class ImageViewerWidget : public QScrollArea {
     virtual ~ImageViewerWidget ();
 
     void setImage (const Image* _image);
+    void setMatrix (const Matrix<UInt8>* matrix);
 
   public slots:
 

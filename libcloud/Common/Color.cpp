@@ -7,6 +7,13 @@ Color::Color ()
 {
 }
 
+Color::Color (UInt8 gray)
+  :r(gray)
+  ,g(gray)
+  ,b(gray)
+{
+}
+
 Color::Color (UInt8 _r, UInt8 _g, UInt8 _b)
   :r(_r)
   ,g(_g)

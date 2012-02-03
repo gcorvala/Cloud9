@@ -18,8 +18,15 @@ ViewerNode::process ()
 {
   setRunning ();
   ImageViewerWidget* viewer = new ImageViewerWidget ();
-  Image* image = inputs["image"]->var->value<Image*> ();
-  viewer->setImage (image);
+  // FIXME
+  if (QString (inputs["image"]->var->typeName ()) == QString ("Image*")) {
+    Image* image = inputs["image"]->var->value<Image*> ();
+    viewer->setImage (image);
+  }
+  else {
+    Matrix<UInt8>* image = inputs["image"]->var->value<Matrix<UInt8>*> ();
+    viewer->setMatrix (image);
+  }
   viewer->show ();
   postProcess ();
   unsetRunning ();

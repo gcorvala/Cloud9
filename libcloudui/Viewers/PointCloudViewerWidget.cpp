@@ -3,7 +3,7 @@
 #include <QMouseEvent>
 
 PointCloudViewerWidget::PointCloudViewerWidget (QWidget *parent)
-  :QGLWidget(QGLFormat (QGL::SampleBuffers), parent)
+  :QGLWidget(QGLFormat (), parent)
   ,x_rotation(0)
   ,y_rotation(0)
   ,z_rotation(0)
@@ -35,7 +35,8 @@ PointCloudViewerWidget::addPointCloud (const QString& key, PointCloud* cloud)
   clouds[key] = cloud;
 
   for (it = cloud->begin (); it != cloud->end (); ++it) {
-    vertex_array.push_back (QVector3D ((*it).x/2300, (*it).y/2300, (*it).z/2300));
+    //qDebug ("x:%f x/2300:%f", (*it).x, (*it).x/2300);
+    vertex_array.push_back (QVector3D ((*it).x, (*it).y, (*it).z));
   }
 
   updateGL ();
@@ -83,22 +84,18 @@ void
 PointCloudViewerWidget::initializeGL ()
 {
   qglClearColor (Qt::black);
-
-  glEnable (GL_DEPTH_TEST);
-  glEnable (GL_CULL_FACE);
-  glShadeModel (GL_SMOOTH);
 }
 
 void
 PointCloudViewerWidget::paintGL ()
 {
-  glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+  glClear (GL_COLOR_BUFFER_BIT);
   glLoadIdentity ();
-  glTranslatef (0.0, 0.0, -10.0);
+//  glTranslatef (0.0, -0.1, -10.0);
 
-  glRotatef (x_rotation / 16.0, 1.0, 0.0, 0.0);
-  glRotatef (y_rotation / 16.0, 0.0, 1.0, 0.0);
-  glRotatef (z_rotation / 16.0, 0.0, 0.0, 1.0);
+  glRotatef (x_rotation, 1.0, 0.0, 0.0);
+  glRotatef (y_rotation, 0.0, 1.0, 0.0);
+  glRotatef (z_rotation, 0.0, 0.0, 1.0);
 
   qglColor (Qt::green);
 
@@ -111,11 +108,13 @@ PointCloudViewerWidget::paintGL ()
 void
 PointCloudViewerWidget::resizeGL (int width, int height)
 {
+  qDebug ("resizeGL");
   glViewport (0, 0, width, height);
 
   glMatrixMode(GL_PROJECTION);
   glLoadIdentity();
-  glOrtho(-0.5, +0.5, -0.5, +0.5, 4.0, 15.0);
+  //glOrtho(-0.5, +0.5, -0.5, +0.5, 4.0, 15.0);
+  glOrtho(-500.5, +500.5, -500.5, +500.5, 4.0, 2500.0);
   glMatrixMode(GL_MODELVIEW);
 }
 
@@ -132,11 +131,11 @@ PointCloudViewerWidget::mouseMoveEvent (QMouseEvent *event)
   int dy = event->y() - last_pos.y();
 
   if (event->buttons() & Qt::LeftButton) {
-    setXRotation (x_rotation + 8 * dy);
-    setYRotation (y_rotation + 8 * dx);
+    setXRotation (x_rotation + dy);
+    setYRotation (y_rotation + dx);
   } else if (event->buttons() & Qt::RightButton) {
-    setXRotation (x_rotation + 8 * dy);
-    setZRotation (z_rotation + 8 * dx);
+    setXRotation (x_rotation + dy);
+    setZRotation (z_rotation + dx);
   }
   last_pos = event->pos();
 }

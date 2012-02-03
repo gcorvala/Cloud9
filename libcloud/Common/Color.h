@@ -6,6 +6,7 @@
 class Color {
   public:
     Color ();
+    Color (UInt8 gray);
     Color (UInt8 _r, UInt8 _g, UInt8 _b);
     virtual ~Color ();
 
