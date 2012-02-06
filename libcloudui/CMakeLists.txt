@@ -52,6 +52,7 @@ set (GRAPH_EDITOR_INCS
 set (NODES_SRCS
 	Nodes/CannyNode.cpp
 	Nodes/GaussianNode.cpp
+	Nodes/HoughNode.cpp
 	Nodes/ImageNode.cpp
 	Nodes/ImageReaderNode.cpp
 	Nodes/PhaseCongruencyNode.cpp
@@ -65,6 +66,7 @@ set (NODES_SRCS
 set (NODES_INCS
 	Nodes/CannyNode.h
 	Nodes/GaussianNode.h
+	Nodes/HoughNode.h
 	Nodes/ImageNode.h
 	Nodes/ImageReaderNode.h
 	Nodes/PhaseCongruencyNode.h

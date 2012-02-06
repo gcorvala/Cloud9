@@ -3,6 +3,7 @@
 #include <QIcon>
 #include "../Nodes/CannyNode.h"
 #include "../Nodes/GaussianNode.h"
+#include "../Nodes/HoughNode.h"
 #include "../Nodes/ImageNode.h"
 #include "../Nodes/ImageReaderNode.h"
 #include "../Nodes/PhaseCongruencyNode.h"
@@ -37,6 +38,7 @@ GraphToolBar::setGraph (Graph* _graph)
   action = addAction (icon, "Threshold", this, SLOT (addNode8 ()));
   action = addAction (icon, "Canny", this, SLOT (addNode9 ()));
   action = addAction (icon, "Point Cloud Reader", this, SLOT (addNode10 ()));
+  action = addAction (icon, "Hough", this, SLOT (addNode11 ()));
 }
 
 Graph*
@@ -103,4 +105,10 @@ void
 GraphToolBar::addNode10 ()
 {
   graph->addNode (new PointCloudReaderNode ());
+}
+
+void
+GraphToolBar::addNode11 ()
+{
+  graph->addNode (new HoughNode ());
 }

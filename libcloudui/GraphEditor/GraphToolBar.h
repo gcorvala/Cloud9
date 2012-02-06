@@ -27,6 +27,7 @@ class GraphToolBar : public QToolBar {
     void addNode8 ();
     void addNode9 ();
     void addNode10 ();
+    void addNode11 ();
 
   protected:
 
