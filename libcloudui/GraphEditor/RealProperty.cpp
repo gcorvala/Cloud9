@@ -7,7 +7,6 @@ RealProperty::RealProperty (const QString& title, qreal min, qreal max, qreal de
   spin_box->setRange (min, max);
   spin_box->setValue (default_value);
   layout->addWidget (spin_box);
-  layout->addStretch ();
 }
 
 RealProperty::~RealProperty ()

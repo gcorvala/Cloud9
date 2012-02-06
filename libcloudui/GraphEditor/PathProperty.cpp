@@ -11,7 +11,6 @@ PathProperty::PathProperty (const QString& title)
   hbox->addWidget (path);
   button = new QPushButton ("...");
   hbox->addWidget (button);
-  layout->addStretch ();
 
   connect (button, SIGNAL (clicked ()), this, SLOT (search ()));
 }
