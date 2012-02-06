@@ -2,6 +2,7 @@
 #define __GRAPH_TOOL_BAR_H__
 
 #include <QToolBar>
+#include "Node.h"
 #include "Graph.h"
 
 class GraphToolBar : public QToolBar {
@@ -22,6 +23,10 @@ class GraphToolBar : public QToolBar {
     void addNode4 ();
     void addNode5 ();
     void addNode6 ();
+    void addNode7 ();
+    void addNode8 ();
+    void addNode9 ();
+    void addNode10 ();
 
   protected:
 

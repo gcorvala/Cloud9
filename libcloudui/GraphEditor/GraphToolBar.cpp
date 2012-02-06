@@ -1,11 +1,15 @@
 #include "GraphToolBar.h"
 
 #include <QIcon>
+#include "../Nodes/CannyNode.h"
 #include "../Nodes/GaussianNode.h"
 #include "../Nodes/ImageNode.h"
 #include "../Nodes/ImageReaderNode.h"
+#include "../Nodes/PhaseCongruencyNode.h"
+#include "../Nodes/PointCloudReaderNode.h"
 #include "../Nodes/SobelNode.h"
 #include "../Nodes/TestNode.h"
+#include "../Nodes/ThresholdNode.h"
 #include "../Nodes/ViewerNode.h"
 
 GraphToolBar::GraphToolBar ()
@@ -29,6 +33,10 @@ GraphToolBar::setGraph (Graph* _graph)
   action = addAction (icon, "Viewer", this, SLOT (addNode4 ()));
   action = addAction (icon, "Sobel", this, SLOT (addNode5 ()));
   action = addAction (icon, "Image", this, SLOT (addNode6 ()));
+  action = addAction (icon, "Phase", this, SLOT (addNode7 ()));
+  action = addAction (icon, "Threshold", this, SLOT (addNode8 ()));
+  action = addAction (icon, "Canny", this, SLOT (addNode9 ()));
+  action = addAction (icon, "Point Cloud Reader", this, SLOT (addNode10 ()));
 }
 
 Graph*
@@ -71,4 +79,28 @@ void
 GraphToolBar::addNode6 ()
 {
   graph->addNode (new ImageNode ());
+}
+
+void
+GraphToolBar::addNode7 ()
+{
+  graph->addNode (new PhaseCongruencyNode ());
+}
+
+void
+GraphToolBar::addNode8 ()
+{
+  graph->addNode (new ThresholdNode ());
+}
+
+void
+GraphToolBar::addNode9 ()
+{
+  graph->addNode (new CannyNode ());
+}
+
+void
+GraphToolBar::addNode10 ()
+{
+  graph->addNode (new PointCloudReaderNode ());
 }

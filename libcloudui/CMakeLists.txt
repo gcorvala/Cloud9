@@ -50,20 +50,28 @@ set (GRAPH_EDITOR_INCS
 	)
 
 set (NODES_SRCS
-	Nodes/ImageNode.cpp
+	Nodes/CannyNode.cpp
 	Nodes/GaussianNode.cpp
+	Nodes/ImageNode.cpp
 	Nodes/ImageReaderNode.cpp
+	Nodes/PhaseCongruencyNode.cpp
+	Nodes/PointCloudReaderNode.cpp
 	Nodes/SobelNode.cpp
 	Nodes/TestNode.cpp
+	Nodes/ThresholdNode.cpp
 	Nodes/ViewerNode.cpp
 	)
 
 set (NODES_INCS
-	Nodes/ImageNode.h
+	Nodes/CannyNode.h
 	Nodes/GaussianNode.h
+	Nodes/ImageNode.h
 	Nodes/ImageReaderNode.h
+	Nodes/PhaseCongruencyNode.h
+	Nodes/PointCloudReaderNode.h
 	Nodes/SobelNode.h
 	Nodes/TestNode.h
+	Nodes/ThresholdNode.h
 	Nodes/ViewerNode.h
 	)
 

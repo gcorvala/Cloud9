@@ -65,3 +65,9 @@ PhaseCongruencyEstimator::compute (const Matrix<UInt8>& input, Matrix<UInt8>& ou
 
   output = s;
 }
+
+void
+PhaseCongruencyEstimator::setAperture (UInt8 aperture)
+{
+  window_aperture = aperture;
+}
