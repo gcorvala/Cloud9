@@ -9,7 +9,12 @@ class PathProperty : public Property {
   Q_OBJECT
 
   public:
-    PathProperty (const QString& title);
+    enum Type {
+      OpenFile,
+      SaveFile
+    };
+
+    PathProperty (const QString& title, Type type = OpenFile);
     ~PathProperty ();
 
     QString getValue () const;
@@ -20,6 +25,7 @@ class PathProperty : public Property {
   private:
     QLineEdit* path;
     QPushButton* button;
+    Type type;
 };
 
 #endif

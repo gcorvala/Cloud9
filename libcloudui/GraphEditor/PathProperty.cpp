@@ -2,8 +2,9 @@
 
 #include <QFileDialog>
 
-PathProperty::PathProperty (const QString& title)
+PathProperty::PathProperty (const QString& title, Type type)
   :Property(title)
+  ,type(type)
 {
   QHBoxLayout* hbox = new QHBoxLayout ();
   layout->addLayout (hbox);
@@ -28,5 +29,14 @@ PathProperty::getValue () const
 void
 PathProperty::search ()
 {
-  path->setText (QFileDialog::getOpenFileName (this, "Open File", QDir::currentPath ()));
+  QString file_name;
+  switch (type) {
+    case OpenFile:
+      file_name = QFileDialog::getOpenFileName (this, "Open File", QDir::currentPath ());
+      break;
+    case SaveFile:
+      file_name = QFileDialog::getSaveFileName (this, "Open File", QDir::currentPath ());
+      break;
+  }
+  path->setText (file_name);
 }

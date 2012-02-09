@@ -1,6 +1,8 @@
 #include <QApplication>
 
 #include <libcloudui/Viewers/ImageViewerWidget.h>
+#include <libcloud/2D/CannyEstimator.h>
+#include <libcloud/2D/HoughEstimator.h>
 
 int
 main (int argc, char** argv)
@@ -17,8 +19,22 @@ main (int argc, char** argv)
     }
   }
 
+  Matrix<UInt8> red = im.getRedChannel ();
+  Matrix<UInt8> edge, param;
+
+  CannyEstimator canny;
+
+  canny.compute (red, edge);
+
+  HoughEstimator hough;
+
+  hough.setNTheta (800);
+  hough.setNRho (800);
+
+  hough.compute (edge, param);
+
   ImageViewerWidget viewer;
-  viewer.setImage (&im);
+  viewer.setMatrix (&param);
   viewer.show ();
   return app.exec();
 }

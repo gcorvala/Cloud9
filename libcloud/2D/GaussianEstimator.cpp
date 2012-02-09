@@ -1,5 +1,7 @@
 #include "GaussianEstimator.h"
 
+#include <iostream>
+
 GaussianEstimator::GaussianEstimator ()
   :aperture(3)
   ,sigma(1.4)

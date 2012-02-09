@@ -6,6 +6,7 @@
 #include "../Nodes/HoughNode.h"
 #include "../Nodes/ImageNode.h"
 #include "../Nodes/ImageReaderNode.h"
+#include "../Nodes/ImageWriterNode.h"
 #include "../Nodes/PhaseCongruencyNode.h"
 #include "../Nodes/PointCloudReaderNode.h"
 #include "../Nodes/SobelNode.h"
@@ -39,6 +40,7 @@ GraphToolBar::setGraph (Graph* _graph)
   action = addAction (icon, "Canny", this, SLOT (addNode9 ()));
   action = addAction (icon, "Point Cloud Reader", this, SLOT (addNode10 ()));
   action = addAction (icon, "Hough", this, SLOT (addNode11 ()));
+  action = addAction (icon, "Image Writer", this, SLOT (addNode12 ()));
 }
 
 Graph*
@@ -111,4 +113,10 @@ void
 GraphToolBar::addNode11 ()
 {
   graph->addNode (new HoughNode ());
+}
+
+void
+GraphToolBar::addNode12 ()
+{
+  graph->addNode (new ImageWriterNode ());
 }
