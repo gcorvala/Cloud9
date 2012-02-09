@@ -3,19 +3,29 @@
 - libcloud
 	- 2D
 		[ ] Rewrite convolution method
-		[ ] Test Fourier transform
+		[.] Test Fourier transform
+		[.] Hough transform
+		[.] Mean-shift
+		[.] Canny edges
+		[.] Gaussian filter
+		[.] Line class
+		[.] Phase congruency edges
+		[.] Sobel edges (+scharr)
 	- Common
-		[ ] Vector class or Point class ?
-		[ ] Point class
-		[ ] Color attribute
+		[.] Vector class or Point class ?
+		[.] Point class
+		[.] Color attribute
 		[ ] Normal attribute
-		[ ] Cloud class
+		[.] Cloud class
 		[ ] Refactor methods in Utils.h
 	- Features
 		[ ] Density estimators
 		[ ] Normal estimators
 		[ ] Kernels
-		[ ] Mean shift
+		[ ] Mean-shift (extends 2D)
+		[ ] Hough transform (extends 2D)
+		[ ] RANSAC
+		[ ] MDPE
 	- Filters
 		[ ] Generic filter class
 		[ ] Basic filters (scale, translate, rotate)
@@ -25,27 +35,27 @@
 			[ ] Voxelgrid centroid
 			[ ] Clusters 
 	- IO
-		[ ] PCD read
-		[ ] PCD write
-		[ ] XYZ read
-		[ ] XYZ write
-		[ ] OBJ read
-		[ ] OBJ write
+		[.] PCD read
+		[.] PCD write
+		[.] XYZ read
+		[.] XYZ write
+		[.] OBJ read
+		[.] OBJ write
 	- Kdtree
 	- Octree
-		[ ] iterator
-		[ ] leafs (vectors, means)
+		[.] iterator
+		[.] leafs (vectors, means)
 	- Search
-		[ ] linear search
+		[.] linear search
 		[ ] kdtree search
-		[ ] flann integration
+		[.] flann integration
 	- Reconstruction
 		[ ] Cocone
 		[ ] Tight-Cocone
 		[ ] Poisson
-		[ ] RANSAC
+		[ ] Marching Cubes
 	- Meshes
 		[ ] Vertex, Face and Edge classes
 - libcloudui
-	[ ] nodal interface
-	[ ] refactor code
+	[.] node graph architecture
+	[.] refactor code
