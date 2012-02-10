@@ -45,3 +45,20 @@ ImageViewerWidget::setMatrix (const Matrix<UInt8>* matrix)
 
   image.adjustSize();
 }
+
+void
+ImageViewerWidget::setMatrix (const Matrix<UInt32>* matrix)
+{
+  QImage im (matrix->getCols (), matrix->getRows (), QImage::Format_RGB888);
+
+  for (unsigned int i = 0; i < matrix->getRows (); ++i) {
+    for (unsigned int j = 0; j < matrix->getCols (); ++j) {
+      UInt32 value = matrix->at (i, j);
+      im.setPixel (j, i, qRgb (value, value, value));
+    }
+  }
+
+  image.setPixmap (QPixmap::fromImage (im));
+
+  image.adjustSize();
+}

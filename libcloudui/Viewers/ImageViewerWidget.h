@@ -15,6 +15,7 @@ class ImageViewerWidget : public QScrollArea {
 
     void setImage (const Image* _image);
     void setMatrix (const Matrix<UInt8>* matrix);
+    void setMatrix (const Matrix<UInt32>* matrix);
 
   public slots:
 

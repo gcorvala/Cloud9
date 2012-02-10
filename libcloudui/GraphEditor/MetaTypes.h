@@ -6,6 +6,8 @@
 
 Q_DECLARE_METATYPE (Image*);
 Q_DECLARE_METATYPE (Matrix<UInt8>*);
+Q_DECLARE_METATYPE (Matrix<UInt16>*);
+Q_DECLARE_METATYPE (Matrix<UInt32>*);
 Q_DECLARE_METATYPE (PointCloud*);
 
 #endif

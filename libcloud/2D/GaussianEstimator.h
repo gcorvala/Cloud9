@@ -4,11 +4,11 @@
 #include "Estimator.h"
 #include "Matrix.h"
 
-class GaussianEstimator : public Estimator<UInt8, UInt8> {
+class GaussianEstimator : public Estimator<UInt32, UInt32> {
   public:
     GaussianEstimator ();
     ~GaussianEstimator ();
-    void compute (const Matrix<UInt8>& input, Matrix<UInt8>& output) const;
+    void compute (const Matrix<UInt32>& input, Matrix<UInt32>& output) const;
 
     void setAperture (UInt32 _aperture);
     UInt32 getAperture () const;

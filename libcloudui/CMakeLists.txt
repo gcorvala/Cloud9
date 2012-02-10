@@ -56,6 +56,7 @@ set (NODES_SRCS
 	Nodes/ImageNode.cpp
 	Nodes/ImageReaderNode.cpp
 	Nodes/ImageWriterNode.cpp
+	Nodes/MeanShiftNode.cpp
 	Nodes/PhaseCongruencyNode.cpp
 	Nodes/PointCloudReaderNode.cpp
 	Nodes/SobelNode.cpp
@@ -71,6 +72,7 @@ set (NODES_INCS
 	Nodes/ImageNode.h
 	Nodes/ImageReaderNode.h
 	Nodes/ImageWriterNode.h
+	Nodes/MeanShiftNode.h
 	Nodes/PhaseCongruencyNode.h
 	Nodes/PointCloudReaderNode.h
 	Nodes/SobelNode.h

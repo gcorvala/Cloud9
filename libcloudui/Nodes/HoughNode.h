@@ -15,7 +15,7 @@ class HoughNode : public Node {
 
       HoughEstimator estimator;
       Matrix<UInt8>* input;
-      Matrix<UInt8> output;
+      Matrix<UInt32> output;
   };
 
   public:

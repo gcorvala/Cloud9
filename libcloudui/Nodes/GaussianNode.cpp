@@ -51,5 +51,9 @@ GaussianNode::GaussianThread::~GaussianThread ()
 void
 GaussianNode::GaussianThread::run ()
 {
-  gaussian.compute (*input, output);
+  Matrix<UInt32> input32, output32;
+  input32 = *input;
+  output32 = output;
+  gaussian.compute (input32, output32);
+  output = output32;
 }

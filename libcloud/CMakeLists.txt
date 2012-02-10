@@ -8,6 +8,7 @@ set(2D_SRCS
 	2D/HysteresisThresholdEstimator.cpp
 	2D/Image.cpp
 	2D/Line.cpp
+	2D/MeanShiftEstimator.cpp
 	2D/PhaseCongruencyEstimator.cpp
 	2D/RemoveDCEstimator.cpp
 	2D/ScharrEstimator.cpp
@@ -27,6 +28,7 @@ set(2D_INCS
 	2D/Image.h
 	2D/Line.h
 	2D/Matrix.h
+	2D/MeanShiftEstimator.h
 	2D/PhaseCongruencyEstimator.h
 	2D/RemoveDCEstimator.h
 	2D/ScharrEstimator.h

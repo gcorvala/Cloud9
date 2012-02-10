@@ -18,7 +18,10 @@ CannyEstimator::compute (const Matrix<UInt8>& input, Matrix<UInt8>& output) cons
 {
   HysteresisThresholdEstimator hysteresis;
   Matrix<UInt8> tmp;
-  gaussian.compute (input, tmp);
+  Matrix<UInt32> input32, tmp32;
+  input32 = input;
+  gaussian.compute (input32, tmp32);
+  tmp = tmp32;
   Matrix<double> intensities, angles;
   sobel.compute (tmp, intensities, angles);
   nonMaximaSuppression (intensities, angles);

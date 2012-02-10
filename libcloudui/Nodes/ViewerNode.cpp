@@ -25,8 +25,13 @@ ViewerNode::process ()
     viewer = new ImageViewerWidget ();
     ((ImageViewerWidget*) viewer)->setImage (image);
   }
-  else if (QString (inputs["image"]->var->typeName ()) == "Matrix<UInt8>*"){
+  else if (QString (inputs["image"]->var->typeName ()) == "Matrix<UInt8>*") {
     Matrix<UInt8>* image = inputs["image"]->var->value<Matrix<UInt8>*> ();
+    viewer = new ImageViewerWidget ();
+    ((ImageViewerWidget*) viewer)->setMatrix (image);
+  }
+  else if (QString (inputs["image"]->var->typeName ()) == "Matrix<UInt32>*") {
+    Matrix<UInt32>* image = inputs["image"]->var->value<Matrix<UInt32>*> ();
     viewer = new ImageViewerWidget ();
     ((ImageViewerWidget*) viewer)->setMatrix (image);
   }

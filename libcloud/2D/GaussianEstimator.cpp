@@ -14,7 +14,7 @@ GaussianEstimator::~GaussianEstimator ()
 }
 
 void
-GaussianEstimator::compute (const Matrix<UInt8>& input, Matrix<UInt8>& output) const
+GaussianEstimator::compute (const Matrix<UInt32>& input, Matrix<UInt32>& output) const
 {
   input.convolve (gaussian_filter, output);
 }

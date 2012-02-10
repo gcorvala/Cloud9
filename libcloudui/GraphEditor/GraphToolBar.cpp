@@ -7,6 +7,7 @@
 #include "../Nodes/ImageNode.h"
 #include "../Nodes/ImageReaderNode.h"
 #include "../Nodes/ImageWriterNode.h"
+#include "../Nodes/MeanShiftNode.h"
 #include "../Nodes/PhaseCongruencyNode.h"
 #include "../Nodes/PointCloudReaderNode.h"
 #include "../Nodes/SobelNode.h"
@@ -41,6 +42,7 @@ GraphToolBar::setGraph (Graph* _graph)
   action = addAction (icon, "Point Cloud Reader", this, SLOT (addNode10 ()));
   action = addAction (icon, "Hough", this, SLOT (addNode11 ()));
   action = addAction (icon, "Image Writer", this, SLOT (addNode12 ()));
+  action = addAction (icon, "Mean Shift", this, SLOT (addNode13 ()));
 }
 
 Graph*
@@ -119,4 +121,10 @@ void
 GraphToolBar::addNode12 ()
 {
   graph->addNode (new ImageWriterNode ());
+}
+
+void
+GraphToolBar::addNode13 ()
+{
+  graph->addNode (new MeanShiftNode ());
 }
