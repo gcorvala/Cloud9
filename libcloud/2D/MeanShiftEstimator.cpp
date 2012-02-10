@@ -67,12 +67,31 @@ MeanShiftEstimator::compute (const Matrix<double>& input, Matrix<UInt8>& output)
   }
 }
 
-/*void getModes (const Matrix<UInt8>& output, std::vector<Point>& modes) const;
+//void getModes (const Matrix<UInt8>& output, std::vector<Point>& modes) const;
 
-UInt32 getRowStep () const;
-void setRowStep (UInt32 step);
-UInt32 getColStep () const;
-void setColStep (UInt32 step);*/
+UInt32
+MeanShiftEstimator::getRowStep () const
+{
+  return row_step;
+}
+
+void
+MeanShiftEstimator::setRowStep (UInt32 step)
+{
+  row_step = step;
+}
+
+UInt32
+MeanShiftEstimator::getColStep () const
+{
+  return col_step;
+}
+
+void
+MeanShiftEstimator::setColStep (UInt32 step)
+{
+  col_step = step;
+}
 
 UInt32
 MeanShiftEstimator::getWindowWidth () const
@@ -86,7 +105,26 @@ MeanShiftEstimator::setWindowWidth (double width)
   window_width = width;
 }
 
-/*UInt32 getMaxIterations () const;
-void setMaxIterations (UInt32 iterations);
-double getEpsilon () const;
-void setEpsilon (double eps);*/
+UInt32
+MeanShiftEstimator::getMaxIterations () const
+{
+  return max_iterations;
+}
+
+void
+MeanShiftEstimator::setMaxIterations (UInt32 iterations)
+{
+  max_iterations = iterations;
+}
+
+double
+MeanShiftEstimator::getEpsilon () const
+{
+  return epsilon;
+}
+
+void
+MeanShiftEstimator::setEpsilon (double eps)
+{
+  epsilon = eps;
+}
