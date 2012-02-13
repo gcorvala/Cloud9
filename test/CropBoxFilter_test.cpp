@@ -40,9 +40,8 @@ TEST_F (CropBoxFilterTest, F1Works) {
 }
 
 TEST_F (CropBoxFilterTest, F2Works) {
-  unsigned int s = cloud.size ();
   f2.run (cloud);
-  ASSERT_EQ (s, cloud.size ());
+  ASSERT_EQ (8, cloud.size ());
   ASSERT_EQ (Point (0, 0, 0), cloud[0]);
   ASSERT_EQ (Point (1, 0, 0), cloud[1]);
   ASSERT_EQ (Point (0, 1, 0), cloud[2]);
