@@ -16,13 +16,11 @@ void
 HoughEstimator::compute (const Matrix<UInt8>& input, Matrix<UInt32>& output) const
 {
   GaussianEstimator gaussian;
-  // FIXME : M_PI is enough
   output.resize (n_theta, n_rho);
 
-  double rho_max = 2*hypot (input.getRows (), input.getCols ());
-  double rho_step = rho_max/(n_rho-1);
-  double theta_init = 3/2*M_PI;
-  double theta_step = 2*M_PI/(n_theta-1);
+  double theta_init = 3./2.*M_PI;
+  double theta_step = getThetaStep ();
+  double rho_step = getRhoStep (input);
 
   for (UInt32 i = 0; i < input.getRows (); ++i) {
     for (UInt32 j = 0; j < input.getCols (); ++j) {
@@ -63,4 +61,18 @@ void
 HoughEstimator::setNRho (UInt32 n)
 {
   n_rho = n;
+}
+
+double
+HoughEstimator::getThetaStep () const
+{
+  // FIXME : M_PI is enough -> done ?
+  return M_PI/(n_theta-1);
+}
+
+double
+HoughEstimator::getRhoStep (const Matrix<UInt8>& input) const
+{
+  double rho_max = 2*hypot (input.getRows (), input.getCols ());
+  return rho_max/(n_rho-1);
 }

@@ -1,7 +1,9 @@
 #include "Image.h"
 
 Image::Image (UInt32 rows, UInt32 cols)
-  :red_channel(rows, cols)
+  :rows(rows)
+  ,cols(cols)
+  ,red_channel(rows, cols)
   ,green_channel(rows, cols)
   ,blue_channel(rows, cols)
 {

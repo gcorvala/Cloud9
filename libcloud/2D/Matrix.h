@@ -47,6 +47,7 @@ class Matrix {
     Matrix operator/= (double s);
     Matrix operator-= (double s);
     Matrix operator- (const T s) const;
+    Matrix operator- () const;
     Matrix operator* (const Matrix& m) const;
     template <typename U>
     Matrix operator+ (const Matrix<U>& m) const;
@@ -305,6 +306,19 @@ Matrix<T>::operator-= (double s)
   }
 
   return *this;
+}
+
+template <typename T>
+Matrix<T>
+Matrix<T>::operator- () const
+{
+  Matrix<T> result;
+
+  for (UInt32 i = 0; i < rows*cols; ++i) {
+    result.data[i] = -data[i];
+  }
+
+  return result;
 }
 
 template <typename T>

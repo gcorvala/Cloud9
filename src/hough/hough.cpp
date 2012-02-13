@@ -5,6 +5,7 @@
 #include <libcloud/2D/GaussianEstimator.h>
 #include <libcloud/2D/HoughEstimator.h>
 #include <libcloud/2D/MeanShiftEstimator.h>
+#include <libcloud/2D/ImageDrawer.h>
 
 int
 main (int argc, char** argv)
@@ -13,6 +14,8 @@ main (int argc, char** argv)
   QImage image (argv[1]);
   Image im;
   im.resize (image.height (), image.width ());
+  qDebug ("height: %d width: %d", image.height (), image.width ());
+  ImageDrawer drawer (image.height (), image.width ());
 
   for (UInt32 i = 0; i < image.height (); ++i) {
     for (UInt32 j = 0; j < image.width (); ++j) {
@@ -22,9 +25,10 @@ main (int argc, char** argv)
   }
 
   Matrix<UInt8> red = im.getYChannel ();
-  Matrix<UInt8> edge, modes;
+  Matrix<UInt8> edge, ms;
   Matrix<UInt32> param;
   Matrix<UInt32> blurredParam;
+  std::vector<Point> modes;
 
   CannyEstimator canny;
 
@@ -32,8 +36,8 @@ main (int argc, char** argv)
 
   HoughEstimator hough;
 
-  hough.setNTheta (800);
-  hough.setNRho (800);
+  hough.setNTheta (400);
+  hough.setNRho (400);
 
   hough.compute (edge, param);
 
@@ -45,7 +49,28 @@ main (int argc, char** argv)
   
   MeanShiftEstimator meanShift;
 
-  meanShift.compute (blurredParam, modes);
+  meanShift.compute (blurredParam, ms, modes);
+
+  // 45°
+  //drawer.drawLine (Line (1, -1, 0), Color (0, 0, 255));
+  // 30°
+  //drawer.drawLine (Line (0, -M_PI/3), Color (0, 255, 0));
+  // 60°
+  //drawer.drawLine (Line (0, -M_PI/6), Color (255, 0, 0));
+
+  int a = 0;
+  for (std::vector<Point>::const_reverse_iterator it = modes.rbegin (); it != modes.rend (); ++it) {
+    std::cout << "mode: " << it->x << " " << it->y << " (" << it->z << ")" << std::endl;
+    std::cout << "y: " << it->y << std::endl;
+    std::cout << "y*step: " << (it->y-200)*hough.getRhoStep (edge) << std::endl;
+    Line line ((it->y-hough.getNRho ()/2)*hough.getRhoStep (edge), -1./2.*M_PI+(it->x*hough.getThetaStep ()));
+    drawer.drawLine (line, Color (0, 255, 0));
+    //a++; if (a > 8) break;
+  }
+
+  ImageViewerWidget viewer0;
+  viewer0.setMatrix (&edge);
+  viewer0.show ();
 
   ImageViewerWidget viewer1;
   viewer1.setMatrix (&param);
@@ -56,8 +81,13 @@ main (int argc, char** argv)
   viewer2.show ();
 
   ImageViewerWidget viewer3;
-  viewer3.setMatrix (&modes);
+  viewer3.setMatrix (&ms);
   viewer3.show ();
+
+  ImageViewerWidget viewer4;
+  im = drawer.getImage ();
+  viewer4.setImage (&im);
+  viewer4.show ();
 
   return app.exec();
 }

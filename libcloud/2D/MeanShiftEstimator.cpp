@@ -1,12 +1,13 @@
 #include "MeanShiftEstimator.h"
 
 #include "../Common/Vector.h"
+#include "../Common/Utils.h"
 
 MeanShiftEstimator::MeanShiftEstimator ()
   :row_step(25)
   ,col_step(25)
   ,window_width(10)
-  ,max_iterations(500)
+  ,max_iterations(300)
   ,epsilon(1e-10)
 {
 }
@@ -61,13 +62,31 @@ MeanShiftEstimator::compute (const Matrix<double>& input, Matrix<UInt8>& output)
         }
         x_old = x;
       }
-      if (x_old != x)
-        output (x.x, x.y) = 255;
+      if (x_old != x) {
+        // FIXME : why normalize ?
+        output (x.x, x.y) = (double) (input (x.x, x.y)/input.max ())*255;
+      }
     }
   }
 }
 
-//void getModes (const Matrix<UInt8>& output, std::vector<Point>& modes) const;
+void
+MeanShiftEstimator::compute (const Matrix<double>& input, Matrix<UInt8>& output, std::vector<Point>& modes) const
+{
+  compute (input, output);
+  modes.clear ();
+
+  for (UInt32 i = 0; i < output.getRows (); ++i) {
+    for (UInt32 j = 0; j < output.getCols (); ++j) {
+      UInt8 val = output (i, j);
+      if (val > 0) {
+        modes.push_back (Point (i, j, val));
+      }
+    }
+  }
+
+  sort (modes.begin (), modes.end (), comparePointsByZAxis);
+}
 
 UInt32
 MeanShiftEstimator::getRowStep () const

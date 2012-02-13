@@ -9,6 +9,9 @@ class Estimator {
     Estimator ();
     virtual ~Estimator ();
     virtual void compute (const Matrix<InputType>& input, Matrix<OutputType>& output) const = 0;
+
+  protected:
+    
 };
 
 template <typename InputType, typename OutputType>

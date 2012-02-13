@@ -10,8 +10,7 @@ class MeanShiftEstimator : public Estimator<double, UInt8> {
     MeanShiftEstimator ();
     ~MeanShiftEstimator ();
     void compute (const Matrix<double>& input, Matrix<UInt8>& output) const;
-
-    void getModes (const Matrix<UInt8>& output, std::vector<Point>& modes) const;
+    void compute (const Matrix<double>& input, Matrix<UInt8>& output, std::vector<Point>& modes) const;
 
     UInt32 getRowStep () const;
     void setRowStep (UInt32 step);

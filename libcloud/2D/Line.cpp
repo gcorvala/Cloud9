@@ -16,6 +16,9 @@ Line::Line (double rho, double theta)
   ,b(sin (theta))
   ,c(-rho)
 {
+//  std::cout << "a:" << a << " b:" << b << " c:" << c;
+  std::cout << " slope:" << getSlope () << " y_intercept:" << getYIntercept () << " x_intercept:" << getXIntercept () << std::endl;
+  std::cout << " rho:" << getRho () << " theta:" << getTheta () << std::endl;
 }
 
 Line::Line (double _a, double _b, double _c)
@@ -60,5 +63,21 @@ Line::getRho () const
 double
 Line::getTheta () const
 {
-  return atan2 (b, a);
+  double theta = atan2 (b, a);
+  if (theta < 0) {
+    theta += M_PI;
+  }
+  return theta;
+}
+
+double
+Line::getXValue (double y) const
+{
+  return -(b*y+c)/a;
+}
+
+double
+Line::getYValue (double x) const
+{
+  return -(a*x+c)/b;
 }

@@ -17,6 +17,9 @@ class HoughEstimator : public Estimator<UInt8, UInt32> {
 
     UInt32 getNRho () const;
     void setNRho (UInt32 n);
+
+    double getThetaStep () const;
+    double getRhoStep (const Matrix<UInt8>& input) const;
   protected:
     UInt32 n_theta;
     UInt32 n_rho;
