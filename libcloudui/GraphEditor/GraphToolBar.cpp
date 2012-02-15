@@ -9,7 +9,8 @@
 #include "../Nodes/ImageWriterNode.h"
 #include "../Nodes/MeanShiftNode.h"
 #include "../Nodes/PhaseCongruencyNode.h"
-#include "../Nodes/PointCloudReaderNode.h"
+#include "../Nodes/3D/CropBoxNode.h"
+#include "../Nodes/3D/PointCloudReaderNode.h"
 #include "../Nodes/SobelNode.h"
 #include "../Nodes/TestNode.h"
 #include "../Nodes/ThresholdNode.h"
@@ -43,6 +44,7 @@ GraphToolBar::setGraph (Graph* _graph)
   action = addAction (icon, "Hough", this, SLOT (addNode11 ()));
   action = addAction (icon, "Image Writer", this, SLOT (addNode12 ()));
   action = addAction (icon, "Mean Shift", this, SLOT (addNode13 ()));
+  action = addAction (icon, "Crop Box", this, SLOT (addNode14 ()));
 }
 
 Graph*
@@ -127,4 +129,10 @@ void
 GraphToolBar::addNode13 ()
 {
   graph->addNode (new MeanShiftNode ());
+}
+
+void
+GraphToolBar::addNode14 ()
+{
+  graph->addNode (new CropBoxNode ());
 }

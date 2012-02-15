@@ -145,3 +145,35 @@ PointCloud::clear ()
 {
   points.clear ();
 }
+
+#include <cfloat>
+
+Point
+PointCloud::getMin () const
+{
+  Point min (FLT_MAX, FLT_MAX, FLT_MAX);
+
+  for (PointCloud::const_iterator it = begin (); it != end (); ++it) {
+    Point p = *it;
+    if (p.x < min.x) min.x = p.x;
+    if (p.y < min.y) min.y = p.y;
+    if (p.z < min.z) min.z = p.z;
+  }
+
+  return min;
+}
+
+Point
+PointCloud::getMax () const
+{
+  Point max (-FLT_MAX, -FLT_MAX, -FLT_MAX);
+
+  for (PointCloud::const_iterator it = begin (); it != end (); ++it) {
+    Point p = *it;
+    if (p.x > max.x) max.x = p.x;
+    if (p.y > max.y) max.y = p.y;
+    if (p.z > max.z) max.z = p.z;
+  }
+
+  return max;
+}

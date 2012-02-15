@@ -58,7 +58,6 @@ set (NODES_SRCS
 	Nodes/ImageWriterNode.cpp
 	Nodes/MeanShiftNode.cpp
 	Nodes/PhaseCongruencyNode.cpp
-	Nodes/PointCloudReaderNode.cpp
 	Nodes/SobelNode.cpp
 	Nodes/TestNode.cpp
 	Nodes/ThresholdNode.cpp
@@ -74,11 +73,20 @@ set (NODES_INCS
 	Nodes/ImageWriterNode.h
 	Nodes/MeanShiftNode.h
 	Nodes/PhaseCongruencyNode.h
-	Nodes/PointCloudReaderNode.h
 	Nodes/SobelNode.h
 	Nodes/TestNode.h
 	Nodes/ThresholdNode.h
 	Nodes/ViewerNode.h
+	)
+
+set (NODES_3D_SRCS
+	Nodes/3D/CropBoxNode.cpp
+	Nodes/3D/PointCloudReaderNode.cpp
+	)
+
+set (NODES_3D_INCS
+	Nodes/3D/CropBoxNode.h
+	Nodes/3D/PointCloudReaderNode.h
 	)
 
 set (VIEWERS_SRCS
@@ -91,7 +99,14 @@ set (VIEWERS_INCS
 	Viewers/PointCloudViewerWidget.h
 	)
 
-qt4_wrap_cpp (MOC_SOURCES ${MOC_HEADERS} ${CLOUD_APPLICATIONS_INCS} ${GRAPH_EDITOR_INCS} ${NODES_INCS} ${VIEWERS_INCS})
+qt4_wrap_cpp (MOC_SOURCES
+	${MOC_HEADERS}
+	${CLOUD_APPLICATIONS_INCS}
+	${GRAPH_EDITOR_INCS}
+	${NODES_INCS}
+	${NODES_3D_INCS}
+	${VIEWERS_INCS}
+	)
 
 aux_source_directory (. libcloudui_sources)
 aux_source_directory (CloudApplication libcloudui_sources)
@@ -99,7 +114,14 @@ aux_source_directory (GraphEditor libcloudui_sources)
 aux_source_directory (Nodes libcloudui_sources)
 aux_source_directory (Viewers libcloudui_sources)
 
-add_library (cloudui SHARED ${libcloudui_sources} ${MOC_SOURCES} ${CLOUD_APPLICATIONS_SRCS} ${GRAPH_EDITOR_SRCS} ${GRAPH_EDITOR_INCS} ${NODES_SRCS} ${NODES_INCS} ${VIEWERS_SRCS} ${VIEWERS_INCS})
+add_library (cloudui SHARED ${libcloudui_sources}
+	${MOC_SOURCES}
+	${CLOUD_APPLICATIONS_SRCS} ${CLOUD_APPLICATIONS_INCS}
+	${GRAPH_EDITOR_SRCS} ${GRAPH_EDITOR_INCS}
+	${NODES_SRCS} ${NODES_INCS}
+	${NODES_3D_SRCS} ${NODES_3D_INCS}
+	${VIEWERS_SRCS} ${VIEWERS_INCS}
+	)
 
 target_link_libraries (cloudui cloud)
 target_link_libraries (cloudui ${QT_LIBRARIES})

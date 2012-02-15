@@ -37,6 +37,10 @@ class PointCloud {
     iterator erase (iterator first, iterator last);
     void clear ();
 
+    // FIXME
+    Point getMin () const;
+    Point getMax () const;
+
   protected:
     std::vector<Point> points;
 };

@@ -1,7 +1,7 @@
 #ifndef __POINT_CLOUD_READER_NODE_H__
 #define __POINT_CLOUD_READER_NODE_H__
 
-#include "../GraphEditor/Node.h"
+#include "../../GraphEditor/Node.h"
 #include <libcloud/Common/PointCloud.h>
 
 class PointCloudReaderNode : public Node {

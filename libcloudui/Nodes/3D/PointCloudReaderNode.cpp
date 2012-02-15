@@ -1,5 +1,5 @@
 #include "PointCloudReaderNode.h"
-#include "../GraphEditor/PathProperty.h"
+#include "../../GraphEditor/PathProperty.h"
 
 #include <libcloud/IO/FileReader.h>
 #include <libcloud/IO/XYZReader.h>

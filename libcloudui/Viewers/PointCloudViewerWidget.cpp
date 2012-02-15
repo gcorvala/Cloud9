@@ -17,7 +17,7 @@ PointCloudViewerWidget::~PointCloudViewerWidget ()
 QSize
 PointCloudViewerWidget::minimumSizeHint () const
 {
-  return QSize(50, 50);
+  return QSize (50, 50);
 }
 
 QSize
@@ -34,9 +34,13 @@ PointCloudViewerWidget::addPointCloud (const QString& key, PointCloud* cloud)
 
   clouds[key] = cloud;
 
+  Point min = cloud->getMin ();
+  Point max = cloud->getMax ();
+  Point center ((min.x+max.x)/2, (min.y+max.y)/2, (min.z+max.z)/2);
+
   for (it = cloud->begin (); it != cloud->end (); ++it) {
     //qDebug ("x:%f x/2300:%f", (*it).x, (*it).x/2300);
-    vertex_array.push_back (QVector3D ((*it).x, (*it).y, (*it).z));
+    vertex_array.push_back (QVector3D ((*it).x-center.x, (*it).y-center.y, (*it).z-center.z));
   }
 
   updateGL ();
@@ -91,7 +95,6 @@ PointCloudViewerWidget::paintGL ()
 {
   glClear (GL_COLOR_BUFFER_BIT);
   glLoadIdentity ();
-//  glTranslatef (0.0, -0.1, -10.0);
 
   glRotatef (x_rotation, 1.0, 0.0, 0.0);
   glRotatef (y_rotation, 0.0, 1.0, 0.0);
@@ -111,11 +114,11 @@ PointCloudViewerWidget::resizeGL (int width, int height)
   qDebug ("resizeGL");
   glViewport (0, 0, width, height);
 
-  glMatrixMode(GL_PROJECTION);
-  glLoadIdentity();
-  //glOrtho(-0.5, +0.5, -0.5, +0.5, 4.0, 15.0);
-  glOrtho(-500.5, +500.5, -500.5, +500.5, 4.0, 2500.0);
-  glMatrixMode(GL_MODELVIEW);
+  glMatrixMode (GL_PROJECTION);
+  glLoadIdentity ();
+  //glOrtho (-0.5, +0.5, -0.5, +0.5, 4.0, 15.0);
+  glOrtho (-500.5, +500.5, -500.5, +500.5, -1004.0, 100000.0);
+  glMatrixMode (GL_MODELVIEW);
 }
 
 void
