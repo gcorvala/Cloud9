@@ -58,14 +58,10 @@ main (int argc, char** argv)
   // 60°
   //drawer.drawLine (Line (0, -M_PI/6), Color (255, 0, 0));
 
-  int a = 0;
   for (std::vector<Point>::const_reverse_iterator it = modes.rbegin (); it != modes.rend (); ++it) {
-    std::cout << "mode: " << it->x << " " << it->y << " (" << it->z << ")" << std::endl;
-    std::cout << "y: " << it->y << std::endl;
-    std::cout << "y*step: " << (it->y-200)*hough.getRhoStep (edge) << std::endl;
+    qDebug ("mode: %d %d %d", it->x, it->y, it->z);
     Line line ((it->y-hough.getNRho ()/2)*hough.getRhoStep (edge), -1./2.*M_PI+(it->x*hough.getThetaStep ()));
     drawer.drawLine (line, Color (0, 255, 0));
-    //a++; if (a > 8) break;
   }
 
   ImageViewerWidget viewer0;

@@ -3,7 +3,6 @@
 
 #include <vector>
 #include <algorithm>
-#include <iostream> // FIXME
 #include <math.h>
 #include "../Common/Types.h"
 
