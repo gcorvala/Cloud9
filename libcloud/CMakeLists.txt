@@ -70,6 +70,7 @@ set(FEATURES_INCS
 set(FILTERS_SRCS
 	Filters/CropBoxFilter.cpp
 	Filters/Filter.cpp
+	Filters/HoughFilter.cpp
 	Filters/ScaleFilter.cpp
 	Filters/TranslateFilter.cpp
 	)
@@ -77,6 +78,7 @@ set(FILTERS_SRCS
 set(FILTERS_INCS
 	Filters/CropBoxFilter.h
 	Filters/Filter.h
+	Filters/HoughFilter.h
 	Filters/ScaleFilter.h
 	Filters/TranslateFilter.h
 	)

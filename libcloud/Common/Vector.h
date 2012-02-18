@@ -24,6 +24,8 @@ class Vector : public Point {
 
     Vector cross (const Vector& v) const;
     double dot (const Vector& v) const;
+
+    double angle (const Vector& v) const;
 };
 
 #endif

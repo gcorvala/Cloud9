@@ -156,3 +156,9 @@ Vector::dot (const Vector& v) const
 
   return result;
 }
+
+double
+Vector::angle (const Vector& v) const
+{
+  return acos (dot (v));
+}
