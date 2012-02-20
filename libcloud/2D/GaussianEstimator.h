@@ -12,15 +12,15 @@ class GaussianEstimator : public Estimator<UInt32, UInt32> {
 
     void setAperture (UInt32 _aperture);
     UInt32 getAperture () const;
-    void setSigma (double s);
-    double getSigma () const;
-    Matrix<double> getFilter () const;
+    void setSigma (Float64 s);
+    Float64 getSigma () const;
+    Matrix<Float64> getFilter () const;
   protected:
     void generateFilter ();
 
-    Matrix<double> gaussian_filter;
+    Matrix<Float64> gaussian_filter;
     UInt32 aperture;
-    double sigma;
+    Float64 sigma;
 };
 
 #endif

@@ -10,15 +10,13 @@ FourierEstimator::~FourierEstimator ()
 }
 
 void
-FourierEstimator::compute (const Matrix<double>& input, Matrix<std::complex<double> >& output) const
+FourierEstimator::compute (const Matrix<Float64>& input, Matrix<std::complex<Float64> >& output) const
 {
-  double *in;
-  fftw_complex *out;
+  Float64* in;
+  fftw_complex* out;
   fftw_plan p;
 
-  // FIXME : fftw3.3 on ubuntu ?
-  //in = (double*) fftw_alloc_real (input.getRows ()*input.getCols ());
-  in = (double*) fftw_malloc (sizeof (double)*input.getRows ()*input.getCols ());
+  in = (Float64*) fftw_malloc (sizeof (Float64)*input.getRows ()*input.getCols ());
 
   for (UInt32 i = 0; i < input.getRows (); ++i) {
     for (UInt32 j = 0; j < input.getCols (); ++j) {
@@ -42,7 +40,7 @@ FourierEstimator::compute (const Matrix<double>& input, Matrix<std::complex<doub
     for (UInt32 j = 0; j < output.getCols (); ++j) {
       if (j < input.getCols ()/2+1) {
         fftw_complex& c = out[offset++];
-        output (i, j) = std::complex<double> (c[0], c[1]);
+        output (i, j) = std::complex<Float64> (c[0], c[1]);
       }
       else {
         UInt32 col = pos--;

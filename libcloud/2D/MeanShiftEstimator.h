@@ -5,30 +5,30 @@
 #include "Matrix.h"
 #include "../Common/Point.h"
 
-class MeanShiftEstimator : public Estimator<double, UInt8> {
+class MeanShiftEstimator : public Estimator<Float64, UInt8> {
   public:
     MeanShiftEstimator ();
     ~MeanShiftEstimator ();
-    void compute (const Matrix<double>& input, Matrix<UInt8>& output) const;
-    void compute (const Matrix<double>& input, Matrix<UInt8>& output, std::vector<Point>& modes) const;
+    void compute (const Matrix<Float64>& input, Matrix<UInt8>& output) const;
+    void compute (const Matrix<Float64>& input, Matrix<UInt8>& output, std::vector<Point>& modes) const;
 
     UInt32 getRowStep () const;
     void setRowStep (UInt32 step);
     UInt32 getColStep () const;
     void setColStep (UInt32 step);
     UInt32 getWindowWidth () const;
-    void setWindowWidth (double width);
+    void setWindowWidth (Float64 width);
     UInt32 getMaxIterations () const;
     void setMaxIterations (UInt32 iterations);
-    double getEpsilon () const;
-    void setEpsilon (double eps);
+    Float64 getEpsilon () const;
+    void setEpsilon (Float64 eps);
 
   protected:
     UInt32 row_step;
     UInt32 col_step;
     UInt32 window_width;
     UInt32 max_iterations;
-    double epsilon;
+    Float64 epsilon;
 };
 
 #endif

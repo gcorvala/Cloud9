@@ -10,21 +10,21 @@ GradientEstimator::~GradientEstimator ()
 }
 
 void
-GradientEstimator::compute (const Matrix<UInt8>& input, Matrix<double>& output) const
+GradientEstimator::compute (const Matrix<UInt8>& input, Matrix<Float64>& output) const
 {
-  Matrix<double> tmp;
+  Matrix<Float64> tmp;
 
   compute (input, output, tmp);
 }
 
 void
-GradientEstimator::compute (const Matrix<UInt8>& input, Matrix<double>& intensities, Matrix<double>& angles) const
+GradientEstimator::compute (const Matrix<UInt8>& input, Matrix<Float64>& intensities, Matrix<Float64>& angles) const
 {
   Matrix<SInt16> gx;
   Matrix<SInt16> gy;
   Matrix<SInt32> gx2, gy2;
   Matrix<SInt32> sum;
-  Matrix<double> root;
+  Matrix<Float64> root;
 
   input.convolve (x_kernel, gx);
   input.convolve (y_kernel, gy);

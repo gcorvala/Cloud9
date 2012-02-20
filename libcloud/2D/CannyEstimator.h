@@ -13,18 +13,18 @@ class CannyEstimator : public Estimator<UInt8, UInt8> {
 
     void compute (const Matrix<UInt8>& input, Matrix<UInt8>& output) const;
 
-    double getHighThreshold () const;
-    void setHighThreshold (double threshold);
-    double getLowThreshold () const;
-    void setLowThreshold (double threshold);
+    Float64 getHighThreshold () const;
+    void setHighThreshold (Float64 threshold);
+    Float64 getLowThreshold () const;
+    void setLowThreshold (Float64 threshold);
 
   protected:
-    void nonMaximaSuppression (Matrix<double>& intensities, const Matrix<double>& angles) const;
+    void nonMaximaSuppression (Matrix<Float64>& intensities, const Matrix<Float64>& angles) const;
 
     GaussianEstimator gaussian;
     SobelEstimator sobel;
-    double high_threshold;
-    double low_threshold;
+    Float64 high_threshold;
+    Float64 low_threshold;
 };
 
 #endif

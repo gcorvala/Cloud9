@@ -160,5 +160,9 @@ Vector::dot (const Vector& v) const
 double
 Vector::angle (const Vector& v) const
 {
+  Vector a = *this;
+  Vector b = v;
+  a.normalize ();
+  b.normalize ();
   return acos (dot (v));
 }

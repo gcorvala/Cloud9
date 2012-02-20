@@ -27,13 +27,13 @@ Image::setPixel (UInt32 row, UInt32 col, const Color c)
   blue_channel(row,col) = c.b;
 }
 
-unsigned int
+UInt32
 Image::getRows () const
 {
   return rows;
 }
 
-unsigned int
+UInt32
 Image::getCols () const
 {
   return cols;

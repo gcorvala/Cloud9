@@ -33,19 +33,19 @@ GaussianEstimator::getAperture () const
 }
 
 void
-GaussianEstimator::setSigma (double s)
+GaussianEstimator::setSigma (Float64 s)
 {
   sigma = s;
   generateFilter ();
 }
 
-double
+Float64
 GaussianEstimator::getSigma () const
 {
   return sigma;
 }
 
-Matrix<double>
+Matrix<Float64>
 GaussianEstimator::getFilter () const
 {
   return gaussian_filter;
@@ -60,7 +60,7 @@ GaussianEstimator::generateFilter ()
     for (UInt32 j = 0; j < gaussian_filter.getCols (); ++j) {
       UInt32 x = j-aperture+1;
       UInt32 y = i-aperture+1;
-      gaussian_filter(i, j) = 1/(2*M_PI*sigma*sigma)*exp (-(float)(x*x+y*y)/(2*sigma*sigma));
+      gaussian_filter(i, j) = 1/(2*M_PI*sigma*sigma)*exp (-(Float64)(x*x+y*y)/(2*sigma*sigma));
     }
   }
 }

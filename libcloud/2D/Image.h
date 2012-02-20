@@ -13,8 +13,8 @@ class Image {
     Color getPixel (UInt32 row, UInt32 col) const;
     void setPixel (UInt32 row, UInt32 col, const Color c);
 
-    unsigned int getRows () const;
-    unsigned int getCols () const;
+    UInt32 getRows () const;
+    UInt32 getCols () const;
 
     void resize (UInt32 _rows, UInt32 _cols);
 
@@ -24,8 +24,8 @@ class Image {
     Matrix<UInt8> getYChannel () const;
 
   protected:
-    unsigned int rows;
-    unsigned int cols;
+    UInt32 rows;
+    UInt32 cols;
 
     Matrix<UInt8> red_channel;
     Matrix<UInt8> green_channel;

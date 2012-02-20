@@ -11,11 +11,11 @@ HysteresisThresholdEstimator::~HysteresisThresholdEstimator ()
 }
 
 void
-HysteresisThresholdEstimator::compute (const Matrix<double>& input, Matrix<double>& output) const
+HysteresisThresholdEstimator::compute (const Matrix<Float64>& input, Matrix<Float64>& output) const
 {
   ThresholdEstimator threshold;
-  Matrix<double> high;
-  Matrix<double> low;
+  Matrix<Float64> high;
+  Matrix<Float64> low;
 
   threshold.setThreshold (high_threshold);
 
@@ -46,26 +46,26 @@ HysteresisThresholdEstimator::compute (const Matrix<double>& input, Matrix<doubl
   output = high;
 }
 
-double
+Float64
 HysteresisThresholdEstimator::getLowThreshold () const
 {
   return low_threshold;
 }
 
 void
-HysteresisThresholdEstimator::setLowThreshold (double t)
+HysteresisThresholdEstimator::setLowThreshold (Float64 t)
 {
   low_threshold = t;
 }
 
-double
+Float64
 HysteresisThresholdEstimator::getHighThreshold () const
 {
   return high_threshold;
 }
 
 void
-HysteresisThresholdEstimator::setHighThreshold (double t)
+HysteresisThresholdEstimator::setHighThreshold (Float64 t)
 {
   high_threshold = t;
 }

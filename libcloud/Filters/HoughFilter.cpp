@@ -81,26 +81,20 @@ HoughFilter::compute (const PointCloud& input, PointCloud& output) const
     if (++it == output.end ()) break;
     Vector p3 (*it);
 
-    /*
-    rho = px*cos(theta)*sin(phi)+py*sin(phi)*sin(theta)+pz*cos(phi)
-    px*cos(theta)*sin(phi) = rho-py*sin(phi)*sin(theta)-pz*cos(phi)
-    */
     Vector n = ((p3-p2).cross (p1-p2));
-
+    n.normalize ();
+    Float64 rho = n.dot (p1);
+    
+    p1.normalize ();
+    
     Float64 theta = n.angle (Vector (1, 0, 0));
     Float64 phi = n.angle (Vector (0, 0, -1));
-    Float64 rho = n.dot (p1);
     UInt32 theta_idx = theta/theta_step;
     UInt32 phi_idx = phi/phi_step;
-    UInt32 rho_idx = rho/rho_step;
-    std::cout << theta_idx << " " << phi_idx << " " << rho_idx << std::endl;
+    // FIXME : rho_idx < 0 ?????? (negative values)
+    UInt32 rho_idx = abs (rho)/rho_step;
     accumulator[theta_idx][phi_idx][rho_idx]++;
-    /*for (UInt32 i = 0; i < n_theta; ++i) {
-      for (UInt32 j = 0; j < n_phi; ++j) {
-        UInt32 k = round (rho/rho_step);
-        accumulator[i][j][0]++;
-      }
-    }*/
+    
   }
 #endif
 }

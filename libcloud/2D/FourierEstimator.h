@@ -5,11 +5,11 @@
 #include "Matrix.h"
 #include <complex>
 
-class FourierEstimator : public Estimator<double, std::complex<double> > {
+class FourierEstimator : public Estimator<Float64, std::complex<Float64> > {
   public:
     FourierEstimator ();
     ~FourierEstimator ();
-    void compute (const Matrix<double>& input, Matrix<std::complex<double> >& output) const;
+    void compute (const Matrix<Float64>& input, Matrix<std::complex<Float64> >& output) const;
 };
 
 #endif

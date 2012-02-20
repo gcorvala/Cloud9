@@ -22,7 +22,7 @@ CannyEstimator::compute (const Matrix<UInt8>& input, Matrix<UInt8>& output) cons
   input32 = input;
   gaussian.compute (input32, tmp32);
   tmp = tmp32;
-  Matrix<double> intensities, angles;
+  Matrix<Float64> intensities, angles;
   sobel.compute (tmp, intensities, angles);
   nonMaximaSuppression (intensities, angles);
   hysteresis.setHighThreshold (high_threshold);
@@ -31,34 +31,34 @@ CannyEstimator::compute (const Matrix<UInt8>& input, Matrix<UInt8>& output) cons
   output = intensities;
 }
 
-double
+Float64
 CannyEstimator::getHighThreshold () const
 {
   return high_threshold;
 }
 
 void
-CannyEstimator::setHighThreshold (double threshold)
+CannyEstimator::setHighThreshold (Float64 threshold)
 {
   high_threshold = threshold;
 }
 
-double
+Float64
 CannyEstimator::getLowThreshold () const
 {
   return low_threshold;
 }
 
 void
-CannyEstimator::setLowThreshold (double threshold)
+CannyEstimator::setLowThreshold (Float64 threshold)
 {
   low_threshold = threshold;
 }
 
 void
-CannyEstimator::nonMaximaSuppression (Matrix<double>& intensities, const Matrix<double>& angles) const
+CannyEstimator::nonMaximaSuppression (Matrix<Float64>& intensities, const Matrix<Float64>& angles) const
 {
-  Matrix<double> tmp;
+  Matrix<Float64> tmp;
   tmp = intensities;
   for (UInt32 i = 1; i < intensities.getRows ()-1; ++i) {
     for (UInt32 j = 1; j < intensities.getCols ()-1; ++j) {

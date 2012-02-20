@@ -9,7 +9,7 @@ RemoveDCEstimator::~RemoveDCEstimator ()
 }
 
 void
-RemoveDCEstimator::compute (const Matrix<double>& input, Matrix<double>& output) const
+RemoveDCEstimator::compute (const Matrix<Float64>& input, Matrix<Float64>& output) const
 {
   UInt32 window_rows;
   UInt32 window_cols;
@@ -21,7 +21,7 @@ RemoveDCEstimator::compute (const Matrix<double>& input, Matrix<double>& output)
     window_rows = input.getRows ();
     window_cols = input.getCols ();
   }
-  Matrix<double> mf (window_rows, window_cols);
+  Matrix<Float64> mf (window_rows, window_cols);
 
   UInt32 window_size_2 = window_rows*window_cols;
 

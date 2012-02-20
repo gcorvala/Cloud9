@@ -11,7 +11,7 @@ Line::Line ()
 {
 }
 
-Line::Line (double rho, double theta)
+Line::Line (Float64 rho, Float64 theta)
   :a(cos (theta))
   ,b(sin (theta))
   ,c(-rho)
@@ -21,7 +21,7 @@ Line::Line (double rho, double theta)
   std::cout << " rho:" << getRho () << " theta:" << getTheta () << std::endl;
 }
 
-Line::Line (double _a, double _b, double _c)
+Line::Line (Float64 _a, Float64 _b, Float64 _c)
   :a(_a)
   ,b(_b)
   ,c(_c)
@@ -32,52 +32,52 @@ Line::~Line ()
 {
 }
 
-double
+Float64
 Line::getSlope () const
 {
-  double slope;
+  Float64 slope;
 
   slope = -a/b;
 
   return slope;
 }
 
-double
+Float64
 Line::getYIntercept () const
 {
   return -c/b;
 }
 
-double
+Float64
 Line::getXIntercept () const
 {
   return -c/a;
 }
 
-double
+Float64
 Line::getRho () const
 {
   return -c;
 }
 
-double
+Float64
 Line::getTheta () const
 {
-  double theta = atan2 (b, a);
+  Float64 theta = atan2 (b, a);
   if (theta < 0) {
     theta += M_PI;
   }
   return theta;
 }
 
-double
-Line::getXValue (double y) const
+Float64
+Line::getXValue (Float64 y) const
 {
   return -(b*y+c)/a;
 }
 
-double
-Line::getYValue (double x) const
+Float64
+Line::getYValue (Float64 x) const
 {
   return -(a*x+c)/b;
 }

@@ -6,31 +6,31 @@
 class Line {
   public:
     Line ();
-    //Line (double slope, double y_intercept);
-    //static Line& createFrom (double slope, double y_intercept);
-    Line (double rho, double theta);
-    Line (double _a, double _b, double _c);
+    //Line (Float64 slope, Float64 y_intercept);
+    //static Line& createFrom (Float64 slope, Float64 y_intercept);
+    Line (Float64 rho, Float64 theta);
+    Line (Float64 _a, Float64 _b, Float64 _c);
     virtual ~Line ();
 
-    double getSlope () const;
-    double getYIntercept () const;
-    double getXIntercept () const;
-    double getRho () const;
-    double getTheta () const;
+    Float64 getSlope () const;
+    Float64 getYIntercept () const;
+    Float64 getXIntercept () const;
+    Float64 getRho () const;
+    Float64 getTheta () const;
 
-    double getXValue (double y) const;
-    double getYValue (double x) const;
+    Float64 getXValue (Float64 y) const;
+    Float64 getYValue (Float64 x) const;
 
-    bool contains (const Point& p, double epsilon = 0) const;
+    bool contains (const Point& p, Float64 epsilon = 0) const;
     bool isVertical () const;
     bool isHorizontal () const;
 
     Point getIntersection () const;
   protected:
     // FIXME : Forme ax+by+c=0
-    double a;
-    double b;
-    double c;
+    Float64 a;
+    Float64 b;
+    Float64 c;
 };
 
 #endif

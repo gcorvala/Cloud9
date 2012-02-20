@@ -40,11 +40,11 @@ class Matrix {
 
     template <typename U>
     Matrix<T> operator= (const Matrix<U>& m);
-    Matrix operator* (double s) const;
-    Matrix operator*= (double s);
-    Matrix operator/ (double s) const;
-    Matrix operator/= (double s);
-    Matrix operator-= (double s);
+    Matrix operator* (Float64 s) const;
+    Matrix operator*= (Float64 s);
+    Matrix operator/ (Float64 s) const;
+    Matrix operator/= (Float64 s);
+    Matrix operator-= (Float64 s);
     Matrix operator- (const T s) const;
     Matrix operator- () const;
     Matrix operator* (const Matrix& m) const;
@@ -250,7 +250,7 @@ Matrix<T>::operator= (const Matrix<U>& m)
 
 template <typename T>
 Matrix<T>
-Matrix<T>::operator* (double s) const
+Matrix<T>::operator* (Float64 s) const
 {
   Matrix<T> result (rows, cols);
 
@@ -263,7 +263,7 @@ Matrix<T>::operator* (double s) const
 
 template <typename T>
 Matrix<T>
-Matrix<T>::operator*= (double s)
+Matrix<T>::operator*= (Float64 s)
 {
   for (UInt32 i = 0; i < rows*cols; ++i) {
     data[i] *= s;
@@ -274,7 +274,7 @@ Matrix<T>::operator*= (double s)
 
 template <typename T>
 Matrix<T>
-Matrix<T>::operator/ (double s) const
+Matrix<T>::operator/ (Float64 s) const
 {
   Matrix<T> result (rows, cols);
 
@@ -287,7 +287,7 @@ Matrix<T>::operator/ (double s) const
 
 template <typename T>
 Matrix<T>
-Matrix<T>::operator/= (double s)
+Matrix<T>::operator/= (Float64 s)
 {
   for (UInt32 i = 0; i < rows*cols; ++i) {
     data[i] /= s;
@@ -298,7 +298,7 @@ Matrix<T>::operator/= (double s)
 
 template <typename T>
 Matrix<T>
-Matrix<T>::operator-= (double s)
+Matrix<T>::operator-= (Float64 s)
 {
   for (UInt32 i = 0; i < rows*cols; ++i) {
     data[i] -= s;

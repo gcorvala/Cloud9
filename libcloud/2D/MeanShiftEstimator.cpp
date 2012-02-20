@@ -17,7 +17,7 @@ MeanShiftEstimator::~MeanShiftEstimator ()
 }
 
 void
-MeanShiftEstimator::compute (const Matrix<double>& input, Matrix<UInt8>& output) const
+MeanShiftEstimator::compute (const Matrix<Float64>& input, Matrix<UInt8>& output) const
 {
   output.resize (input.getRows (), input.getCols ());
   output.fill (0);
@@ -30,11 +30,11 @@ MeanShiftEstimator::compute (const Matrix<double>& input, Matrix<UInt8>& output)
 
       while (counter++ < max_iterations) {
         Vector sum_xig (0, 0);
-        double sum_g = 0;
+        Float64 sum_g = 0;
 
         for (UInt32 k = x.x-window_width; k <= x.x+window_width; ++k) {
           for (UInt32 l = x.y-window_width; l <= x.y+window_width; ++l) {
-            double w;
+            Float64 w;
             if (k < 0 || l < 0 || k >= input.getRows () || l >= input.getCols ()) {
               w = 0;
             }
@@ -43,7 +43,7 @@ MeanShiftEstimator::compute (const Matrix<double>& input, Matrix<UInt8>& output)
             }
             Vector x_i (k, l);
             // FIXME : kernel ? exp ?
-            double g_ = exp (-((x-x_i)/window_width).norm2 ());
+            Float64 g_ = exp (-((x-x_i)/window_width).norm2 ());
             sum_xig += x_i*g_*w;
             sum_g += g_*w;
           }
@@ -64,14 +64,14 @@ MeanShiftEstimator::compute (const Matrix<double>& input, Matrix<UInt8>& output)
       }
       if (x_old != x) {
         // FIXME : why normalize ?
-        output (x.x, x.y) = (double) (input (x.x, x.y)/input.max ())*255;
+        output (x.x, x.y) = (Float64) (input (x.x, x.y)/input.max ())*255;
       }
     }
   }
 }
 
 void
-MeanShiftEstimator::compute (const Matrix<double>& input, Matrix<UInt8>& output, std::vector<Point>& modes) const
+MeanShiftEstimator::compute (const Matrix<Float64>& input, Matrix<UInt8>& output, std::vector<Point>& modes) const
 {
   compute (input, output);
   modes.clear ();
@@ -119,7 +119,7 @@ MeanShiftEstimator::getWindowWidth () const
 }
 
 void
-MeanShiftEstimator::setWindowWidth (double width)
+MeanShiftEstimator::setWindowWidth (Float64 width)
 {
   window_width = width;
 }
@@ -136,14 +136,14 @@ MeanShiftEstimator::setMaxIterations (UInt32 iterations)
   max_iterations = iterations;
 }
 
-double
+Float64
 MeanShiftEstimator::getEpsilon () const
 {
   return epsilon;
 }
 
 void
-MeanShiftEstimator::setEpsilon (double eps)
+MeanShiftEstimator::setEpsilon (Float64 eps)
 {
   epsilon = eps;
 }

@@ -9,7 +9,8 @@ class Plane {
     Plane (const Point& p, const Vector& normal);
     Plane (const Vector& v1, const Vector& v2, const Point& p);
     Plane (const Point& p1, const Point& p2, const Point& p3);
-    Plane (double _a = 0, double _b = 0, double _c = 0, double _d = 0);
+    Plane (double _a, double _b, double _c, double _d);
+    Plane (double rho, double theta, double phi);
     virtual ~Plane ();
 
     Vector getNormal () const;
