@@ -2,7 +2,7 @@
 
 #include <math.h>
 
-Vector::Vector (double _x, double _y, double _z)
+Vector::Vector (Float64 _x, Float64 _y, Float64 _z)
 {
   x = _x;
   y = _y;
@@ -19,7 +19,7 @@ Vector::Vector (const Point& p1, const Point& p2)
 void
 Vector::normalize ()
 {
-  double size;
+  Float64 size;
 
   size = norm ();
 
@@ -28,13 +28,23 @@ Vector::normalize ()
   z /= size;
 }
 
-double
+Vector
+Vector::normalized () const
+{
+  Float64 size;
+
+  size = norm ();
+
+  return Vector (x/size, y/size, z/size);
+}
+
+Float64
 Vector::norm () const
 {
   return sqrt (norm2 ());
 }
 
-double
+Float64
 Vector::norm2 () const
 {
   return x*x + y*y + z*z;
@@ -65,7 +75,7 @@ Vector::operator- (const Vector& v) const
 }
 
 Vector
-Vector::operator* (double s) const
+Vector::operator* (Float64 s) const
 {
   Vector v;
 
@@ -77,7 +87,7 @@ Vector::operator* (double s) const
 }
 
 Vector
-Vector::operator/ (double s) const
+Vector::operator/ (Float64 s) const
 {
   Vector v;
 
@@ -109,7 +119,7 @@ Vector::operator-= (const Vector& v)
 }
 
 Vector
-Vector::operator*= (double s)
+Vector::operator*= (Float64 s)
 {
   x *= s;
   y *= s;
@@ -119,7 +129,7 @@ Vector::operator*= (double s)
 }
 
 Vector
-Vector::operator/= (double s)
+Vector::operator/= (Float64 s)
 {
   x /= s;
   y /= s;
@@ -147,17 +157,17 @@ Vector::cross (const Vector& v) const
   return result;
 }
 
-double
+Float64
 Vector::dot (const Vector& v) const
 {
-  double result;
+  Float64 result;
 
 	result = x*v.x + y*v.y + z*v.z;
 
   return result;
 }
 
-double
+Float64
 Vector::angle (const Vector& v) const
 {
   Vector a = *this;
@@ -165,4 +175,10 @@ Vector::angle (const Vector& v) const
   a.normalize ();
   b.normalize ();
   return acos (dot (v));
+}
+
+std::ostream&
+operator<< (std::ostream& out, const Vector& v)
+{
+  out << "Vector: (" << v.x << "," << v.y << "," << v.z << ")";
 }

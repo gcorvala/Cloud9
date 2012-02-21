@@ -26,7 +26,7 @@ Color::~Color ()
 }
 
 Color
-Color::operator* (double s) const
+Color::operator* (Float64 s) const
 {
   return Color (r*s, g*s, b*s);
 }

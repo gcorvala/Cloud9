@@ -6,21 +6,29 @@
 
 class Plane {
   public:
+    Plane ();
     Plane (const Point& p, const Vector& normal);
-    Plane (const Vector& v1, const Vector& v2, const Point& p);
     Plane (const Point& p1, const Point& p2, const Point& p3);
-    Plane (double _a, double _b, double _c, double _d);
-    Plane (double rho, double theta, double phi);
+    Plane (Float64 _a, Float64 _b, Float64 _c, Float64 _d);
+    Plane (Float64 rho, Float64 theta, Float64 phi);
     virtual ~Plane ();
 
     Vector getNormal () const;
+    Float64 getRho () const;
+    Float64 getTheta () const;
+    Float64 getPhi () const;
 
   protected:
+#if 0
     // FIXME : Forme ax+by+cz+d=0
-    double a;
-    double b;
-    double c;
-    double d;
+    Float64 a;
+    Float64 b;
+    Float64 c;
+    Float64 d;
+#else
+    // FIXME : Forme n.x*x+n.y*y+n.z*z=1
+    Vector n;
+#endif
 };
 
 #endif

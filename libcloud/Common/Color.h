@@ -10,7 +10,7 @@ class Color {
     Color (UInt8 _r, UInt8 _g, UInt8 _b);
     virtual ~Color ();
 
-    Color operator* (double s) const;
+    Color operator* (Float64 s) const;
     Color operator* (const Color c) const;
     Color operator+= (const Color c);
 

@@ -2,7 +2,7 @@
 
 #include <math.h>
 
-Point::Point (double _x, double _y, double _z)
+Point::Point (Float64 _x, Float64 _y, Float64 _z)
   : x(_x), y(_y), z(_z)
 {
 }

@@ -5,14 +5,14 @@
 
 class Point {
   public:
-    Point (double _x = 0, double _y = 0, double _z = 0);
+    Point (Float64 _x = 0, Float64 _y = 0, Float64 _z = 0);
     virtual ~Point ();
     Point operator= (const Point& p);
     bool operator== (const Point& p) const;
     bool operator!= (const Point& p) const;
-    double x;
-    double y;
-    double z;
+    Float64 x;
+    Float64 y;
+    Float64 z;
 };
 
 #endif

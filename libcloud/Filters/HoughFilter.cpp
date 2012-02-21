@@ -74,7 +74,20 @@ HoughFilter::compute (const PointCloud& input, PointCloud& output) const
   std::random_shuffle (output.begin (), output.end ());
   std::cout << "start processing" << std::endl;
 
-  for (PointCloud::const_iterator it = output.begin (); it != output.end (); ++it) {
+  SInt32 min = 1000;
+  SInt32 max = -1000;
+  
+
+  for (UInt32 i = 0; i < output.size ()-2; i += 3) {
+    Vector p1 = output[i];
+    Vector p2 = output[i+1];
+    Vector p3 = output[i+2];
+
+    Vector n ((p3-p2).cross (p1-p2));
+    n.normalize ();
+//    std::cout << n << std::endl;
+  }
+/*  for (PointCloud::const_iterator it = output.begin (); it != output.end (); ++it) {
     Vector p1 = *it;
     if (++it == output.end ()) break;
     Vector p2 = *it;
@@ -92,9 +105,13 @@ HoughFilter::compute (const PointCloud& input, PointCloud& output) const
     UInt32 theta_idx = theta/theta_step;
     UInt32 phi_idx = phi/phi_step;
     // FIXME : rho_idx < 0 ?????? (negative values)
-    UInt32 rho_idx = abs (rho)/rho_step;
+    UInt32 rho_idx = rho/rho_step;
+    if (rho_idx > max) max = rho_idx;
+    if (rho_idx < min) min = rho_idx;
+    rho_idx = abs (rho_idx);
     accumulator[theta_idx][phi_idx][rho_idx]++;
-    
-  }
+  }*/
+
+  std::cout << "min:" << min << " max:" << max << std::endl;
 #endif
 }
