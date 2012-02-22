@@ -1,15 +1,16 @@
 #include "PointCloudViewerWidget.h"
 
 #include <QMouseEvent>
-#include "PointCloudActor.h"
+#include "../Actors/PointCloudActor.h"
+#include "../Actors/AxisActor.h"
 
 PointCloudViewerWidget::PointCloudViewerWidget (QWidget *parent)
   :QGLWidget(QGLFormat (), parent)
   ,x_rotation(0)
   ,y_rotation(0)
   ,z_rotation(0)
-  ,actor(NULL)
 {
+  actors.push_back (new AxisActor ());
 }
 
 PointCloudViewerWidget::~PointCloudViewerWidget ()
@@ -32,7 +33,7 @@ PointCloudViewerWidget::sizeHint () const
 void
 PointCloudViewerWidget::addPointCloud (const QString& key, PointCloud* cloud)
 {
-  actor = new PointCloudActor (*cloud);
+  actors.push_back (new PointCloudActor (*cloud));
 
   updateGL ();
 }
@@ -84,6 +85,7 @@ PointCloudViewerWidget::initializeGL ()
 void
 PointCloudViewerWidget::paintGL ()
 {
+  std::vector<Actor*>::const_iterator it;
   glClear (GL_COLOR_BUFFER_BIT);
   glLoadIdentity ();
 
@@ -91,21 +93,10 @@ PointCloudViewerWidget::paintGL ()
   glRotatef (y_rotation, 0.0, 1.0, 0.0);
   glRotatef (z_rotation, 0.0, 0.0, 1.0);
 
-  if (actor) actor->draw ();
-
-  glBegin(GL_LINES);
-  glColor3f(255,0,0);
-	glVertex3f(0,0,0);
-	glVertex3f(100,0,0);
-
-	glColor3f(0,255,0);
-	glVertex3f(0,0,0);
-	glVertex3f(0,100,0);
-
-	glColor3f(0,0,255);
-	glVertex3f(0,0,0);
-	glVertex3f(0,0,100);
-	glEnd();
+  for (it = actors.begin (); it != actors.end (); ++it) {
+    Actor* actor = *it;
+    actor->draw ();
+  }
 }
 
 void

@@ -4,7 +4,7 @@
 #include <QGLWidget>
 #include <QMap>
 #include <libcloud/Common/PointCloud.h>
-#include "Actor.h"
+#include "../Actors/Actor.h"
 
 class PointCloudViewerWidget : public QGLWidget {
   Q_OBJECT
@@ -37,7 +37,7 @@ class PointCloudViewerWidget : public QGLWidget {
     QPoint last_pos;
 
     QMap<QString, PointCloud*> clouds;
-    Actor* actor;
+    std::vector<Actor*> actors;
 };
 
 #endif

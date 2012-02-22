@@ -11,6 +11,18 @@ set (MOC_HEADERS
 	CloudWindow.h
 )
 
+set (ACTORS_SRCS
+	Actors/Actor.cpp
+	Actors/AxisActor.cpp
+	Actors/PointCloudActor.cpp
+	)
+
+set (ACTORS_INCS
+	Actors/Actor.h
+	Actors/AxisActor.h
+	Actors/PointCloudActor.h
+	)
+
 set (CLOUD_APPLICATION_SRCS
 	CloudApplication/CloudApplication.cpp
 	)
@@ -92,21 +104,18 @@ set (NODES_3D_INCS
 	)
 
 set (VIEWERS_SRCS
-	Viewers/Actor.cpp
 	Viewers/ImageViewerWidget.cpp
-	Viewers/PointCloudActor.cpp
 	Viewers/PointCloudViewerWidget.cpp
 	)
 
 set (VIEWERS_INCS
-	Viewers/Actor.h
 	Viewers/ImageViewerWidget.h
-	Viewers/PointCloudActor.h
 	Viewers/PointCloudViewerWidget.h
 	)
 
 qt4_wrap_cpp (MOC_SOURCES
 	${MOC_HEADERS}
+	${ACTORS_INCS}
 	${CLOUD_APPLICATIONS_INCS}
 	${GRAPH_EDITOR_INCS}
 	${NODES_INCS}
@@ -122,6 +131,7 @@ aux_source_directory (Viewers libcloudui_sources)
 
 add_library (cloudui SHARED ${libcloudui_sources}
 	${MOC_SOURCES}
+	${ACTORS_SRCS} ${ACTORS_INCS}
 	${CLOUD_APPLICATIONS_SRCS} ${CLOUD_APPLICATIONS_INCS}
 	${GRAPH_EDITOR_SRCS} ${GRAPH_EDITOR_INCS}
 	${NODES_SRCS} ${NODES_INCS}

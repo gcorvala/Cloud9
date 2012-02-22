@@ -4,6 +4,7 @@
 
 PointCloudActor::PointCloudActor (const PointCloud& cloud)
   :m_cloud(&cloud)
+  ,m_color(255, 0, 0)
 {
   PointCloud::const_iterator it;
 
@@ -23,7 +24,7 @@ PointCloudActor::~PointCloudActor ()
 void
 PointCloudActor::draw () const
 {
-  glColor3f (1.0, 0.0, 0.0);
+  glColor3ub (m_color.r, m_color.g, m_color.b);
 
   glEnableClientState (GL_VERTEX_ARRAY);
   glVertexPointer (3, GL_FLOAT, 0, vertex_array.constData ());
