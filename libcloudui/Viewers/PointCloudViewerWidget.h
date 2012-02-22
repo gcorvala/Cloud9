@@ -3,8 +3,8 @@
 
 #include <QGLWidget>
 #include <QMap>
-#include <QVector3D>
 #include <libcloud/Common/PointCloud.h>
+#include "Actor.h"
 
 class PointCloudViewerWidget : public QGLWidget {
   Q_OBJECT
@@ -37,7 +37,7 @@ class PointCloudViewerWidget : public QGLWidget {
     QPoint last_pos;
 
     QMap<QString, PointCloud*> clouds;
-    QVector<QVector3D>  vertex_array;
+    Actor* actor;
 };
 
 #endif

@@ -1,6 +1,7 @@
 #include "HoughFilter.h"
 
 #include "../Common/Vector.h"
+#include "../Common/Plane.h"
 #include <stdlib.h>
 #include <math.h>
 #include <iostream>
@@ -29,8 +30,8 @@ HoughFilter::compute (const PointCloud& input, PointCloud& output) const
   UInt32 n_phi = 100;
   UInt32 n_rho = 100;
 
-  double theta_step = M_PI/(n_theta-1);
-  double phi_step = M_PI/(n_phi-1);
+  double theta_step = 2*M_PI/(n_theta-1);
+  double phi_step = 2*M_PI/(n_phi-1);
   double diameter = 2*(Vector (input.getMax ()) - Vector (input.getMin ())).norm ();
   double rho_step = diameter/(n_rho-1);
 
@@ -67,51 +68,54 @@ HoughFilter::compute (const PointCloud& input, PointCloud& output) const
   }
 #else
   // Randomized Hough Transform (RHT)
-//  std::cout << "list construction" << std::endl;
-//  std::list<Point> cloud (input.begin (), input.end ());
   output = input;
   std::cout << "shuffle" << std::endl;
   std::random_shuffle (output.begin (), output.end ());
   std::cout << "start processing" << std::endl;
 
-  SInt32 min = 1000;
-  SInt32 max = -1000;
+  SInt32 min = 1000000000;
+  SInt32 max = -1000000000;
   
 
   for (UInt32 i = 0; i < output.size ()-2; i += 3) {
-    Vector p1 = output[i];
-    Vector p2 = output[i+1];
-    Vector p3 = output[i+2];
+    Plane plane (output[i], output[i+1], output[i+2]);
 
-    Vector n ((p3-p2).cross (p1-p2));
-    n.normalize ();
+    UInt32 theta_idx = plane.getTheta ()/theta_step;
+    UInt32 phi_idx = plane.getPhi ()/phi_step;
+    // FIXME : n_rho/2 ?
+    UInt32 rho_idx = plane.getRho ()/rho_step+n_rho/2;
+
+    std::cout << "theta:" << plane.getTheta () << std::endl;
+    std::cout << "phi:" << plane.getPhi () << std::endl;
+    std::cout << "rho:" << plane.getRho () << std::endl;
+    std::cout << "theta_idx:" << theta_idx << std::endl;
+    std::cout << "phi_idx:" << phi_idx << std::endl;
+    std::cout << "rho_idx:" << rho_idx << std::endl;
+    accumulator[theta_idx][phi_idx][rho_idx]++;
 //    std::cout << n << std::endl;
   }
-/*  for (PointCloud::const_iterator it = output.begin (); it != output.end (); ++it) {
-    Vector p1 = *it;
-    if (++it == output.end ()) break;
-    Vector p2 = *it;
-    if (++it == output.end ()) break;
-    Vector p3 (*it);
-
-    Vector n = ((p3-p2).cross (p1-p2));
-    n.normalize ();
-    Float64 rho = n.dot (p1);
-    
-    p1.normalize ();
-    
-    Float64 theta = n.angle (Vector (1, 0, 0));
-    Float64 phi = n.angle (Vector (0, 0, -1));
-    UInt32 theta_idx = theta/theta_step;
-    UInt32 phi_idx = phi/phi_step;
-    // FIXME : rho_idx < 0 ?????? (negative values)
-    UInt32 rho_idx = rho/rho_step;
-    if (rho_idx > max) max = rho_idx;
-    if (rho_idx < min) min = rho_idx;
-    rho_idx = abs (rho_idx);
-    accumulator[theta_idx][phi_idx][rho_idx]++;
-  }*/
 
   std::cout << "min:" << min << " max:" << max << std::endl;
 #endif
+
+  UInt32 theta_max = 0;
+  UInt32 phi_max = 0;
+  UInt32 rho_max = 0;
+  max = 0;
+  for (UInt32 i = 0; i < n_theta; ++i) {
+    for (UInt32 j = 0; j < n_phi; ++j) {
+      for (UInt32 k = 0; k < n_rho; ++k) {
+        if (accumulator[i][j][k] > max) {
+          max = accumulator[i][j][k];
+          theta_max = i;
+          phi_max = j;
+          rho_max = k;
+        }
+      }
+    }
+  }
+
+  std::cout << "theta_max:" << theta_max*theta_step << std::endl;
+  std::cout << "phi_max:" << phi_max*phi_step << std::endl;
+  std::cout << "rho_max:" << (rho_max-n_rho/2)*rho_step << std::endl;
 }

@@ -1,12 +1,14 @@
 #include "PointCloudViewerWidget.h"
 
 #include <QMouseEvent>
+#include "PointCloudActor.h"
 
 PointCloudViewerWidget::PointCloudViewerWidget (QWidget *parent)
   :QGLWidget(QGLFormat (), parent)
   ,x_rotation(0)
   ,y_rotation(0)
   ,z_rotation(0)
+  ,actor(NULL)
 {
 }
 
@@ -30,18 +32,7 @@ PointCloudViewerWidget::sizeHint () const
 void
 PointCloudViewerWidget::addPointCloud (const QString& key, PointCloud* cloud)
 {
-  PointCloud::const_iterator it;
-
-  clouds[key] = cloud;
-
-  Point min = cloud->getMin ();
-  Point max = cloud->getMax ();
-  Point center ((min.x+max.x)/2, (min.y+max.y)/2, (min.z+max.z)/2);
-
-  for (it = cloud->begin (); it != cloud->end (); ++it) {
-    //qDebug ("x:%f x/2300:%f", (*it).x, (*it).x/2300);
-    vertex_array.push_back (QVector3D ((*it).x-center.x, (*it).y-center.y, (*it).z-center.z));
-  }
+  actor = new PointCloudActor (*cloud);
 
   updateGL ();
 }
@@ -100,12 +91,21 @@ PointCloudViewerWidget::paintGL ()
   glRotatef (y_rotation, 0.0, 1.0, 0.0);
   glRotatef (z_rotation, 0.0, 0.0, 1.0);
 
-  qglColor (Qt::green);
+  if (actor) actor->draw ();
 
-  glEnableClientState (GL_VERTEX_ARRAY);
-  glVertexPointer (3, GL_FLOAT, 0, vertex_array.constData ());
-  glDrawArrays (GL_POINTS, 0, vertex_array.size ());
-  glDisableClientState (GL_VERTEX_ARRAY);
+  glBegin(GL_LINES);
+  glColor3f(255,0,0);
+	glVertex3f(0,0,0);
+	glVertex3f(100,0,0);
+
+	glColor3f(0,255,0);
+	glVertex3f(0,0,0);
+	glVertex3f(0,100,0);
+
+	glColor3f(0,0,255);
+	glVertex3f(0,0,0);
+	glVertex3f(0,0,100);
+	glEnd();
 }
 
 void

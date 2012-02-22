@@ -3,22 +3,12 @@
 #include <math.h>
 #include <stdlib.h>
 
-#if 0
 Plane::Plane ()
   :a(1)
   ,b(0)
   ,c(0)
   ,d(0)
 {
-}
-
-Plane::Plane (const Point& p, const Vector& normal)
-{
-  a = normal.x;
-  b = normal.y;
-  c = normal.z;
-  Vector v = p;
-  d = -normal.dot(v);
 }
 
 Plane::Plane (const Point& p1, const Point& p2, const Point& p3)
@@ -73,9 +63,10 @@ Plane::getTheta () const
   Float64 theta;
 
   theta = atan2 (b, a);
-  if (theta < 0) {
-    theta += 2.*M_PI;
-  }
+  //if (theta < 0) {
+    //theta += 2.*M_PI;
+  //}
+  theta += M_PI;
 
   return theta;
 }
@@ -86,55 +77,7 @@ Plane::getPhi () const
   Float64 phi;
 
   phi = atan2 (hypot (a, b), c);
+  phi += M_PI;
 
   return phi;
 }
-#else
-
-Plane::Plane ()
-  :n(1,0,0)
-{
-}
-
-Plane::Plane (const Point& p1, const Point& p2, const Point& p3)
-{
-  Vector v1 (p1);
-  n = (Vector (p2)-v1).cross (Vector (p3)-v1);
-  n /= n.dot (v1);
-}
-
-Plane::Plane (Float64 _a, Float64 _b, Float64 _c, Float64 _d)
-{
-}
-
-Plane::Plane (Float64 rho, Float64 theta, Float64 phi)
-{
-}
-
-Plane::~Plane ()
-{
-}
-
-Vector
-Plane::getNormal () const
-{
-  return n.normalized ();
-}
-
-Float64
-Plane::getRho () const
-{
-  return 1/n.norm ();
-}
-
-Float64
-Plane::getTheta () const
-{
-}
-
-Float64
-Plane::getPhi () const
-{
-}
-
-#endif

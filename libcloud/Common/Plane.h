@@ -7,7 +7,6 @@
 class Plane {
   public:
     Plane ();
-    Plane (const Point& p, const Vector& normal);
     Plane (const Point& p1, const Point& p2, const Point& p3);
     Plane (Float64 _a, Float64 _b, Float64 _c, Float64 _d);
     Plane (Float64 rho, Float64 theta, Float64 phi);
@@ -19,16 +18,11 @@ class Plane {
     Float64 getPhi () const;
 
   protected:
-#if 0
     // FIXME : Forme ax+by+cz+d=0
     Float64 a;
     Float64 b;
     Float64 c;
     Float64 d;
-#else
-    // FIXME : Forme n.x*x+n.y*y+n.z*z=1
-    Vector n;
-#endif
 };
 
 #endif

@@ -81,21 +81,27 @@ set (NODES_INCS
 
 set (NODES_3D_SRCS
 	Nodes/3D/CropBoxNode.cpp
+	Nodes/3D/Hough3dNode.cpp
 	Nodes/3D/PointCloudReaderNode.cpp
 	)
 
 set (NODES_3D_INCS
 	Nodes/3D/CropBoxNode.h
+	Nodes/3D/Hough3dNode.h
 	Nodes/3D/PointCloudReaderNode.h
 	)
 
 set (VIEWERS_SRCS
+	Viewers/Actor.cpp
 	Viewers/ImageViewerWidget.cpp
+	Viewers/PointCloudActor.cpp
 	Viewers/PointCloudViewerWidget.cpp
 	)
 
 set (VIEWERS_INCS
+	Viewers/Actor.h
 	Viewers/ImageViewerWidget.h
+	Viewers/PointCloudActor.h
 	Viewers/PointCloudViewerWidget.h
 	)
 
