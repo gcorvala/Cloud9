@@ -31,12 +31,14 @@ class Viewer3dWidget : public QGLWidget {
     void resizeGL (int width, int height);
     void mousePressEvent (QMouseEvent* event);
     void mouseMoveEvent (QMouseEvent* event);
+    void wheelEvent (QWheelEvent* event);
 
   private:
     int x_rotation;
     int y_rotation;
     int z_rotation;
     QPoint last_pos;
+    Float32 m_zoom_factor;
 
     std::vector<Actor*> actors;
 };

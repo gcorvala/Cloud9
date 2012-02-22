@@ -4,7 +4,6 @@
 
 PointCloudActor::PointCloudActor (const PointCloud& cloud)
   :m_cloud(&cloud)
-  ,m_color(128, 128, 128)
   ,m_point_size(3.0f)
 {
   PointCloud::const_iterator it;

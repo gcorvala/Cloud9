@@ -14,7 +14,6 @@ class PointCloudActor : public Actor {
     void draw () const;
   private:
     const PointCloud* m_cloud;
-    Color m_color;
     QVector<QVector3D> vertex_array;
     QVector<UInt8> color_array;
     Float32 m_point_size;

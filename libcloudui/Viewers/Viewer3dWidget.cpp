@@ -10,6 +10,7 @@ Viewer3dWidget::Viewer3dWidget (QWidget *parent)
   ,x_rotation(0)
   ,y_rotation(0)
   ,z_rotation(0)
+  ,m_zoom_factor(1)
 {
   actors.push_back (new AxisActor ());
   actors.push_back (new BoxActor (Point (-100, 50, -100), Point (100, 100, 100)));
@@ -81,11 +82,12 @@ Viewer3dWidget::setZRotation (int angle)
 void
 Viewer3dWidget::initializeGL ()
 {
-  qglClearColor (Qt::black);
+  qglClearColor (Qt::gray);
   glEnable (GL_DEPTH_TEST);
   glEnable (GL_POINT_SMOOTH);
-  glEnable (GL_BLEND);
-  glBlendFunc (GL_ONE, GL_ONE);
+  //glEnable (GL_BLEND);
+  //glBlendFunc (GL_ONE, GL_ONE);
+  //glEnable (GL_LIGHTING);
 }
 
 void
@@ -97,6 +99,7 @@ Viewer3dWidget::paintGL ()
   glClear (GL_DEPTH_BUFFER_BIT);
   glLoadIdentity ();
 
+  glTranslated (0.0, 0.0, m_zoom_factor);
   glRotatef (x_rotation, 1.0, 0.0, 0.0);
   glRotatef (y_rotation, 0.0, 1.0, 0.0);
   glRotatef (z_rotation, 0.0, 0.0, 1.0);
@@ -110,13 +113,11 @@ Viewer3dWidget::paintGL ()
 void
 Viewer3dWidget::resizeGL (int width, int height)
 {
-  qDebug ("resizeGL");
   glViewport (0, 0, width, height);
 
   glMatrixMode (GL_PROJECTION);
   glLoadIdentity ();
-  //glOrtho (-0.5, +0.5, -0.5, +0.5, 4.0, 15.0);
-  glOrtho (-500.5, +500.5, -500.5, +500.5, -10040.0, 100000.0);
+  glOrtho (-500*m_zoom_factor, 500*m_zoom_factor, -500*m_zoom_factor, 500*m_zoom_factor, -100000, 100000);
   glMatrixMode (GL_MODELVIEW);
 }
 
@@ -140,4 +141,14 @@ Viewer3dWidget::mouseMoveEvent (QMouseEvent *event)
     setZRotation (z_rotation + dx);
   }
   last_pos = event->pos();
+}
+
+void
+Viewer3dWidget::wheelEvent (QWheelEvent* event)
+{
+  m_zoom_factor += 0.01*event->delta ();
+
+  resizeGL (width (), height ());
+
+  updateGL ();
 }
