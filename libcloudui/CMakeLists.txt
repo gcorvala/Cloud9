@@ -14,12 +14,14 @@ set (MOC_HEADERS
 set (ACTORS_SRCS
 	Actors/Actor.cpp
 	Actors/AxisActor.cpp
+	Actors/BoxActor.cpp
 	Actors/PointCloudActor.cpp
 	)
 
 set (ACTORS_INCS
 	Actors/Actor.h
 	Actors/AxisActor.h
+	Actors/BoxActor.h
 	Actors/PointCloudActor.h
 	)
 

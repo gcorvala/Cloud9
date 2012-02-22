@@ -10,7 +10,7 @@ class AxisActor : public Actor {
     virtual ~AxisActor ();
     void draw () const;
   private:
-    UInt32 size;
+    UInt32 m_size;
 };
 
 #endif

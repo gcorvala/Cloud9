@@ -3,6 +3,7 @@
 #include <QMouseEvent>
 #include "../Actors/PointCloudActor.h"
 #include "../Actors/AxisActor.h"
+#include "../Actors/BoxActor.h"
 
 PointCloudViewerWidget::PointCloudViewerWidget (QWidget *parent)
   :QGLWidget(QGLFormat (), parent)
@@ -11,6 +12,7 @@ PointCloudViewerWidget::PointCloudViewerWidget (QWidget *parent)
   ,z_rotation(0)
 {
   actors.push_back (new AxisActor ());
+  actors.push_back (new BoxActor (Point (50, 50, 50), Point (100, 100, 100)));
 }
 
 PointCloudViewerWidget::~PointCloudViewerWidget ()
@@ -80,6 +82,7 @@ void
 PointCloudViewerWidget::initializeGL ()
 {
   qglClearColor (Qt::black);
+  glEnable (GL_DEPTH_TEST);
 }
 
 void
@@ -87,6 +90,7 @@ PointCloudViewerWidget::paintGL ()
 {
   std::vector<Actor*>::const_iterator it;
   glClear (GL_COLOR_BUFFER_BIT);
+  glClear (GL_DEPTH_BUFFER_BIT);
   glLoadIdentity ();
 
   glRotatef (x_rotation, 1.0, 0.0, 0.0);
@@ -108,7 +112,7 @@ PointCloudViewerWidget::resizeGL (int width, int height)
   glMatrixMode (GL_PROJECTION);
   glLoadIdentity ();
   //glOrtho (-0.5, +0.5, -0.5, +0.5, 4.0, 15.0);
-  glOrtho (-500.5, +500.5, -500.5, +500.5, -1004.0, 100000.0);
+  glOrtho (-500.5, +500.5, -500.5, +500.5, -10040.0, 100000.0);
   glMatrixMode (GL_MODELVIEW);
 }
 
