@@ -1,39 +1,39 @@
-#include "PointCloudViewerWidget.h"
+#include "Viewer3dWidget.h"
 
 #include <QMouseEvent>
 #include "../Actors/PointCloudActor.h"
 #include "../Actors/AxisActor.h"
 #include "../Actors/BoxActor.h"
 
-PointCloudViewerWidget::PointCloudViewerWidget (QWidget *parent)
+Viewer3dWidget::Viewer3dWidget (QWidget *parent)
   :QGLWidget(QGLFormat (), parent)
   ,x_rotation(0)
   ,y_rotation(0)
   ,z_rotation(0)
 {
   actors.push_back (new AxisActor ());
-  actors.push_back (new BoxActor (Point (50, 50, 50), Point (100, 100, 100)));
+  actors.push_back (new BoxActor (Point (-100, 50, -100), Point (100, 100, 100)));
 }
 
-PointCloudViewerWidget::~PointCloudViewerWidget ()
+Viewer3dWidget::~Viewer3dWidget ()
 {
 }
 
 QSize
-PointCloudViewerWidget::minimumSizeHint () const
+Viewer3dWidget::minimumSizeHint () const
 {
   return QSize (50, 50);
 }
 
 QSize
-PointCloudViewerWidget::sizeHint () const
+Viewer3dWidget::sizeHint () const
 {
   return QSize (600, 400);
 }
 
 
 void
-PointCloudViewerWidget::addPointCloud (const QString& key, PointCloud* cloud)
+Viewer3dWidget::add (const QString& key, PointCloud* cloud)
 {
   actors.push_back (new PointCloudActor (*cloud));
 
@@ -49,7 +49,7 @@ static void qNormalizeAngle(int &angle)
 }
 
 void
-PointCloudViewerWidget::setXRotation (int angle)
+Viewer3dWidget::setXRotation (int angle)
 {
   qNormalizeAngle(angle);
   if (angle != x_rotation) {
@@ -59,7 +59,7 @@ PointCloudViewerWidget::setXRotation (int angle)
 }
 
 void
-PointCloudViewerWidget::setYRotation (int angle)
+Viewer3dWidget::setYRotation (int angle)
 {
   qNormalizeAngle(angle);
   if (angle != y_rotation) {
@@ -69,7 +69,7 @@ PointCloudViewerWidget::setYRotation (int angle)
 }
 
 void
-PointCloudViewerWidget::setZRotation (int angle)
+Viewer3dWidget::setZRotation (int angle)
 {
   qNormalizeAngle(angle);
   if (angle != z_rotation) {
@@ -79,16 +79,20 @@ PointCloudViewerWidget::setZRotation (int angle)
 }
 
 void
-PointCloudViewerWidget::initializeGL ()
+Viewer3dWidget::initializeGL ()
 {
   qglClearColor (Qt::black);
   glEnable (GL_DEPTH_TEST);
+  glEnable (GL_POINT_SMOOTH);
+  glEnable (GL_BLEND);
+  glBlendFunc (GL_ONE, GL_ONE);
 }
 
 void
-PointCloudViewerWidget::paintGL ()
+Viewer3dWidget::paintGL ()
 {
   std::vector<Actor*>::const_iterator it;
+
   glClear (GL_COLOR_BUFFER_BIT);
   glClear (GL_DEPTH_BUFFER_BIT);
   glLoadIdentity ();
@@ -104,7 +108,7 @@ PointCloudViewerWidget::paintGL ()
 }
 
 void
-PointCloudViewerWidget::resizeGL (int width, int height)
+Viewer3dWidget::resizeGL (int width, int height)
 {
   qDebug ("resizeGL");
   glViewport (0, 0, width, height);
@@ -117,13 +121,13 @@ PointCloudViewerWidget::resizeGL (int width, int height)
 }
 
 void
-PointCloudViewerWidget::mousePressEvent (QMouseEvent *event)
+Viewer3dWidget::mousePressEvent (QMouseEvent *event)
 {
   last_pos = event->pos();
 }
 
 void
-PointCloudViewerWidget::mouseMoveEvent (QMouseEvent *event)
+Viewer3dWidget::mouseMoveEvent (QMouseEvent *event)
 {
   int dx = event->x() - last_pos.x();
   int dy = event->y() - last_pos.y();

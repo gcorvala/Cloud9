@@ -1,22 +1,24 @@
-#ifndef __POINT_CLOUD_VIEWER_WIDGET_H__
-#define __POINT_CLOUD_VIEWER_WIDGET_H__
+#ifndef __3D_VIEWER_WIDGET_H__
+#define __3D_VIEWER_WIDGET_H__
 
 #include <QGLWidget>
 #include <QMap>
 #include <libcloud/Common/PointCloud.h>
+#include <libcloud/Common/Plane.h>
 #include "../Actors/Actor.h"
 
-class PointCloudViewerWidget : public QGLWidget {
+class Viewer3dWidget : public QGLWidget {
   Q_OBJECT
 
   public:
-    PointCloudViewerWidget (QWidget *parent = 0);
-    ~PointCloudViewerWidget ();
+    Viewer3dWidget (QWidget *parent = 0);
+    ~Viewer3dWidget ();
 
     QSize minimumSizeHint () const;
     QSize sizeHint () const;
 
-    void addPointCloud (const QString& key, PointCloud* cloud);
+    void add (const QString& key, PointCloud* cloud);
+    void add (const QString& key, Plane* plane);
 
   public slots:
     void setXRotation (int angle);
@@ -36,7 +38,6 @@ class PointCloudViewerWidget : public QGLWidget {
     int z_rotation;
     QPoint last_pos;
 
-    QMap<QString, PointCloud*> clouds;
     std::vector<Actor*> actors;
 };
 

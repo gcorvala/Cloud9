@@ -43,7 +43,7 @@ CloudWindow::load ()
   QString file = QFileDialog::getOpenFileName (this, "Load a OBJ file", "~", "Point clouds (*.obj)");
   reader.read (file.toStdString (), cloud, false);
 
-  viewer.addPointCloud ("new", &cloud);
+  viewer.add ("new", &cloud);
 
   std::cout << file.toStdString () << " " << cloud.size () << std::endl;
 }

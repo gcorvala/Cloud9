@@ -107,12 +107,12 @@ set (NODES_3D_INCS
 
 set (VIEWERS_SRCS
 	Viewers/ImageViewerWidget.cpp
-	Viewers/PointCloudViewerWidget.cpp
+	Viewers/Viewer3dWidget.cpp
 	)
 
 set (VIEWERS_INCS
 	Viewers/ImageViewerWidget.h
-	Viewers/PointCloudViewerWidget.h
+	Viewers/Viewer3dWidget.h
 	)
 
 qt4_wrap_cpp (MOC_SOURCES

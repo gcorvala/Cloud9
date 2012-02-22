@@ -17,7 +17,7 @@ BoxActor::draw () const
 {
   glBegin (GL_QUADS);
 
-  glColor4f (255, 0, 0, 50);
+  glColor4f (255, 0, 0, 0.5f);
 
   glVertex3f (m_min.x, m_min.y, m_min.z);
   glVertex3f (m_max.x, m_min.y, m_min.z);

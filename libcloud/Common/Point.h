@@ -5,7 +5,7 @@
 
 class Point {
   public:
-    Point (Float64 _x = 0, Float64 _y = 0, Float64 _z = 0);
+    Point (Float64 _x = 0, Float64 _y = 0, Float64 _z = 0, const Color& color = Color ());
     virtual ~Point ();
     Point operator= (const Point& p);
     bool operator== (const Point& p) const;
@@ -13,6 +13,8 @@ class Point {
     Float64 x;
     Float64 y;
     Float64 z;
+    // FIXME : add layer into PointCloud instead of here
+    Color m_color;
 };
 
 #endif

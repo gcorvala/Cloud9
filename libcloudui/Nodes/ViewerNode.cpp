@@ -2,7 +2,7 @@
 
 #include <QMainWindow>
 #include "../Viewers/ImageViewerWidget.h"
-#include "../Viewers/PointCloudViewerWidget.h"
+#include "../Viewers/Viewer3dWidget.h"
 
 ViewerNode::ViewerNode ()
   :Node("Viewer")
@@ -37,8 +37,8 @@ ViewerNode::process ()
   }
   else if (QString (inputs["image"]->var->typeName ()) == "PointCloud*") {
     PointCloud* cloud = inputs["image"]->var->value<PointCloud*> ();
-    viewer = new PointCloudViewerWidget ();
-    ((PointCloudViewerWidget*) viewer)->addPointCloud ("main", cloud);
+    viewer = new Viewer3dWidget ();
+    ((Viewer3dWidget*) viewer)->add ("main", cloud);
   }
   viewer->show ();
   postProcess ();

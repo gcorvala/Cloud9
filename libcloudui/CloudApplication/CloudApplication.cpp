@@ -3,7 +3,7 @@
 #include <QVBoxLayout>
 #include "../GraphEditor/GraphEditorWidget.h"
 #include "../Viewers/ImageViewerWidget.h"
-#include "../Viewers/PointCloudViewerWidget.h"
+#include "../Viewers/Viewer3dWidget.h"
 
 CloudApplication::CloudApplication ( int & argc, char ** argv)
   :QApplication(argc, argv, true )
@@ -12,7 +12,7 @@ CloudApplication::CloudApplication ( int & argc, char ** argv)
   QVBoxLayout* box = new QVBoxLayout ();
   GraphEditorWidget* editor = new GraphEditorWidget ();
   ImageViewerWidget* image_viewer = new ImageViewerWidget ();
-  PointCloudViewerWidget* cloud_viewer = new PointCloudViewerWidget ();
+  Viewer3dWidget* cloud_viewer = new Viewer3dWidget ();
 
   window->setLayout (box);
 

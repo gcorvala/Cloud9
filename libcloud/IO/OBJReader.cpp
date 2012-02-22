@@ -28,13 +28,22 @@ OBJReader::read (const std::string& file_name, PointCloud& cloud, bool binary) {
     std::cerr << "Failed to open file " << file_name << std::endl;
     return -1;
   }
+  int i = 0;
   while (!input.eof ()) {
     getline (input, line);
     if (line[0] == 'v') {
       StringSplit (line, " ", st);
-      cloud.push_back (Point (strtod (st[1].c_str(), NULL),
-                              strtod (st[2].c_str(), NULL),
-                              strtod (st[3].c_str(), NULL)));
+      if (++i == 1) {
+        std::cout << atoi (st[4].c_str ()) << std::endl;
+        std::cout << atoi (st[5].c_str ()) << std::endl;
+        std::cout << atoi (st[6].c_str ()) << std::endl;
+      }
+      cloud.push_back (Point (strtod (st[1].c_str (), NULL),
+                              strtod (st[2].c_str (), NULL),
+                              strtod (st[3].c_str (), NULL),
+                              Color (atoi (st[4].c_str ()),
+                                     atoi (st[5].c_str ()),
+                                     atoi (st[6].c_str ()))));
       st.clear ();
     }
   }

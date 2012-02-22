@@ -2,8 +2,11 @@
 
 #include <math.h>
 
-Point::Point (Float64 _x, Float64 _y, Float64 _z)
-  : x(_x), y(_y), z(_z)
+Point::Point (Float64 _x, Float64 _y, Float64 _z, const Color& color)
+  :x(_x)
+  ,y(_y)
+  ,z(_z)
+  ,m_color(color)
 {
 }
 
