@@ -176,9 +176,3 @@ Vector::angle (const Vector& v) const
   b.normalize ();
   return acos (dot (v));
 }
-
-std::ostream&
-operator<< (std::ostream& out, const Vector& v)
-{
-  out << "Vector: (" << v.x << "," << v.y << "," << v.z << ")";
-}

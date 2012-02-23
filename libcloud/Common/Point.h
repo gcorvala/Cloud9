@@ -2,6 +2,7 @@
 #define __POINT_H__
 
 #include "Color.h"
+#include <iostream>
 
 class Point {
   public:
@@ -15,6 +16,8 @@ class Point {
     Float64 z;
     // FIXME : add layer into PointCloud instead of here
     Color m_color;
+
+    friend std::ostream& operator<< (std::ostream& out, const Point& p);
 };
 
 #endif

@@ -2,7 +2,6 @@
 #define __VECTOR_H__
 
 #include "Point.h"
-#include <iostream>
 
 class Vector : public Point {
   public:
@@ -28,8 +27,6 @@ class Vector : public Point {
     Float64 dot (const Vector& v) const;
 
     Float64 angle (const Vector& v) const;
-
-    friend std::ostream& operator<< (std::ostream& out, const Vector& v);
 };
 
 #endif

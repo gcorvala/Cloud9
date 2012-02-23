@@ -82,7 +82,7 @@ Viewer3dWidget::setZRotation (int angle)
 void
 Viewer3dWidget::initializeGL ()
 {
-  qglClearColor (Qt::gray);
+  qglClearColor (Qt::black);
   glEnable (GL_DEPTH_TEST);
   glEnable (GL_POINT_SMOOTH);
   //glEnable (GL_BLEND);

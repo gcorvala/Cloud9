@@ -15,6 +15,7 @@ set (ACTORS_SRCS
 	Actors/Actor.cpp
 	Actors/AxisActor.cpp
 	Actors/BoxActor.cpp
+	Actors/LineActor.cpp
 	Actors/PointCloudActor.cpp
 	)
 
@@ -22,6 +23,7 @@ set (ACTORS_INCS
 	Actors/Actor.h
 	Actors/AxisActor.h
 	Actors/BoxActor.h
+	Actors/LineActor.h
 	Actors/PointCloudActor.h
 	)
 
