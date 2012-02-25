@@ -6,6 +6,7 @@
 #include "OctreeKey.h"
 #include "OctreeLeaf.h"
 #include "OctreeIterator.h"
+#include "../Common/Box.h"
 #include "../Common/Point.h"
 #include "../Common/PointCloud.h"
 #include "../Common/Utils.h"
@@ -18,27 +19,30 @@ class Octree {
     typedef OctreeIterator iterator;
     typedef const OctreeIterator const_iterator;
 
-    Octree (const double _resolution);
+    Octree (const Float64 resolution);
     virtual ~Octree ();
-    void setDepth (unsigned int _depth);
-    void add (unsigned int x_idx, unsigned int y_idx, unsigned int z_idx, Point& p);
-    bool get (unsigned int x_idx, unsigned int y_idx, unsigned int z_idx, Point& p) const;
+
+    UInt32 getDepth () const;
+    Float64 getResolution () const;
+    void setResolution (Float64 resolution);
+
+    void setMaxDepth (UInt32 depth);
+
+    void add (const Point& point);
+    void add (const PointCloud& cloud);
+
     bool existLeaf (unsigned int x_idx, unsigned int y_idx, unsigned int z_idx) const;
-    void removeLeaf (unsigned int x_idx, unsigned int y_idx, unsigned int z_idx);
-    unsigned int getLeafCount () const;
-    unsigned int getBranchCount () const;
-    void deleteTree ();
-    void setInputCloud (const PointCloud& _cloud);
-    void addPointsFromCloud ();
-    // getIndices
-    // getInputCloud
-    // setResolution
-    // getResolution
-    // addPointToCloud
-    // isVoxelOccupiedAtPoint
+
+    UInt32 getLeafCount () const;
+    UInt32 getBranchCount () const;
+    UInt32 getObjectCount () const;
+
+    iterator begin ();
+    iterator end ();
+    const_iterator begin () const;
+    const_iterator end () const;
     
   protected:
-    unsigned int getDepth () const; // FIXME : protected ?
     const OctreeNode& getRootNode () const; // FIXME : protected ?
     void add (const OctreeKey& k, const Point& p);
     bool get (const OctreeKey& k, Point& p) const;
@@ -46,26 +50,16 @@ class Octree {
     void removeLeaf (const OctreeKey& k);
     OctreeLeaf * getLeaf (const OctreeKey& k);
     OctreeLeaf * getLeafRecursive (const OctreeKey& k, const unsigned int depth, OctreeBranch& branch);
-    unsigned int getObjectCount () const;
-    void addPointIdx (const unsigned int idx);
     void adoptBoundingBoxToPoint (const Point& p);
     void genOctreeKeyForPoint (const Point& p, OctreeKey& k) const;
-    void test ();
   protected:
-    const PointCloud * cloud;
-    double resolution;
-    double min_x;
-    double min_y;
-    double min_z;
-    double max_x;
-    double max_y;
-    double max_z;
-    unsigned int branch_count;
-    unsigned int leaf_count;
-    unsigned int object_count;
+    Float64 m_resolution;
+    Box m_bounding_box;
+    UInt32 branch_count;
+    UInt32 leaf_count;
+    UInt32 object_count;
 
     OctreeBranch* root;
-    class leaf;
 
     unsigned int depth;
 };

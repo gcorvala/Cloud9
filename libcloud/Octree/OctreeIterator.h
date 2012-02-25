@@ -1,9 +1,12 @@
 #ifndef __OCTREE_ITERATOR_H__
 #define __OCTREE_ITERATOR_H__
 
+#if 0
 #include "Octree.h"
+#include "OctreeKey.h"
 #include "OctreeNode.h"
 #include <iterator>
+#include <vector>
 
 class Octree; // FIXME : cross dep ?
 
@@ -33,5 +36,9 @@ class OctreeIterator : public std::iterator<std::forward_iterator_tag,
     std::vector<std::pair<OctreeNode const*, unsigned char> > stack;
     //std::vector<unsigned char> stack;
 };
+
+#else
+
+#endif
 
 #endif

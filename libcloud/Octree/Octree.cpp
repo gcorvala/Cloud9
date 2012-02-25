@@ -1,21 +1,48 @@
 #include "Octree.h"
 
-#include <iostream> // FIXME
-#include <assert.h> // FIXME
 #include <math.h>
+#include "../Common/Vector.h"
 
-Octree::Octree (const double _resolution)
-  : cloud(NULL), resolution(_resolution),
-    min_x(0.0), min_y(0.0), min_z(0.0),
-    max_x(_resolution), max_y(_resolution), max_z(_resolution),
-    branch_count(0), leaf_count(0), object_count(0),
-    root(new OctreeBranch ()),
-    depth(0)
+Octree::Octree (const Float64 resolution)
+  :m_resolution(resolution)
+  ,m_bounding_box(Point (0, 0, 0), Point (resolution, resolution, resolution))
+  ,branch_count(0)
+  ,leaf_count(0)
+  ,object_count(0)
+  ,root(new OctreeBranch ())
+  ,depth(0)
 {
 }
 
 Octree::~Octree()
 {
+}
+
+unsigned int
+Octree::getDepth () const
+{
+  return depth;
+}
+
+void
+Octree::add (const Point& point)
+{
+  OctreeKey key;
+
+  adoptBoundingBoxToPoint (point);
+  genOctreeKeyForPoint (point, key);
+  add (key, point);
+}
+
+void
+Octree::add (const PointCloud& cloud)
+{
+  PointCloud::const_iterator it;
+  OctreeKey key;
+
+  for (it = cloud.begin (); it != cloud.end (); ++it) {
+    add (*it);
+  }
 }
 
 void
@@ -91,41 +118,6 @@ Octree::getObjectCount () const
   return object_count;
 }
 
-void
-Octree::setInputCloud (const PointCloud& _cloud)
-{
-  assert (leaf_count == 0);
-
-  if (cloud != &_cloud) {
-    cloud = &_cloud;
-  }
-}
-
-void
-Octree::addPointsFromCloud ()
-{
-  unsigned int i;
-
-  assert (leaf_count == 0);
-
-  for (i = 0; i < cloud->size (); ++i) {
-    addPointIdx (i);
-  }
-
-  std::cout << "min x : " << min_x << std::endl; 
-  std::cout << "min y : " << min_y << std::endl; 
-  std::cout << "min z : " << min_z << std::endl; 
-  std::cout << "max x : " << max_x << std::endl; 
-  std::cout << "max y : " << max_y << std::endl; 
-  std::cout << "max z : " << max_z << std::endl; 
-}
-
-unsigned int
-Octree::getDepth () const
-{
-  return depth;
-}
-
 const OctreeNode&
 Octree::getRootNode () const
 {
@@ -133,40 +125,25 @@ Octree::getRootNode () const
 }
 
 void
-Octree::addPointIdx (const unsigned int idx)
-{
-  OctreeKey key;
-
-  assert (idx < cloud->size ());
-
-  const Point& point = cloud->at(idx);
-
-  adoptBoundingBoxToPoint (point);
-
-  genOctreeKeyForPoint (point, key);
-
-  add (key, point);
-}
-
-void
 Octree::adoptBoundingBoxToPoint (const Point& p)
 {
   if (leaf_count == 0) {
-    min_x = p.x - (resolution / 2);
-    min_y = p.y - (resolution / 2);
-    min_z = p.z - (resolution / 2);
-    max_x = p.x + (resolution / 2);
-    max_y = p.y + (resolution / 2);
-    max_z = p.z + (resolution / 2);
+    Vector half_resolution (m_resolution/2, m_resolution/2, m_resolution/2);
+    m_bounding_box.setMin (Vector (p)-half_resolution);
+    m_bounding_box.setMax (Vector (p)+half_resolution);
   }
   else {
     while (true) {
-      bool min_x_violation = p.x < min_x;
-      bool min_y_violation = p.y < min_y;
-      bool min_z_violation = p.z < min_z;
-      bool max_x_violation = p.x >= max_x;
-      bool max_y_violation = p.y >= max_y;
-      bool max_z_violation = p.z >= max_z;
+      Point min = m_bounding_box.getMin ();
+      Point max = m_bounding_box.getMax ();
+
+      bool min_x_violation = p.x < min.x;
+      bool min_y_violation = p.y < min.y;
+      bool min_z_violation = p.z < min.z;
+      bool max_x_violation = p.x >= max.x;
+      bool max_y_violation = p.y >= max.y;
+      bool max_z_violation = p.z >= max.z;
+      
       if (min_x_violation || min_y_violation || min_z_violation
         || max_x_violation || max_y_violation || max_z_violation) {
         OctreeBranch* new_root;
@@ -178,26 +155,26 @@ Octree::adoptBoundingBoxToPoint (const Point& p)
         new_root->setBranchChild (idx, *root);
         root = new_root;
 
-        side_length = max_x - min_x;
+        side_length = m_bounding_box.getWidth ();
         if (max_x_violation) {
-          max_x += side_length;
+          m_bounding_box.setMax (Vector (m_bounding_box.getMax ())+Vector(side_length, 0, 0));
         }
         else {
-          min_x -= side_length;
+          m_bounding_box.setMin (Vector (m_bounding_box.getMin ())-Vector(side_length, 0, 0));
         }
 
         if (max_y_violation) {
-          max_y += side_length;
+          m_bounding_box.setMax (Vector (m_bounding_box.getMax ())+Vector(0, side_length, 0));
         }
         else {
-          min_y -= side_length;
+          m_bounding_box.setMin (Vector (m_bounding_box.getMin ())-Vector(0, side_length, 0));
         }
 
         if (max_z_violation) {
-          max_z += side_length;
+          m_bounding_box.setMax (Vector (m_bounding_box.getMax ())+Vector(0, 0, side_length));
         }
         else {
-          min_z -= side_length;
+          m_bounding_box.setMin (Vector (m_bounding_box.getMin ())-Vector(0, 0, side_length));
         }
 
         branch_count++;
@@ -213,12 +190,9 @@ Octree::adoptBoundingBoxToPoint (const Point& p)
 void
 Octree::genOctreeKeyForPoint (const Point& p, OctreeKey& k) const
 {
-  k.x = floor ((p.x - min_x) / resolution);
-  k.y = floor ((p.y - min_y) / resolution);
-  k.z = floor ((p.z - min_z) / resolution);
-}
-
-void
-Octree::test ()
-{
+  Vector diff (Vector (p)-Vector (m_bounding_box.getMin ()));
+  diff /= m_resolution;
+  k.x = floor (diff.x);
+  k.y = floor (diff.y);
+  k.z = floor (diff.z);
 }

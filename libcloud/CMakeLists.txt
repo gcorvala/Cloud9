@@ -39,6 +39,7 @@ set(2D_INCS
 	)
 
 set(COMMON_SRCS
+	Common/Box.cpp
 	Common/Color.cpp
 	Common/Plane.cpp
 	Common/Point.cpp
@@ -48,6 +49,7 @@ set(COMMON_SRCS
 	)
 
 set(COMMON_INCS
+	Common/Box.h
 	Common/Color.h
 	Common/Plane.h
 	Common/Point.h

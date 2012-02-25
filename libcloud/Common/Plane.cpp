@@ -63,10 +63,10 @@ Plane::getTheta () const
   Float64 theta;
 
   theta = atan2 (b, a);
-  //if (theta < 0) {
-    //theta += 2.*M_PI;
-  //}
-  theta += M_PI;
+  if (theta < 0) {
+    theta += 2.*M_PI;
+  }
+  //theta += M_PI;
 
   return theta;
 }
@@ -77,7 +77,9 @@ Plane::getPhi () const
   Float64 phi;
 
   phi = atan2 (hypot (a, b), c);
-  phi += M_PI;
-
+  if (phi < 0) {
+    phi += 2.*M_PI;
+  }
+  
   return phi;
 }
