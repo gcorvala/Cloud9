@@ -66,7 +66,6 @@ Plane::getTheta () const
   if (theta < 0) {
     theta += 2.*M_PI;
   }
-  //theta += M_PI;
 
   return theta;
 }
