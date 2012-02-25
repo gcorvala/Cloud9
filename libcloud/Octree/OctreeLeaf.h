@@ -7,6 +7,9 @@
 
 class OctreeLeaf : public OctreeNode {
   public:
+    typedef OctreeLeaf* ptr;
+    typedef const OctreeLeaf* const_ptr;
+
     OctreeLeaf ();
     virtual ~OctreeLeaf ();
     virtual void setData (const Point& p) = 0;

@@ -3,6 +3,9 @@
 
 class OctreeNode {
   public:
+    typedef OctreeNode* ptr;
+    typedef const OctreeNode* const_ptr;
+
     OctreeNode ();
     virtual ~OctreeNode ();
     virtual bool isBranch () const;

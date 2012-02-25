@@ -1,6 +1,5 @@
 #include "OctreeIterator.h"
 
-#if 0
 #include <iostream> // FIXME
 
 OctreeIterator::OctreeIterator (const Octree& o)
@@ -146,7 +145,3 @@ OctreeIterator::operator++ (int)
   ++*this;
   return tmp;
 }
-
-#else
-
-#endif

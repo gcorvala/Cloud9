@@ -6,6 +6,9 @@
 
 class Point {
   public:
+    typedef Point* ptr;
+    typedef const Point* const_ptr;
+
     Point (Float64 _x = 0, Float64 _y = 0, Float64 _z = 0, const Color& color = Color ());
     virtual ~Point ();
     Point operator= (const Point& p);

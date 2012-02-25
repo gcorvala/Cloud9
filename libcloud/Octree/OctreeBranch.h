@@ -5,6 +5,9 @@
 
 class OctreeBranch : public OctreeNode {
   public:
+    typedef OctreeBranch* ptr;
+    typedef const OctreeBranch* const_ptr;
+
     OctreeBranch ();
     virtual ~OctreeBranch ();
     void setBranchChild (const unsigned char idx, const OctreeNode& child);
@@ -12,7 +15,7 @@ class OctreeBranch : public OctreeNode {
     bool hasChild (const unsigned char idx) const;
     bool isBranch () const;
   protected:
-    const OctreeNode * children[8];
+    OctreeNode::const_ptr children[8];
 };
 
 #endif

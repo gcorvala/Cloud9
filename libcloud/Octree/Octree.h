@@ -18,11 +18,14 @@ class Octree {
   public:
     typedef OctreeIterator iterator;
     typedef const OctreeIterator const_iterator;
+    typedef Octree* ptr;
+    typedef const Octree* const_ptr;
 
     Octree (const Float64 resolution);
     virtual ~Octree ();
 
     UInt32 getDepth () const;
+
     Float64 getResolution () const;
     void setResolution (Float64 resolution);
 
@@ -31,7 +34,7 @@ class Octree {
     void add (const Point& point);
     void add (const PointCloud& cloud);
 
-    bool existLeaf (unsigned int x_idx, unsigned int y_idx, unsigned int z_idx) const;
+    bool existLeaf (UInt32 x_idx, UInt32 y_idx, UInt32 z_idx) const;
 
     UInt32 getLeafCount () const;
     UInt32 getBranchCount () const;
@@ -48,8 +51,8 @@ class Octree {
     bool get (const OctreeKey& k, Point& p) const;
     bool existLeaf (const OctreeKey& k) const;
     void removeLeaf (const OctreeKey& k);
-    OctreeLeaf * getLeaf (const OctreeKey& k);
-    OctreeLeaf * getLeafRecursive (const OctreeKey& k, const unsigned int depth, OctreeBranch& branch);
+    OctreeLeaf::ptr getLeaf (const OctreeKey& k);
+    OctreeLeaf::ptr getLeafRecursive (const OctreeKey& k, const unsigned int depth, OctreeBranch& branch);
     void adoptBoundingBoxToPoint (const Point& p);
     void genOctreeKeyForPoint (const Point& p, OctreeKey& k) const;
   protected:
@@ -59,9 +62,9 @@ class Octree {
     UInt32 leaf_count;
     UInt32 object_count;
 
-    OctreeBranch* root;
+    OctreeBranch::ptr root;
 
-    unsigned int depth;
+    UInt32 depth;
 };
 
 #endif
