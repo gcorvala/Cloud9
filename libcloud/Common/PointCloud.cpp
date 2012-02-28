@@ -38,20 +38,20 @@ PointCloud::end () const
   return points.end ();
 }
 
-size_t
+UInt32
 PointCloud::size () const
 {
   return points.size ();
 }
 
 void
-PointCloud::reserve (size_t n)
+PointCloud::reserve (UInt32 n)
 {
   points.reserve (n);
 }
 
 void
-PointCloud::resize (size_t n)
+PointCloud::resize (UInt32 n)
 {
   points.resize (n);
 }
@@ -63,25 +63,25 @@ PointCloud::empty ()
 }
 
 const Point&
-PointCloud::operator[] (size_t n) const
+PointCloud::operator[] (UInt32 n) const
 {
   return points[n];
 }
 
 Point&
-PointCloud::operator[] (size_t n)
+PointCloud::operator[] (UInt32 n)
 {
   return points[n];
 }
 
 const Point&
-PointCloud::at (size_t n) const
+PointCloud::at (UInt32 n) const
 {
   return points.at (n);
 }
 
 Point&
-PointCloud::at (size_t n)
+PointCloud::at (UInt32 n)
 {
   return points.at (n);
 }
@@ -123,7 +123,7 @@ PointCloud::insert (iterator position, const Point& p)
 }
 
 void
-PointCloud::insert (iterator position, size_t n, const Point& p)
+PointCloud::insert (iterator position, UInt32 n, const Point& p)
 {
   points.insert (position, n, p);
 }
@@ -176,4 +176,10 @@ PointCloud::getMax () const
   }
 
   return max;
+}
+
+Box
+PointCloud::getBoundingBox () const
+{
+  return Box (getMin (), getMax ());
 }

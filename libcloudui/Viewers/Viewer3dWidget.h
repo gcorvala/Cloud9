@@ -33,7 +33,7 @@ class Viewer3dWidget : public QGLWidget {
     void mouseMoveEvent (QMouseEvent* event);
     void wheelEvent (QWheelEvent* event);
 
-  private:
+  //private:
     int x_rotation;
     int y_rotation;
     int z_rotation;

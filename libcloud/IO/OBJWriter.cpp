@@ -31,7 +31,7 @@ OBJWriter::write (const std::string& file_name, const PointCloud& cloud, const b
 
   for (it = cloud.begin (); it != cloud.end (); ++it) {
     output << "v " << (*it).x << " " << (*it).y << " " << (*it).z;
-    output << " " << it->m_color.r << " " << it->m_color.g << " " << it->m_color.b << std::endl;
+    output << " " << (UInt32) it->m_color.r << " " << (UInt32) it->m_color.g << " " << (UInt32) it->m_color.b << std::endl;
   }
 
   return 0;

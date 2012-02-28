@@ -4,17 +4,26 @@
 #include <stdlib.h>
 #include <math.h>
 
+/*
+  Box-Muller method
+*/
+
+Float64
+gaussianRand (double mu, double sigma) {
+  Float64 u = ((Float64) rand ())/((Float64) RAND_MAX);
+  Float64 b = ((Float64) rand ())/((Float64) RAND_MAX);
+
+  Float64 g = sqrt (-2.0*log(u))*cos (2.*M_PI*b);
+
+  return (mu+sigma*g);
+}
+
 void
 normalNoise (Point& point, Float64 sigma)
 {
-  Float64 noise;
-  Float64 random = (Float64) (rand () % 100)/100;
-  noise = Float64 (rand () % 10000)/1000-5;
-  point.x += noise;
-  noise = Float64 (rand () % 10000)/1000-5;
-  point.y += noise;
-  noise = Float64 (rand () % 10000)/1000-5;
-  point.z += noise;
+  point.x = gaussianRand (point.x, sigma);
+  point.y = gaussianRand (point.y, sigma);
+  point.z = gaussianRand (point.z, sigma);
 }
 
 int
@@ -25,7 +34,7 @@ main (int argc, char** argv)
   PointCloud::iterator it;
 
   if (argc != 5) {
-    std::cout << "Usage : " << argv[0] << " nb_points_per_faces gaussian_sigma width output.obj" << std::endl;
+    std::cout << "Usage : " << argv[0] << " n sigma w output.obj" << std::endl;
     return -1;
   }
 
@@ -42,7 +51,7 @@ main (int argc, char** argv)
     Float64 y = rand ()%width;
     Float64 z = (Float64) width/2;
     Point p (x-z, y-z, z);
-    p.m_color = Color (127+(rand () % 127), 127+(rand () % 127), 127+(rand () % 127));
+    p.m_color = Color (rand () % 256, rand () % 256, rand () % 256);
     cloud.push_back (p);
   }
 
@@ -52,7 +61,7 @@ main (int argc, char** argv)
     Float64 y = rand ()%width;
     Float64 z = (Float64) width/2;
     Point p (x-z, y-z, -z);
-    p.m_color = Color (127+(rand () % 127), 127+(rand () % 127), 127+(rand () % 127));
+    p.m_color = Color (rand () % 256, rand () % 256, rand () % 256);
     cloud.push_back (p);
   }
 
@@ -62,7 +71,7 @@ main (int argc, char** argv)
     Float64 y = (Float64) width/2;
     Float64 z = rand ()%width;
     Point p (x-y, y, z-y);
-    p.m_color = Color (127+(rand () % 127), 127+(rand () % 127), 127+(rand () % 127));
+    p.m_color = Color (rand () % 256, rand () % 256, rand () % 256);
     cloud.push_back (p);
   }
 
@@ -72,7 +81,7 @@ main (int argc, char** argv)
     Float64 y = (Float64) width/2;
     Float64 z = rand ()%width;
     Point p (x-y, -y, z-y);
-    p.m_color = Color (127+(rand () % 127), 127+(rand () % 127), 127+(rand () % 127));
+    p.m_color = Color (rand () % 256, rand () % 256, rand () % 256);
     cloud.push_back (p);
   }
 
@@ -82,7 +91,7 @@ main (int argc, char** argv)
     Float64 y = rand ()%width;
     Float64 z = rand ()%width;
     Point p (x, y-x, z-x);
-    p.m_color = Color (127+(rand () % 127), 127+(rand () % 127), 127+(rand () % 127));
+    p.m_color = Color (rand () % 256, rand () % 256, rand () % 256);
     cloud.push_back (p);
   }
 
@@ -92,7 +101,7 @@ main (int argc, char** argv)
     Float64 y = rand ()%width;
     Float64 z = rand ()%width;
     Point p (-x, y-x, z-x);
-    p.m_color = Color (127+(rand () % 127), 127+(rand () % 127), 127+(rand () % 127));
+    p.m_color = Color (rand () % 256, rand () % 256, rand () % 256);
     cloud.push_back (p);
   }
 

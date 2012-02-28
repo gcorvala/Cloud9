@@ -43,7 +43,7 @@ main (int argc, char** argv)
 
   GaussianEstimator gaussian;
   gaussian.setAperture (9);
-  gaussian.setSigma (5.3);
+  gaussian.setSigma (6.3);
 
   gaussian.compute (param, blurredParam);
   

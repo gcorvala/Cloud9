@@ -1,4 +1,4 @@
-set(2D_SRCS 
+set (2D_SRCS 
 	2D/CannyEstimator.cpp
 	2D/FourierEstimator.cpp
 	2D/GaussianEstimator.cpp
@@ -17,7 +17,7 @@ set(2D_SRCS
 	2D/ThresholdEstimator.cpp
 	)
 
-set(2D_INCS
+set (2D_INCS
 	2D/CannyEstimator.h
 	2D/Estimator.h
 	2D/FourierEstimator.h
@@ -38,7 +38,7 @@ set(2D_INCS
 	2D/ThresholdEstimator.h
 	)
 
-set(COMMON_SRCS
+set (COMMON_SRCS
 	Common/Box.cpp
 	Common/Color.cpp
 	Common/Plane.cpp
@@ -48,7 +48,7 @@ set(COMMON_SRCS
 	Common/Vector.cpp
 	)
 
-set(COMMON_INCS
+set (COMMON_INCS
 	Common/Box.h
 	Common/Color.h
 	Common/Plane.h
@@ -59,17 +59,17 @@ set(COMMON_INCS
 	Common/Vector.h
 	)
 
-set(FEATURES_SRCS
+set (FEATURES_SRCS
 	Features/Feature.cpp
 	Features/NormalEstimator.cpp
 	)
 
-set(FEATURES_INCS
+set (FEATURES_INCS
 	Features/Feature.h
 	Features/NormalEstimator.h
 	)
 
-set(FILTERS_SRCS
+set (FILTERS_SRCS
 	Filters/CropBoxFilter.cpp
 	Filters/Filter.cpp
 	Filters/HoughFilter.cpp
@@ -77,7 +77,7 @@ set(FILTERS_SRCS
 	Filters/TranslateFilter.cpp
 	)
 
-set(FILTERS_INCS
+set (FILTERS_INCS
 	Filters/CropBoxFilter.h
 	Filters/Filter.h
 	Filters/HoughFilter.h
@@ -85,7 +85,7 @@ set(FILTERS_INCS
 	Filters/TranslateFilter.h
 	)
 
-set(IO_SRCS
+set (IO_SRCS
 	IO/FileReader.cpp
 	IO/FileWriter.cpp
 	IO/OBJReader.cpp
@@ -96,7 +96,7 @@ set(IO_SRCS
 	IO/XYZWriter.cpp
 	)
 
-set(IO_INCS
+set (IO_INCS
 	IO/FileReader.h
 	IO/FileWriter.h
 	IO/OBJReader.h
@@ -107,17 +107,17 @@ set(IO_INCS
 	IO/XYZWriter.h
 	)
 
-set(KDTREE_SRCS
+set (KDTREE_SRCS
 	Kdtree/Kdtree.cpp
 	Kdtree/KdtreeNode.cpp
 	)
 
-set(KDTREE_INCS
+set (KDTREE_INCS
 	Kdtree/Kdtree.h
 	Kdtree/KdtreeNode.h
 	)
 
-set(OCTREE_SRCS
+set (OCTREE_SRCS
 	Octree/Octree.cpp
 	Octree/OctreeBranch.cpp
 	Octree/OctreeIterator.cpp
@@ -126,7 +126,7 @@ set(OCTREE_SRCS
 	Octree/OctreeNode.cpp
 	)
 
-set(OCTREE_INCS
+set (OCTREE_INCS
 	Octree/Octree.h
 	Octree/OctreeBranch.h
 	Octree/OctreeIterator.h
@@ -135,20 +135,51 @@ set(OCTREE_INCS
 	Octree/OctreeNode.h
 	)
 
-set(SEARCH_SRCS
+set (SEARCH_SRCS
 	Search/FlannSearch.cpp
 	Search/LinearSearch.cpp
 	Search/Search.cpp
 	)
 
-set(SEARCH_INCS
+set (SEARCH_INCS
 	Search/FlannSearch.h
 	Search/LinearSearch.h
 	Search/Search.h
 	)
 
-set(SRCS ${2D_SRCS} ${COMMON_SRCS} ${FEATURES_SRCS} ${FILTERS_SRCS} ${IO_SRCS} ${KDTREE_SRCS} ${OCTREE_SRCS} ${SEARCH_SRCS})
-set(INCS ${2D_INCS} ${COMMON_INCS} ${FEATURES_INCS} ${FILTERS_INCS} ${IO_INCS} ${KDTREE_INCS} ${OCTREE_INCS} ${SEARCH_INCS})
+set (SLICERS_SRCS
+	Slicers/Slicer.cpp
+	Slicers/XYSlicer.cpp
+	)
+
+set (SLICERS_INCS
+	Slicers/Slicer.h
+	Slicers/XYSlicer.h
+	)
+
+set (SRCS
+	${2D_SRCS}
+	${COMMON_SRCS}
+	${FEATURES_SRCS}
+	${FILTERS_SRCS}
+	${IO_SRCS}
+	${KDTREE_SRCS}
+	${OCTREE_SRCS}
+	${SEARCH_SRCS}
+	${SLICERS_SRCS}
+	)
+
+set (INCS
+	${2D_INCS}
+	${COMMON_INCS}
+	${FEATURES_INCS}
+	${FILTERS_INCS}
+	${IO_INCS}
+	${KDTREE_INCS}
+	${OCTREE_INCS}
+	${SEARCH_INCS}
+	${SLICERS_INCS}
+	)
 
 include (../cmake/FindFlann.cmake)
 include (../cmake/FindFftw3.cmake)

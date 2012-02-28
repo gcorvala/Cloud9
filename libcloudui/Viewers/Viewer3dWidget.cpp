@@ -4,6 +4,7 @@
 #include "../Actors/PointCloudActor.h"
 #include "../Actors/AxisActor.h"
 #include "../Actors/BoxActor.h"
+#include "../Actors/PlaneActor.h"
 
 Viewer3dWidget::Viewer3dWidget (QWidget *parent)
   :QGLWidget(QGLFormat (), parent)
@@ -13,7 +14,9 @@ Viewer3dWidget::Viewer3dWidget (QWidget *parent)
   ,m_zoom_factor(1)
 {
   actors.push_back (new AxisActor ());
-  actors.push_back (new BoxActor (Point (-100, 50, -100), Point (100, 100, 100)));
+  //actors.push_back (new BoxActor (Point (-100, 50, -100), Point (100, 100, 100)));
+
+  //actors.push_back (new PlaneActor (Plane (650.715, 1.54712, 1.54712)));
 }
 
 Viewer3dWidget::~Viewer3dWidget ()
@@ -37,6 +40,14 @@ void
 Viewer3dWidget::add (const QString& key, PointCloud* cloud)
 {
   actors.push_back (new PointCloudActor (*cloud));
+
+  updateGL ();
+}
+
+void
+Viewer3dWidget::add (const QString& key, Plane* plane)
+{
+  actors.push_back (new PlaneActor (*plane));
 
   updateGL ();
 }

@@ -4,8 +4,8 @@
 #include "HysteresisThresholdEstimator.h"
 
 CannyEstimator::CannyEstimator ()
-  :high_threshold(120)
-  ,low_threshold(5)
+  :high_threshold(200)
+  ,low_threshold(100)
 {
 }
 

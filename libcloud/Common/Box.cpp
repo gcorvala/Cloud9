@@ -3,9 +3,33 @@
 #include "Vector.h"
 
 Box::Box (const Point& min, const Point& max)
-  :m_min(min)
-  ,m_max(max)
 {
+  if (min.x < max.x) {
+    m_min.x = min.x;
+    m_max.x = max.x;
+  }
+  else {
+    m_min.x = max.x;
+    m_max.x = min.x;
+  }
+
+  if (min.y < max.y) {
+    m_min.y = min.y;
+    m_max.y = max.y;
+  }
+  else {
+    m_min.y = max.y;
+    m_max.y = min.y;
+  }
+
+  if (min.z < max.z) {
+    m_min.z = min.z;
+    m_max.z = max.z;
+  }
+  else {
+    m_min.z = max.z;
+    m_max.z = min.z;
+  }
 }
 
 Box::~Box ()

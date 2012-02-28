@@ -82,3 +82,21 @@ Plane::getPhi () const
   
   return phi;
 }
+
+Float64
+Plane::getXValue (Float64 y, Float64 z) const
+{
+  return -(b*y+c*z+d)/a;
+}
+
+Float64
+Plane::getYValue (Float64 x, Float64 z) const
+{
+  return -(a*x+c*z+d)/b;
+}
+
+Float64
+Plane::getZValue (Float64 x, Float64 y) const
+{
+  return -(a*x+b*y+d)/c;
+}

@@ -8,9 +8,10 @@ PointCloudActor::PointCloudActor (const PointCloud& cloud)
 {
   PointCloud::const_iterator it;
 
-  Point min = cloud.getMin ();
+/*  Point min = cloud.getMin ();
   Point max = cloud.getMax ();
-  Point center ((min.x+max.x)/2, (min.y+max.y)/2, (min.z+max.z)/2);
+  Point center ((min.x+max.x)/2, (min.y+max.y)/2, (min.z+max.z)/2);*/
+    Point center;
 
   for (it = cloud.begin (); it != cloud.end (); ++it) {
     const Point& p = *it;
