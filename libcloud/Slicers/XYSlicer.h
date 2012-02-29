@@ -3,13 +3,14 @@
 
 #include "Slicer.h"
 #include "../Common/Types.h"
+#include "../Common/PointCloud.h"
 #include <vector>
 
 class XYSlicer : public Slicer {
   public:
     XYSlicer (Float64 thickness, UInt32 resolution);
     virtual ~XYSlicer ();
-    void compute (const PointCloud& input, std::vector<Matrix<UInt8> >& output) const;
+    void compute (const PointCloud& input, std::vector<PointCloud>& output) const;
 };
 
 #endif

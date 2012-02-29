@@ -17,17 +17,17 @@ main (int argc, char** argv)
   HoughFilter hough;
   Plane plane;
   Viewer3dWidget viewer;
-  //CropBoxFilter crop (Point (500, -10000, 600), Point (1000, 1000, 900));
+  CropBoxFilter crop (Point (00, -10000, 500), Point (1000, 1000, 900));
 
   reader.read (argv[1], cloud);
 
   std::cout << "size:" << cloud.size () << std::endl;
 
-  //crop.compute (cloud, tmp);
+  crop.compute (cloud, tmp);
 
   std::cout << "size:" << tmp.size () << std::endl;
 
-  hough.compute (cloud, cloud, plane);
+  hough.compute (tmp, cloud, plane);
 
   viewer.add ("abc", &cloud);
   viewer.add ("abc", &plane);

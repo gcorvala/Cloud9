@@ -9,7 +9,7 @@ main (int argc, char** argv)
   OBJReader reader;
   PointCloud cloud;
   XYSlicer slicer (10, 1024);
-  std::vector<Matrix<UInt8> > result;
+  std::vector<PointCloud> result;
 
   reader.read (argv[1], cloud);
 
