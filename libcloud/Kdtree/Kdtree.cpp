@@ -3,6 +3,7 @@
 #include <algorithm>
 
 Kdtree::Kdtree ()
+  :root (NULL)
 {
 }
 

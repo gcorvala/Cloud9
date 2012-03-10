@@ -7,6 +7,6 @@ include (${QT_USE_FILE})
 add_executable (slicer slicer.cpp)
 
 target_link_libraries (slicer ${QT_LIBRARIES})
-target_link_libraries (slicer cloud)
+target_link_libraries (slicer cloudui)
 
 install (TARGETS slicer DESTINATION bin)

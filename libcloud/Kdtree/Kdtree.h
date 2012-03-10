@@ -12,6 +12,8 @@ class Kdtree {
     Kdtree ();
     virtual ~Kdtree ();
     void setInputCloud (const PointCloud& _cloud);
+    void add (const Point& point);
+    void add (const PointCloud& cloud);
     void addPointsFromCloud ();
     const Point& nearestSearch (unsigned int index) const;
     unsigned int nearestKSearch (unsigned int index, unsigned int k, std::vector<unsigned int>& indices, std::vector<double>& distances);
