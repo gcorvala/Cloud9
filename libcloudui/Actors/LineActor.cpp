@@ -1,6 +1,11 @@
 #include "LineActor.h"
 
-#include <gl/GL.h>
+#if (CMAKE_SYSTEM_NAME == Linux)
+  #include <GL/gl.h>
+#else
+  #include <gl/GL.h>
+#endif
+
 #include <math.h>
 
 LineActor::LineActor (const Point& start, const Point& end)
