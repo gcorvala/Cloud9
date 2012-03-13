@@ -46,4 +46,12 @@ class PointCloud {
     std::vector<Point> points;
 };
 
+template <class PointT>
+class PointCloudT : public std::vector <PointT> {
+  public:
+    PointCloudT ();
+    virtual ~PointCloudT ();
+  protected:
+};
+
 #endif

@@ -16,6 +16,8 @@ Line::Line (Float64 rho, Float64 theta)
   ,b(sin (theta))
   ,c(-rho)
 {
+  std::cout << "line rho:" << rho << " theta:" << theta << std::endl;
+  std::cout << "line a:" << a << " b:" << b << " c:" << c << std::endl;
 }
 
 Line::Line (Float64 _a, Float64 _b, Float64 _c)
@@ -80,4 +82,10 @@ Float64
 Line::getYValue (Float64 x) const
 {
   return -(a*x+c)/b;
+}
+
+void
+Line::translate (const Vector& v)
+{
+  c += a*v.x+b*v.y;
 }

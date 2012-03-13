@@ -34,6 +34,9 @@ ImageDrawer::drawLine (const Line& line, const Color& color)
   for (UInt32 i = 0; i < image.getCols (); ++i) {
     drawPoint (Point (i, line.getYValue (i)), color);
   }
+  for (UInt32 i = 0; i < image.getRows (); ++i) {
+    drawPoint (Point (line.getXValue (i), i), color);
+  }
 }
 
 Image

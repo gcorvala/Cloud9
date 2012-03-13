@@ -15,7 +15,6 @@ HoughEstimator::~HoughEstimator ()
 void
 HoughEstimator::compute (const Matrix<UInt8>& input, Matrix<UInt32>& output) const
 {
-  GaussianEstimator gaussian;
   output.resize (n_theta, n_rho);
 
   Float64 theta_init = 3./2.*M_PI;
@@ -35,6 +34,44 @@ HoughEstimator::compute (const Matrix<UInt8>& input, Matrix<UInt32>& output) con
           output (k, l) += 1;
         }
       }
+    }
+  }
+}
+
+void
+HoughEstimator::compute (const PointCloud& cloud, Matrix<UInt32>& output) const
+{
+  PointCloud::const_iterator it;
+
+  output.resize (n_theta, n_rho);
+
+  //Float64 theta_init = 3./2.*M_PI;
+  Float64 theta_init = 0;
+  Float64 theta_step = getThetaStep ();
+  Float64 rho_step = getRhoStep (cloud);
+  std::cout << "theta_step:" << theta_step << std::endl;
+  std::cout << "rho_step:" << rho_step << std::endl;
+
+  int i = 0;
+  Point min = cloud.getMin ();
+  Point max = cloud.getMax ();
+  Point center = (Vector (min)+Vector (max))/2;
+  Float64 h = min.distanceTo (max);
+
+  std::cout << "cloud size:" << cloud.size () << std::endl;
+
+  for (it = cloud.begin (); it != cloud.end (); ++it) {
+    std::cout << ++i << std::endl;
+    //Point p = Vector (*it)-Vector (min);
+    for (UInt32 k = 0; k < n_theta; ++k) {
+      Float64 theta = theta_init+k*theta_step;
+      if (theta >= 2.*M_PI) {
+        theta -= 2.*M_PI;
+      }
+      Float64 rho = it->x*cos (theta)+it->y*sin (theta)+h;
+      //Float64 rho = p.x*cos (theta)+p.y*sin (theta)+h;
+      UInt32 l = rho/rho_step;
+      output (k, l) += 1;
     }
   }
 }
@@ -75,4 +112,10 @@ HoughEstimator::getRhoStep (const Matrix<UInt8>& input) const
 {
   Float64 rho_max = 2*hypot (input.getRows (), input.getCols ());
   return rho_max/(n_rho-1);
+}
+
+Float64
+HoughEstimator::getRhoStep (const PointCloud& cloud) const
+{
+  return 2*(cloud.getMin ().distanceTo (cloud.getMax ()))/(n_rho-1);
 }

@@ -2,6 +2,7 @@
 #define __LINE_H__
 
 #include "../Common/Point.h"
+#include "../Common/Vector.h"
 
 class Line {
   public:
@@ -26,7 +27,9 @@ class Line {
     bool isHorizontal () const;
 
     Point getIntersection () const;
-  protected:
+
+    void translate (const Vector& v);
+  //protected:
     // FIXME : Forme ax+by+c=0
     Float64 a;
     Float64 b;

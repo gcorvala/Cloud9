@@ -36,6 +36,15 @@ Point::operator!= (const Point& p) const
   return (x != p.x) || (y != p.y) || (z != p.z);
 }
 
+Float64
+Point::distanceTo (const Point& p) const
+{
+  Float64 dx = p.x-x;
+  Float64 dy = p.y-y;
+  Float64 dz = p.z-z;
+  return sqrt (dx*dx+dy*dy+dz*dz);
+}
+
 std::ostream&
 operator<< (std::ostream& out, const Point& p)
 {

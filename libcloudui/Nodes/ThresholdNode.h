@@ -13,7 +13,7 @@ class ThresholdNode : public Node {
 
       void run ();
 
-      ThresholdEstimator threshold;
+      ThresholdEstimator<UInt8> threshold;
       Matrix<UInt8>* input;
       Matrix<UInt8> output;
   };

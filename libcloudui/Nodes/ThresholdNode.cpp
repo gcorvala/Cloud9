@@ -48,8 +48,5 @@ ThresholdNode::ThresholdThread::~ThresholdThread ()
 void
 ThresholdNode::ThresholdThread::run ()
 {
-  Matrix<double> t1, t2;
-  t1 = *input;
-  threshold.compute (t1, t2);
-  output = t2;
+  threshold.compute (*input, output);
 }

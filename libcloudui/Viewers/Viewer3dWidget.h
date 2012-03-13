@@ -5,6 +5,7 @@
 #include <QMap>
 #include <libcloud/Common/PointCloud.h>
 #include <libcloud/Common/Plane.h>
+#include <libcloud/2D/Line.h>
 #include "../Actors/Actor.h"
 
 class Viewer3dWidget : public QGLWidget {
@@ -19,6 +20,8 @@ class Viewer3dWidget : public QGLWidget {
 
     void add (const QString& key, PointCloud* cloud);
     void add (const QString& key, Plane* plane);
+    void add (const QString& key, Line* line);
+    void add (const Line& line);
 
   public slots:
     void setXRotation (int angle);

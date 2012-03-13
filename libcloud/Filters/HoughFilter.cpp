@@ -126,9 +126,9 @@ HoughFilter::compute (const PointCloud& input, PointCloud& output, Plane& plane)
     std::cout << "HoughFilter::compute" << std::endl;
 
     output = input;
-    UInt32 n_theta = 200;
-    UInt32 n_phi = 200;
-    UInt32 n_rho = 200;
+    UInt32 n_theta = 400;
+    UInt32 n_phi = 400;
+    UInt32 n_rho = 400;
 
     double theta_step = 2*M_PI/(n_theta-1);
     double phi_step = 2*M_PI/(n_phi-1);
@@ -178,21 +178,28 @@ HoughFilter::compute (const PointCloud& input, PointCloud& output, Plane& plane)
 
 
     for (UInt32 i = 0; i < output.size ()-2; i += 3) {
-      Plane plane (output[i], output[i+1], output[i+2]);
+      const Point& p1 = output[i];
+      const Point& p2 = output[i+1];
+      const Point& p3 = output[i+2];
 
-      UInt32 theta_idx = plane.getTheta ()/theta_step;
-      UInt32 phi_idx = plane.getPhi ()/phi_step;
-      // FIXME : n_rho/2 ?
-      UInt32 rho_idx = plane.getRho ()/rho_step+n_rho/2;
+      Float64 min_dist = 1e20;
+//      if (p1.distanceTo (p2) < min_dist && p1.distanceTo (p3) < min_dist && p2.distanceTo (p3) < min_dist) {
+            Plane plane (p1, p2, p3);
 
-  /*    std::cout << "theta:" << plane.getTheta () << std::endl;
-      std::cout << "phi:" << plane.getPhi () << std::endl;
-      std::cout << "rho:" << plane.getRho () << std::endl;
-      std::cout << "theta_idx:" << theta_idx << std::endl;
-      std::cout << "phi_idx:" << phi_idx << std::endl;
-      std::cout << "rho_idx:" << rho_idx << std::endl;*/
-      accumulator[theta_idx][phi_idx][rho_idx]++;
-  //    std::cout << n << std::endl;
+            UInt32 theta_idx = plane.getTheta ()/theta_step;
+            UInt32 phi_idx = plane.getPhi ()/phi_step;
+            // FIXME : n_rho/2 ?
+            UInt32 rho_idx = plane.getRho ()/rho_step+n_rho/2;
+
+        /*    std::cout << "theta:" << plane.getTheta () << std::endl;
+            std::cout << "phi:" << plane.getPhi () << std::endl;
+            std::cout << "rho:" << plane.getRho () << std::endl;
+            std::cout << "theta_idx:" << theta_idx << std::endl;
+            std::cout << "phi_idx:" << phi_idx << std::endl;
+            std::cout << "rho_idx:" << rho_idx << std::endl;*/
+            accumulator[theta_idx][phi_idx][rho_idx]++;
+        //    std::cout << n << std::endl;
+//      }
     }
 
     std::cout << "min:" << min << " max:" << max << std::endl;

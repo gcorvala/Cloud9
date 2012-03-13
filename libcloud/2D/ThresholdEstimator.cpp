@@ -1,3 +1,4 @@
+#if 0
 #include "ThresholdEstimator.h"
 
 ThresholdEstimator::ThresholdEstimator ()
@@ -37,3 +38,4 @@ ThresholdEstimator::setThreshold (Float64 t)
 {
   threshold = t;
 }
+#endif

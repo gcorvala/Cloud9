@@ -5,6 +5,8 @@
 #include "../Actors/AxisActor.h"
 #include "../Actors/BoxActor.h"
 #include "../Actors/PlaneActor.h"
+#include "../Actors/LineActor.h"
+#include <math.h>
 
 Viewer3dWidget::Viewer3dWidget (QWidget *parent)
   :QGLWidget(QGLFormat (), parent)
@@ -14,6 +16,14 @@ Viewer3dWidget::Viewer3dWidget (QWidget *parent)
   ,m_zoom_factor(1)
 {
   actors.push_back (new AxisActor ());
+/*  actors.push_back (new LineActor (Line (100, M_PI/4)));
+  actors.push_back (new LineActor (Line (100, M_PI/2)));
+  actors.push_back (new LineActor (Line (100, 3*M_PI/4)));
+  actors.push_back (new LineActor (Line (100, M_PI)));
+  actors.push_back (new LineActor (Line (100, 5*M_PI/4)));
+  actors.push_back (new LineActor (Line (100, 3*M_PI/2)));
+  actors.push_back (new LineActor (Line (100, 7*M_PI/4)));
+  actors.push_back (new LineActor (Line (100, 2*M_PI)));*/
   //actors.push_back (new BoxActor (Point (-100, 50, -100), Point (100, 100, 100)));
 
   //actors.push_back (new PlaneActor (Plane (650.715, 1.54712, 1.54712)));
@@ -50,6 +60,23 @@ Viewer3dWidget::add (const QString& key, Plane* plane)
   actors.push_back (new PlaneActor (*plane));
 
   updateGL ();
+}
+
+void
+Viewer3dWidget::add (const QString& key, Line* line)
+{
+  actors.push_back (new LineActor (*line));
+
+  updateGL ();
+}
+
+void
+Viewer3dWidget::add (const Line& line)
+{
+  actors.push_back (new LineActor (line));
+
+  updateGL ();
+  std::cout << "aie" << std::endl;
 }
 
 static void qNormalizeAngle(int &angle)

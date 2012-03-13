@@ -13,7 +13,7 @@ HysteresisThresholdEstimator::~HysteresisThresholdEstimator ()
 void
 HysteresisThresholdEstimator::compute (const Matrix<Float64>& input, Matrix<Float64>& output) const
 {
-  ThresholdEstimator threshold;
+  ThresholdEstimator<Float64> threshold;
   Matrix<Float64> high;
   Matrix<Float64> low;
 
