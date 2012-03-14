@@ -25,37 +25,4 @@ class Point {
     friend std::ostream& operator<< (std::ostream& out, const Point& p);
 };
 
-template <typename T>
-class Point2D {
-  public:
-    typedef Point2D<T>* ptr;
-    typedef const Point2D<T>* const_ptr;
-
-    Point2D (T x, T y);
-    Point2D (const Point2D& p);
-    virtual ~Point2D ();
-
-  private:
-    T m_x;
-    T m_y;
-};
-
-template <typename T>
-Point2D<T>::Point2D (T x, T y)
-  :m_x(x)
-  ,m_y(y)
-{
-}
-
-template <typename T>
-Point2D<T>::Point2D (const Point2D& p)
-  :m_x(p.x)
-  ,m_y(p.y)
-{
-}
-
-template <typename T>
-Point2D<T>::~Point2D ()
-{
-}
 #endif
