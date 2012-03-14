@@ -6,7 +6,7 @@
 MeanShiftEstimator::MeanShiftEstimator ()
   :row_step(15)
   ,col_step(15)
-  ,window_width(10)
+  ,window_width(15)
   ,max_iterations(300)
   ,epsilon(1e-10)
 {

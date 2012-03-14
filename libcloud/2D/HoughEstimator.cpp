@@ -41,6 +41,17 @@ HoughEstimator::compute (const Matrix<UInt8>& input, Matrix<UInt32>& output) con
 void
 HoughEstimator::compute (const PointCloud& cloud, Matrix<UInt32>& output) const
 {
+#if 1
+  PointCloud t = cloud;
+  std::random_shuffle (t.begin (), t.end ());
+
+  output.resize (n_theta, n_rho);
+
+  for (UInt32 i = 0; i < t.size (); i += 2) {
+    Line line (t[i], t[i+1]);
+    
+  }
+#else
   PointCloud::const_iterator it;
 
   output.resize (n_theta, n_rho);
@@ -74,6 +85,7 @@ HoughEstimator::compute (const PointCloud& cloud, Matrix<UInt32>& output) const
       output (k, l) += 1;
     }
   }
+#endif
 }
 
 UInt32

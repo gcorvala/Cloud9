@@ -28,4 +28,51 @@ class HoughEstimator : public Estimator<UInt8, UInt32> {
     UInt32 n_rho;
 };
 
+template <typename T>
+class Accumulator : public Matrix <T> {
+  public:
+    Accumulator (UInt32 rows = 0, UInt32 cols = 0);
+
+    T& operator() (UInt32 row, UInt32 col);
+    const T& operator() (UInt32 row, UInt32 col) const;
+    T& at (UInt32 row, UInt32 col);
+    const T& at (UInt32 row, UInt32 col) const;
+
+  protected:
+};
+
+template <typename T>
+Accumulator<T>::Accumulator (UInt32 rows, UInt32 cols)
+  :Matrix<T>(rows, cols)
+{
+}
+
+template <typename T>
+T&
+Accumulator<T>::operator() (UInt32 row, UInt32 col)
+{
+  return Matrix<T>::operator() (row%Matrix<T>::rows,col%Matrix<T>::cols);
+}
+
+template <typename T>
+const T&
+Accumulator<T>::operator() (UInt32 row, UInt32 col) const
+{
+  return Matrix<T>::operator() (row%Matrix<T>::rows,col%Matrix<T>::cols);
+}
+
+template <typename T>
+T&
+Accumulator<T>::at (UInt32 row, UInt32 col)
+{
+  return Matrix<T>::operator() (row%Matrix<T>::rows,col%Matrix<T>::cols);
+}
+
+template <typename T>
+const T&
+Accumulator<T>::at (UInt32 row, UInt32 col) const
+{
+  return Matrix<T>::operator() (row%Matrix<T>::rows,col%Matrix<T>::cols);
+}
+
 #endif

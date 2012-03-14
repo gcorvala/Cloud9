@@ -11,6 +11,7 @@ class Line {
     //static Line& createFrom (Float64 slope, Float64 y_intercept);
     Line (Float64 rho, Float64 theta);
     Line (Float64 _a, Float64 _b, Float64 _c);
+    Line (const Point& p1, const Point& p2);
     virtual ~Line ();
 
     Float64 getSlope () const;

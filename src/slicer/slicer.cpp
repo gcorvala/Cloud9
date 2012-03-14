@@ -77,14 +77,15 @@ main (int argc, char** argv)
   }
 
   Matrix<UInt8>  ms;
-  Matrix<UInt32> param;
+//  Matrix<UInt32> param;
+  Accumulator<UInt32> param;
   Matrix<UInt32> blurredParam;
   std::vector<Point> modes;
   HoughEstimator hough;
   ImageDrawer drawer (1024, 1024);
 
-  hough.setNTheta (1300);
-  hough.setNRho (1300);
+  hough.setNTheta (300);
+  hough.setNRho (300);
 
   //hough.compute (slice_matrix, param);
   hough.compute (slices[slice_id], param);
@@ -169,6 +170,8 @@ main (int argc, char** argv)
   viewer4.show ();
 
   viewer.show ();
+
+  qDebug ("Modes size: %d", modes.size ());
 
   return app.exec();
 }

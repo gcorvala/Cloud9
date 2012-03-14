@@ -27,6 +27,14 @@ Line::Line (Float64 _a, Float64 _b, Float64 _c)
 {
 }
 
+Line::Line (const Point& p1, const Point& p2)
+  :a(p1.y-p2.y)
+  ,b(p1.x-p2.x)
+  ,c(-a*p1.x-b*p1.y)
+{
+  // FIXME : write a test
+}
+
 Line::~Line ()
 {
 }
