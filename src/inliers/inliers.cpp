@@ -1,8 +1,8 @@
-
 #include <libcloud/Templates/Point2D.h>
 #include <libcloud/Templates/PointCloudT.h>
 #include <libcloud/Templates/LineInliersT.h>
 #include <libcloud/Templates/LineProjectorT.h>
+#include <libcloud/Templates/ExtractIndicesT.h>
 
 #include <iostream>
 
@@ -31,7 +31,8 @@ int
 main ()
 {
   PointCloudT < Point2D <double> > cloud;
-  PointCloudT < Point2D <double> > cloud_filtered;
+  PointCloudT < Point2D <double> > cloud2;
+  PointCloudT < Point2D <double> > cloud3;
 
   cloud.push_back (Point2D <double> (0, 0));
   cloud.push_back (Point2D <double> (1, 1));
@@ -51,9 +52,25 @@ main ()
 
   printIndices (indices);
 
+  ExtractIndicesT < Point2D <double> > extract;
+
+  extract.setIndices (indices);
+
+  std::cout << "negative" << std::endl;
+  extract.setNegative (true);
+  extract.compute (cloud, cloud2);
+
+  printCloud (cloud2);
+
+  std::cout << "positive" << std::endl;
+  extract.setNegative (false);
+  extract.compute (cloud, cloud2);
+
+  printCloud (cloud2);
+
   LineProjectorT <double> projector;
 
-  projector.compute (cloud, cloud_filtered);
+  projector.compute (cloud2, cloud3);
 
-  printCloud (cloud_filtered);
+  printCloud (cloud3);
 }

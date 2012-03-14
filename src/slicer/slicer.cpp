@@ -120,7 +120,7 @@ main (int argc, char** argv)
   //viewer.add (Line (-500, -M_PI/2));
   //viewer.add (Line (500, 0));
   //viewer.add (Line (-500, 0));*/
-  meanShift.compute (blurredParam, ms, modes);
+  //meanShift.compute (blurredParam, ms, modes);
   //meanShift.compute (param, ms, modes);
   
   // 45°

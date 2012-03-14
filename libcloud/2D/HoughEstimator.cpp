@@ -41,7 +41,7 @@ HoughEstimator::compute (const Matrix<UInt8>& input, Matrix<UInt32>& output) con
 void
 HoughEstimator::compute (const PointCloud& cloud, Matrix<UInt32>& output) const
 {
-#if 1
+#if 0
   PointCloud t = cloud;
   std::random_shuffle (t.begin (), t.end ());
 
