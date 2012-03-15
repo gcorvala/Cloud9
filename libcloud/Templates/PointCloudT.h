@@ -24,6 +24,7 @@ class PointCloudT {
     bool empty ();*/
     const PointT& operator[] (UInt32 n) const;
     PointT& operator[] (UInt32 n);
+    PointCloudT& operator+= (const PointCloudT& cloud);
 /*    const Point& at (UInt32 n) const;
     Point& at (UInt32 n);
     const Point& front () const;
@@ -104,6 +105,19 @@ PointT&
 PointCloudT <PointT>::operator[] (UInt32 n)
 {
   return m_points[n];
+}
+
+template <class PointT>
+PointCloudT <PointT>&
+PointCloudT <PointT>::operator+= (const PointCloudT& cloud)
+{
+  UInt32 s = m_points.size ();
+
+  m_points.resize (s+cloud.m_points.size ());
+
+  for (UInt32 i = s; i < m_points.size (); ++i) {
+    m_points[i] = cloud.m_points[i-s];
+  }
 }
 
 template <class PointT>

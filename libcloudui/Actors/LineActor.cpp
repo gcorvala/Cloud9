@@ -16,7 +16,7 @@ LineActor::LineActor (const Point& start, const Point& end)
 
 LineActor::LineActor (const Line& line)
 {
-  Float64 e = 2000;
+  Float64 e = 20000;
   if (line.getSlope () < M_PI/4) {
     m_start = Point (line.getXValue (e), e , 0);
     m_end = Point (line.getXValue (-e), -e, 0);

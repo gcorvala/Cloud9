@@ -52,7 +52,6 @@ LineInliers <T>::compute (const PointCloudT < Point2D <T> >& input, PointIndices
   indices.clear ();
 
   for (UInt32 i = 0; i < input.size (); ++i) {
-    std::cout << distanceLinePoint (m_line, input[i]) << std::endl;
     if (distanceLinePoint (m_line, input[i]) <= m_distance_threshold) {
       indices.push_back (i);
     }

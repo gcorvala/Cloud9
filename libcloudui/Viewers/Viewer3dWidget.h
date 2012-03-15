@@ -6,6 +6,8 @@
 #include <libcloud/Common/PointCloud.h>
 #include <libcloud/Common/Plane.h>
 #include <libcloud/2D/Line.h>
+#include <libcloud/Templates/PointCloudT.h>
+#include <libcloud/Templates/Point2D.h>
 #include "../Actors/Actor.h"
 
 class Viewer3dWidget : public QGLWidget {
@@ -19,6 +21,8 @@ class Viewer3dWidget : public QGLWidget {
     QSize sizeHint () const;
 
     void add (const QString& key, PointCloud* cloud);
+    template <typename T>
+    void add (const QString& key, const PointCloudT < Point2D <T> >& cloud);
     void add (const QString& key, Plane* plane);
     void add (const QString& key, Line* line);
     void add (const Line& line);
@@ -45,5 +49,12 @@ class Viewer3dWidget : public QGLWidget {
 
     std::vector<Actor*> actors;
 };
+
+template <typename T>
+void
+Viewer3dWidget::add (const QString& key, const PointCloudT < Point2D <T> >& cloud)
+{
+  
+}
 
 #endif

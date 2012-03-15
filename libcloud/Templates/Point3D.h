@@ -4,7 +4,7 @@
 template <typename T>
 class Point3D {
   public:
-    Point3D (const T& x_, const T& y_, const T& z_);
+    Point3D (const T& x_ = T (), const T& y_ = T (), const T& z_ = T ());
     Point3D (const Point3D& p);
     virtual ~Point3D ();
 
