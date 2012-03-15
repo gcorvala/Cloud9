@@ -27,7 +27,9 @@ printCloud (const PointCloudT <T>& cloud)
 void
 printIndices (const PointIndices& indices)
 {
-  for (PointIndices::const_iterator it = indices.begin (); it != indices.end (); ++it) {
+  PointIndices::const_iterator it;
+  std::cout << "printIndices" << std::endl;
+  for (it = indices.begin (); it != indices.end (); ++it) {
     std::cout << "index: " << *it << std::endl;
   }
 }
@@ -48,52 +50,43 @@ int
 main (int argc, char** argv)
 {
   OBJReader reader;
-  PointCloud c;
-
-  reader.read (argv[1], c);
-
-  PointCloudT < Point2D <double> > cloud;
-  
-  pointCloudConverter < Point2D <double> > (c, cloud);
-  
-/*  cloud.push_back (Point2D <double> (0, 0));
-  cloud.push_back (Point2D <double> (1, 1));
-  cloud.push_back (Point2D <double> (0, 2));
-  cloud.push_back (Point2D <double> (1, 0));
-  cloud.push_back (Point2D <double> (1000, 999));*/
-
-  printCloud (cloud);
-
+  PointCloud cloud;
+  PointCloudT < Point2D <double> > cloudT1;
+  PointCloudT < Point2D <double> > cloudT2;
+  PointCloudT < Point2D <double> > cloudT3;
   LineInliers <double> inliers;
+  PointIndices indices;
+  ExtractIndices < Point2D <double> > extract;
+  LineProjector <double> projector;
+
+  reader.read (argv[1], cloud);
+
+  
+  pointCloudConverter < Point2D <double> > (cloud, cloudT1);
+
+  printCloud (cloudT1);
+
   Line line (0, 1, -50);
 
   inliers.setLine (line);
   inliers.setDistanceThreshold (3);
 
-  PointIndices indices;
-
-  inliers.compute (cloud, indices);
+  inliers.compute (cloudT1, indices);
 
   printIndices (indices);
-
-  ExtractIndices < Point2D <double> > extract;
-  PointCloudT < Point2D <double> > cloud2;
 
   extract.setIndices (indices);
   extract.setNegative (false);
 
-  extract.compute (cloud, cloud2);
+  extract.compute (cloudT1, cloudT2);
 
-  printCloud (cloud2);
-
-  LineProjector <double> projector;
-  PointCloudT < Point2D <double> > cloud3;
+  printCloud (cloudT2);
 
   projector.setLine (line);
-  projector.compute (cloud2, cloud3);
+  projector.compute (cloudT2, cloudT3);
 
-  printCloud (cloud3);
+  printCloud (cloudT3);
 
   std::cout << "cloud size: " << cloud.size () << std::endl;
-  std::cout << "cloud size: " << cloud3.size () << std::endl;
+  std::cout << "cloud size: " << cloudT3.size () << std::endl;
 }
