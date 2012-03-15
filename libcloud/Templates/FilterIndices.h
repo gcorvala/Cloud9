@@ -1,36 +1,36 @@
-#ifndef __FILTER_INDICES_T_H__
-#define __FILTER_INDICES_T_H__
+#ifndef __FILTER_INDICES_H__
+#define __FILTER_INDICES_H__
 
-#include "FilterT.h"
+#include "Filter.h"
 #include "PointCloudT.h"
 #include "../Common/Types.h"
 
 typedef std::vector <UInt32> PointIndices;
 
 template <class PointT>
-class FilterIndicesT : public FilterT <PointT> {
+class FilterIndices : public Filter <PointT> {
   public:
 
-    FilterIndicesT ();
-    virtual ~FilterIndicesT ();
+    FilterIndices ();
+    virtual ~FilterIndices ();
 
     void compute (const PointCloudT <PointT>& input, PointCloudT <PointT>& output) const;
     virtual void compute (const PointCloudT <PointT>& input, PointIndices& indices) const = 0;
 };
 
 template <class PointT>
-FilterIndicesT <PointT>::FilterIndicesT ()
+FilterIndices <PointT>::FilterIndices ()
 {
 }
 
 template <class PointT>
-FilterIndicesT <PointT>::~FilterIndicesT ()
+FilterIndices <PointT>::~FilterIndices ()
 {
 }
 
 template <class PointT>
 void
-FilterIndicesT <PointT>::compute (const PointCloudT <PointT>& input, PointCloudT <PointT>& output) const
+FilterIndices <PointT>::compute (const PointCloudT <PointT>& input, PointCloudT <PointT>& output) const
 {
   PointIndices indices;
 

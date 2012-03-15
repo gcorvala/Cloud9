@@ -1,14 +1,14 @@
-#ifndef __LINE_INLIERS_T_H__
-#define __LINE_INLIERS_T_H__
+#ifndef __LINE_INLIERS_H__
+#define __LINE_INLIERS_H__
 
-#include "FilterIndicesT.h"
+#include "FilterIndices.h"
 #include "../2D/Line.h"
 
 template <typename T>
-class LineInliersT : public FilterIndicesT < Point2D <T> > {
+class LineInliers : public FilterIndices < Point2D <T> > {
   public:
-    LineInliersT ();
-    virtual ~LineInliersT ();
+    LineInliers ();
+    virtual ~LineInliers ();
 
     void compute (const PointCloudT < Point2D <T> >& input, PointIndices& indices) const;
   
@@ -24,14 +24,14 @@ class LineInliersT : public FilterIndicesT < Point2D <T> > {
 };
 
 template <typename T>
-LineInliersT <T>::LineInliersT ()
+LineInliers <T>::LineInliers ()
   :m_line (1, -1, 0)
   ,m_distance_threshold (0)
 {
 }
 
 template <typename T>
-LineInliersT <T>::~LineInliersT ()
+LineInliers <T>::~LineInliers ()
 {
 }
 
@@ -47,7 +47,7 @@ distanceLinePoint (const Line& line, const Point2D <T>& point)
 
 template <typename T>
 void
-LineInliersT <T>::compute (const PointCloudT < Point2D <T> >& input, PointIndices& indices) const
+LineInliers <T>::compute (const PointCloudT < Point2D <T> >& input, PointIndices& indices) const
 {
   indices.clear ();
 
@@ -61,28 +61,28 @@ LineInliersT <T>::compute (const PointCloudT < Point2D <T> >& input, PointIndice
 
 template <typename T>
 Line
-LineInliersT <T>::getLine () const
+LineInliers <T>::getLine () const
 {
   return m_line;
 }
 
 template <typename T>
 void
-LineInliersT <T>::setLine (const Line& line)
+LineInliers <T>::setLine (const Line& line)
 {
   m_line = line;
 }
 
 template <typename T>
 Float64
-LineInliersT <T>::getDistanceThreshold () const
+LineInliers <T>::getDistanceThreshold () const
 {
   return m_distance_threshold;
 }
 
 template <typename T>
 void
-LineInliersT <T>::setDistanceThreshold (Float64 distance_threshold)
+LineInliers <T>::setDistanceThreshold (Float64 distance_threshold)
 {
   m_distance_threshold = distance_threshold;
 }

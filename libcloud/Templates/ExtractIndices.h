@@ -1,15 +1,15 @@
-#ifndef __EXTRACT_INDICES_T_H__
-#define __EXTRACT_INDICES_T_H__
+#ifndef __EXTRACT_INDICES_H__
+#define __EXTRACT_INDICES_H__
 
-#include "FilterT.h"
+#include "Filter.h"
 
 #include <algorithm>
 
 template <class PointT>
-class ExtractIndicesT : public FilterT <PointT> {
+class ExtractIndices : public Filter <PointT> {
   public:
-    ExtractIndicesT ();
-    virtual ~ExtractIndicesT ();
+    ExtractIndices ();
+    virtual ~ExtractIndices ();
 
     void compute (const PointCloudT <PointT>& input, PointCloudT <PointT>& output) const;
 
@@ -25,19 +25,19 @@ class ExtractIndicesT : public FilterT <PointT> {
 };
 
 template <class PointT>
-ExtractIndicesT <PointT>::ExtractIndicesT ()
+ExtractIndices <PointT>::ExtractIndices ()
   :m_negative (false)
 {
 }
 
 template <class PointT>
-ExtractIndicesT <PointT>::~ExtractIndicesT ()
+ExtractIndices <PointT>::~ExtractIndices ()
 {
 }
 
 template <class PointT>
 void
-ExtractIndicesT <PointT>::compute (const PointCloudT <PointT>& input, PointCloudT <PointT>& output) const
+ExtractIndices <PointT>::compute (const PointCloudT <PointT>& input, PointCloudT <PointT>& output) const
 {
   PointIndices::const_iterator it;
 
@@ -60,14 +60,14 @@ ExtractIndicesT <PointT>::compute (const PointCloudT <PointT>& input, PointCloud
 
 template <class PointT>
 PointIndices
-ExtractIndicesT <PointT>::getIndices () const
+ExtractIndices <PointT>::getIndices () const
 {
   return m_indices;
 }
 
 template <class PointT>
 void
-ExtractIndicesT <PointT>::setIndices (const PointIndices& indices)
+ExtractIndices <PointT>::setIndices (const PointIndices& indices)
 {
   m_indices = indices;
   std::sort (m_indices.begin (), m_indices.end ());
@@ -75,14 +75,14 @@ ExtractIndicesT <PointT>::setIndices (const PointIndices& indices)
 
 template <class PointT>
 Boolean
-ExtractIndicesT <PointT>::getNegative () const
+ExtractIndices <PointT>::getNegative () const
 {
   return m_negative;
 }
 
 template <class PointT>
 void
-ExtractIndicesT <PointT>::setNegative (Boolean negative)
+ExtractIndices <PointT>::setNegative (Boolean negative)
 {
   m_negative = negative;
 }

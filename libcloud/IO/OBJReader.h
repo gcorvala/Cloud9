@@ -2,6 +2,7 @@
 #define __OBJ_READER_H__
 
 #include "FileReader.h"
+#include "../Templates/PointCloudT.h"
 
 class OBJReader : FileReader {
   public:

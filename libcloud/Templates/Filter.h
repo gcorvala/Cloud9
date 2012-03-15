@@ -1,23 +1,23 @@
-#ifndef __FILTER_T_H__
-#define __FILTER_T_H__
+#ifndef __FILTER_H__
+#define __FILTER_H__
 
 #include "PointCloudT.h"
 
 template <class PointT>
-class FilterT {
+class Filter {
   public:
-    FilterT ();
-    virtual ~FilterT ();
+    Filter ();
+    virtual ~Filter ();
     virtual void compute (const PointCloudT <PointT>& input, PointCloudT <PointT>& output) const = 0;
 };
 
 template <class PointT>
-FilterT <PointT>::FilterT ()
+Filter <PointT>::Filter ()
 {
 }
 
 template <class PointT>
-FilterT <PointT>::~FilterT ()
+Filter <PointT>::~Filter ()
 {
 }
 
