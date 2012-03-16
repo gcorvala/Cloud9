@@ -7,6 +7,9 @@
 #include <libcloud/Templates/OBJReaderT.h>
 #include <libcloud/Templates/XYSlicerT.h>
 #include <libcloud/Templates/Hough2D.h>
+#include <libcloud/Templates/ExtractHoughClusters.h>
+#include <libcloud/Templates/ExtractEuclideanClusters.h>
+#include <libcloud/Templates/LinearSearchT.h>
 
 #include <libcloud/Common/PointCloud.h>
 #include <libcloud/2D/Line.h>
@@ -111,6 +114,7 @@ main (int argc, char** argv)
   PointCloudT < Point2D <double> > cloudT2;
   PointCloudT < Point2D <double> > cloudT3;
   PointCloudT < Point2D <double> > cloudT4;
+  std::vector < PointCloudT < Point2D <double> > > clusters;
   LineInliers <double> inliers;
   PointIndices indices;
   ExtractIndices < Point2D <double> > extract;
@@ -120,6 +124,8 @@ main (int argc, char** argv)
   Hough2D <double> hough;
   Matrix <UInt32> matrix;
   std::vector <Float64> thetas, rhos;
+  ExtractHoughClusters <double> hough_clusters;
+  ExtractEuclideanClusters <Point2D <double> > euclidean_clusters;
 
   readerT.read (argv[1], cloudT);
   std::cout << "cloudT size: " << cloudT.size () << std::endl;
@@ -127,49 +133,48 @@ main (int argc, char** argv)
   slicer.compute (cloudT, slices);
 
   std::cout << "slices size: " << slices.size () << std::endl;
-  UInt8 slice_idx = 10;
+  UInt8 slice_idx = 12;
   std::cout << "slice #20 size: " << slices[slice_idx].size () << std::endl;
 
   pointCloudConverter3 (slices[slice_idx], cloud);
   
   pointCloudConverter4 <double> (slices[slice_idx], cloudT1);
 
-  hough.setNRho (1200);
-  hough.setNTheta (1200);
+  hough.setNRho (2048);
+  hough.setNTheta (2048);
   hough.compute (cloudT1, matrix, rhos, thetas);
 
   UInt32 rho, theta, max;
 
 #if 1
-  max = matrix.max (theta, rho);
-  while (true) {
-    Line line (rhos[rho], thetas[theta]);
-    inliers.setLine (line);
-    inliers.setDistanceThreshold (200);
+  hough_clusters.setAccumulator (matrix);
+  hough_clusters.setRhoSteps (rhos);
+  hough_clusters.setThetaSteps (thetas);
+  hough_clusters.compute (cloudT1, clusters);
 
-    inliers.compute (cloudT1, indices);
+  std::cout << "clusters size: " << clusters.size () << std::endl;
 
-    extract.setIndices (indices);
-    extract.setNegative (false);
-    extract.compute (cloudT1, cloudT2);
-    std::cout << "cloud (+) size: " << cloudT2.size () << std::endl;
-    if (cloudT2.size () < 100) break;
-    extract.setNegative (true);
-    extract.compute (cloudT1, cloudT3);
-    std::cout << "cloud (-) size: " << cloudT3.size () << std::endl;
-    cloudT1 = cloudT3;
+  LinearSearchT <Point2D <double> > search;
+  std::vector <PointCloudT <Point2D <double> > > clusters_;
 
-    hough.remove (cloudT2, matrix, rhos, thetas);
-    
-    pointCloudConverter2 (cloudT2, cloud2);
+  euclidean_clusters.setSearchMethod (search);
+
+  for (UInt32 i = 0; i < clusters.size (); ++i) {
+#if 0
+    pointCloudConverter2 (clusters[i], cloud2);
     viewer.add ("cluster", &cloud2);
-    max = matrix.max (theta, rho);
-    std::cout << "max: " << matrix.max () << std::endl;
-    viewer.add ("line", &line);
+#else
+    euclidean_clusters.compute (clusters[i],clusters_);
+    std::cout << "clusters_ size: " << clusters_.size () << std::endl;
+
+    for (UInt32 j = 0; j < clusters_.size (); ++j) {
+//      std::cout << "clusters_[] size: " << clusters_[j].size () << std::endl;
+      pointCloudConverter2 (clusters_[j], cloud2);
+      viewer.add ("cluster", &cloud2);
+    }
+#endif
   }
-  pointCloudConverter3 <double> (slices[slice_idx], cloud);
-  std::cout << "cloud size: " << cloud.size () << std::endl;
-//  viewer.add ("cloud", &cloud);
+
   viewer.show ();
 #else
   matrix.max (theta, rho);

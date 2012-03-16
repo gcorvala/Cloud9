@@ -141,6 +141,7 @@ Viewer3dWidget::paintGL ()
   glRotatef (x_rotation, 1.0, 0.0, 0.0);
   glRotatef (y_rotation, 0.0, 1.0, 0.0);
   glRotatef (z_rotation, 0.0, 0.0, 1.0);
+  glTranslatef (-1000, -1000, -1000);
 
   for (it = actors.begin (); it != actors.end (); ++it) {
     Actor* actor = *it;

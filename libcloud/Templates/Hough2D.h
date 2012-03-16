@@ -104,9 +104,9 @@ Hough2D <T>::remove (const PointCloudT < Point2D <T> >& cloud, Matrix <UInt32>& 
   Float64 rho_step = rho_steps[1]-rho_steps[0];
   Float64 h = -rho_steps[0];
 
-  std::cout << "theta step: " << theta_step << std::endl;
-  std::cout << "rho step: " << rho_step << std::endl;
-  std::cout << "h: " << h << std::endl;
+//  std::cout << "theta step: " << theta_step << std::endl;
+//  std::cout << "rho step: " << rho_step << std::endl;
+//  std::cout << "h: " << h << std::endl;
 
 //    Float64 rho_step = 2*h/(m_n_rho-1);
 
