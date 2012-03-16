@@ -13,6 +13,9 @@ class ExtractHoughClusters {
 
     void compute (const PointCloudT < Point2D <T> >& cloud, std::vector <PointCloudT < Point2D <T> > >& clusters) const;
 
+    Float64 getDistanceThreshold () const;
+    void setDistanceThreshold (Float64 distance);
+
     Matrix <UInt32> getAccumulator () const;
     void setAccumulator (const Matrix <UInt32>& accumulator);
 
@@ -126,6 +129,21 @@ ExtractHoughClusters <T>::compute (const PointCloudT < Point2D <T> >& cloud, std
     std::cout << "max: " << matrix.max () << std::endl;
     */
 }
+
+template <typename T>
+Float64
+ExtractHoughClusters <T>::getDistanceThreshold () const
+{
+  return m_distance_threshold;
+}
+
+template <typename T>
+void
+ExtractHoughClusters <T>::setDistanceThreshold (Float64 distance)
+{
+  m_distance_threshold = distance;
+}
+
 
 template <typename T>
 Matrix <UInt32>
