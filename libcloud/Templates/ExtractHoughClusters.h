@@ -3,6 +3,7 @@
 
 #include "PointCloudT.h"
 #include "Point2D.h"
+#include "ExtractEuclideanClusters.h"
 #include "../2D/Matrix.h"
 
 template <typename T>
@@ -11,10 +12,13 @@ class ExtractHoughClusters {
     ExtractHoughClusters ();
     virtual ~ExtractHoughClusters ();
 
-    void compute (const PointCloudT < Point2D <T> >& cloud, std::vector <PointCloudT < Point2D <T> > >& clusters) const;
+    void compute (const PointCloudT < Point2D <T> >& cloud, std::vector <PointCloudT < Point2D <T> > >& clusters, std::vector <Line>& lines) const;
 
     Float64 getDistanceThreshold () const;
     void setDistanceThreshold (Float64 distance);
+
+    UInt32 getMinPointsPerCluster () const;
+    void setMinPointsPerCluster (UInt32 min);
 
     Matrix <UInt32> getAccumulator () const;
     void setAccumulator (const Matrix <UInt32>& accumulator);
@@ -27,6 +31,7 @@ class ExtractHoughClusters {
 
   protected:
     Float64 m_distance_threshold;
+    UInt32 m_min_points_per_cluster;
     Matrix <UInt32> m_accumulator;
     std::vector <Float64> m_rho_steps;
     std::vector <Float64> m_theta_steps;
@@ -35,6 +40,7 @@ class ExtractHoughClusters {
 template <typename T>
 ExtractHoughClusters <T>::ExtractHoughClusters ()
   :m_distance_threshold (10)
+  ,m_min_points_per_cluster (10)
 {
 }
 
@@ -45,7 +51,7 @@ ExtractHoughClusters <T>::~ExtractHoughClusters ()
 
 template <typename T>
 void
-ExtractHoughClusters <T>::compute (const PointCloudT < Point2D <T> >& cloud, std::vector <PointCloudT < Point2D <T> > >& clusters) const
+ExtractHoughClusters <T>::compute (const PointCloudT < Point2D <T> >& cloud, std::vector <PointCloudT < Point2D <T> > >& clusters, std::vector <Line>& lines) const
 {
   UInt32 max;
   UInt32 theta;
@@ -59,7 +65,6 @@ ExtractHoughClusters <T>::compute (const PointCloudT < Point2D <T> >& cloud, std
   Matrix <UInt32> accumulator_copy;
   ExtractIndices < Point2D <T> > extract;
   Hough2D <T> hough;
-  LineProjector <T> projector;
 
   cloud_copy = cloud;
   accumulator_copy = m_accumulator;
@@ -69,23 +74,33 @@ ExtractHoughClusters <T>::compute (const PointCloudT < Point2D <T> >& cloud, std
 
   inliers.setDistanceThreshold (m_distance_threshold);
 
+  Matrix <UInt32> accumulator_copy2;
+
   while (true) {
     max = accumulator_copy.max (theta, rho);
 
+    if (accumulator_copy2 == accumulator_copy || max == 0)
+      break;
+
+    accumulator_copy2 = accumulator_copy;
+
+    std::cout << "max: " << max << std::endl;
+
+    if (clusters.size () == 0) {
+      std::cout << "rho->" << m_rho_steps[rho] << std::endl;
+      std::cout << "theta->" << m_theta_steps[theta] << std::endl;
+    }
     line = Line (m_rho_steps[rho], m_theta_steps[theta]);
 
     inliers.setLine (line);
 
     inliers.compute (cloud_copy, indices);
 
-    if (indices.size () < 100) {
-      break;
-    }
-
     extract.setIndices (indices);
     extract.setNegative (false);
 
     extract.compute (cloud_copy, line_cluster);
+
 
     extract.setNegative (true);
 
@@ -93,41 +108,39 @@ ExtractHoughClusters <T>::compute (const PointCloudT < Point2D <T> >& cloud, std
 
     cloud_copy = cloud_tmp;
 
-    hough.remove (line_cluster, accumulator_copy, m_rho_steps, m_theta_steps);
+    ExtractIndices < Point2D <T> > extract2;
+    ExtractEuclideanClusters < Point2D <T> > euclidean;
+    std::vector <PointIndices> clusters_indices;
+    PointCloudT < Point2D <T> > biggest_cloud;
+    PointCloudT < Point2D <T> > extra_cloud;
+    PointIndices biggest;
+    int biggest_idx;
+    Float64 max_distance = hypot (m_distance_threshold, m_distance_threshold);
+    euclidean.setMaxDistance (max_distance*1.1);
+    euclidean.setMinPointsPerCluster (m_min_points_per_cluster);
 
-    projector.setLine (line);
-    projector.compute (line_cluster, cloud_tmp);
-    line_cluster = cloud_tmp;
-
-    clusters.push_back (line_cluster);
-  }
-  /*
-  max = matrix.max (theta, rho);
-  while (true) {
-    Line line (rhos[rho], thetas[theta]);
-    inliers.setLine (line);
-    inliers.setDistanceThreshold (10);
-
-    inliers.compute (cloudT1, indices);
-
-    extract.setIndices (indices);
-    extract.setNegative (false);
-    extract.compute (cloudT1, cloudT2);
-    std::cout << "cloud (+) size: " << cloudT2.size () << std::endl;
-    if (cloudT2.size () < 100) break;
-    extract.setNegative (true);
-    extract.compute (cloudT1, cloudT3);
-    std::cout << "cloud (-) size: " << cloudT3.size () << std::endl;
-    cloudT1 = cloudT3;
-
-    hough.remove (cloudT2, matrix, rhos, thetas);
+    euclidean.compute (line_cluster, clusters_indices);
+    for (UInt32 i = 0; i < clusters_indices.size (); ++i) {
+      if (clusters_indices[i].size () > biggest.size ()) {
+        biggest = clusters_indices[i];
+        biggest_idx = i;
+      }
+    }
+    extract2.setNegative (false);
+    extract2.setIndices (biggest);
     
-    pointCloudConverter2 (cloudT2, cloud2);
-    viewer.add ("cluster", &cloud2);
-    clusters.push_back (cloudT2);
-    max = matrix.max (theta, rho);
-    std::cout << "max: " << matrix.max () << std::endl;
-    */
+    extract2.compute (line_cluster, biggest_cloud);
+
+    extract2.setNegative (true);
+    extract2.compute (line_cluster, extra_cloud);
+
+    cloud_copy += extra_cloud;
+
+    hough.remove (biggest_cloud, accumulator_copy, m_rho_steps, m_theta_steps);
+
+    clusters.push_back (biggest_cloud);
+    lines.push_back (line);
+  }
 }
 
 template <typename T>
@@ -144,6 +157,19 @@ ExtractHoughClusters <T>::setDistanceThreshold (Float64 distance)
   m_distance_threshold = distance;
 }
 
+template <typename T>
+UInt32
+ExtractHoughClusters <T>::getMinPointsPerCluster () const
+{
+  return m_min_points_per_cluster;
+}
+
+template <typename T>
+void
+ExtractHoughClusters <T>::setMinPointsPerCluster (UInt32 min)
+{
+  m_min_points_per_cluster = min;
+}
 
 template <typename T>
 Matrix <UInt32>

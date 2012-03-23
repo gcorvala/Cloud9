@@ -14,6 +14,8 @@ class Line {
     Line (const Point& p1, const Point& p2);
     virtual ~Line ();
 
+    Boolean operator== (const Line& line) const;
+
     Float64 getSlope () const;
     Float64 getYIntercept () const;
     Float64 getXIntercept () const;
@@ -27,7 +29,8 @@ class Line {
     bool isVertical () const;
     bool isHorizontal () const;
 
-    Point getIntersection () const;
+    Point getIntersection (const Line& line) const;
+    Line getPerpendicular (const Point& p) const;
 
     void translate (const Vector& v);
   //protected:

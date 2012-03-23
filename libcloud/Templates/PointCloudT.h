@@ -38,7 +38,7 @@ class PointCloudT {
     iterator erase (iterator first, iterator last);*/
     void clear ();
 
-  protected:
+  private:
     std::vector <PointT> m_points;
 };
 
@@ -109,7 +109,7 @@ PointCloudT <PointT>::operator[] (UInt32 n)
 
 template <class PointT>
 PointCloudT <PointT>&
-PointCloudT <PointT>::operator+= (const PointCloudT& cloud)
+PointCloudT <PointT>::operator+= (const PointCloudT <PointT>& cloud)
 {
   UInt32 s = m_points.size ();
 

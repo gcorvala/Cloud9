@@ -11,9 +11,9 @@ class Point2D {
     Point2D (const Point2D& p);
     virtual ~Point2D ();
 
-    bool operator== (const Point2D <T>& p) const;
+    bool operator== (const Point2D& p) const;
 
-    Float64 distanceTo (const Point2D <T>& p) const;
+    Float64 distanceTo (const Point2D& p) const;
 
     T x;
     T y;
@@ -40,16 +40,14 @@ Point2D <T>::~Point2D ()
 
 template <typename T>
 bool
-Point2D <T>::operator== (const Point2D <T>& p) const
+Point2D <T>::operator== (const Point2D& p) const
 {
   return (x == p.x) && (y == p.y);
 }
 
-#include <iostream>
-
 template <typename T>
 Float64
-Point2D <T>::distanceTo (const Point2D <T>& p) const
+Point2D <T>::distanceTo (const Point2D& p) const
 {
   return hypot (p.x-x, p.y-y);
 }

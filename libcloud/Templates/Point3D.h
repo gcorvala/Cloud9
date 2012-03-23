@@ -8,6 +8,10 @@ class Point3D {
     Point3D (const Point3D& p);
     virtual ~Point3D ();
 
+    bool operator== (const Point3D& p) const;
+
+    Float64 distanceTo (const Point3D& p) const;
+
     T x;
     T y;
     T z;

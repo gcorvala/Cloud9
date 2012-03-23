@@ -3,9 +3,8 @@
 
 #include "Filter.h"
 #include "PointCloudT.h"
+#include "Types.h"
 #include "../Common/Types.h"
-
-typedef std::vector <UInt32> PointIndices;
 
 template <class PointT>
 class FilterIndices : public Filter <PointT> {

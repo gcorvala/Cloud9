@@ -1,6 +1,5 @@
 #include <gtest/gtest.h>
 
-#include <libcloud/Templates/LinearSearchT.h>
 #include <libcloud/Templates/PointCloudT.h>
 #include <libcloud/Templates/ExtractEuclideanClusters.h>
 #include <libcloud/Templates/Point2D.h>
@@ -21,18 +20,22 @@ class EuclideanClustersTest : public ::testing::Test {
     cloud.push_back (Point2D <Float32> (13, 3));
     cloud.push_back (Point2D <Float32> (14, 4));
     cloud.push_back (Point2D <Float32> (15, 5));
-    linear.setInputCloud (cloud);
-    euclidean_clusters.setSearchMethod (linear);
+
+    euclidean_clusters.setMaxDistance (2);
+    euclidean_clusters.setMinPointsPerCluster (3);
+
+    euclidean_clusters.setMaxPointsPerCluster (6);
   }
 
   ExtractEuclideanClusters < Point2D <Float32> > euclidean_clusters;
-  LinearSearchT < Point2D <Float32> > linear;
   PointCloudT < Point2D <Float32> > cloud;
 };
 
 TEST_F (EuclideanClustersTest, Works) {
-  std::vector <PointCloudT <Point2D <Float32> > > clusters;
-  euclidean_clusters.compute (cloud, clusters);
+  std::vector <PointIndices> clusters_indices;
+  std::vector <PointCloudT < Point2D <Float32> > > clusters;
+  euclidean_clusters.compute (cloud, clusters_indices);
+  euclidean_clusters.getClustersPoints (cloud, clusters_indices, clusters);
 
   for (UInt32 i = 0; i < clusters.size (); ++i) {
     std::cout << "cluster " << i << std::endl;

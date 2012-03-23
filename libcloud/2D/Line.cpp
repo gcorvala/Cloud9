@@ -39,6 +39,12 @@ Line::~Line ()
 {
 }
 
+Boolean
+Line::operator== (const Line& line) const
+{
+  return (a == line.a) && (b == line.b) && (c == line.c);
+}
+
 Float64
 Line::getSlope () const
 {
@@ -96,4 +102,18 @@ void
 Line::translate (const Vector& v)
 {
   c += a*v.x+b*v.y;
+}
+
+Point
+Line::getIntersection (const Line& line) const
+{
+  Float64 delta = a*line.b-line.a*b;
+
+  return Point (-(line.b*c-b*line.c)/delta, -(a*line.c-line.a*c)/delta);
+}
+
+Line
+Line::getPerpendicular (const Point& p) const
+{
+  return Line (-b, a, b*p.x-a*p.y);
 }

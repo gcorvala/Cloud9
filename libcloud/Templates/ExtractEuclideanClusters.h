@@ -3,15 +3,17 @@
 
 #include "PointCloudT.h"
 #include "SearchT.h"
+#include "ExtractClusters.h"
 #include "LinearSearchT.h"
 
 template <class PointT>
-class ExtractEuclideanClusters {
+class ExtractEuclideanClusters : public ExtractClusters <PointT> {
   public:
     ExtractEuclideanClusters ();
     virtual ~ExtractEuclideanClusters ();
 
-    void compute (const PointCloudT <PointT>& cloud, std::vector <PointCloudT <PointT> >& clusters) const;
+    // FIXME : Why inheritance is not working ?
+    //void compute (const PointCloudT <PointT>& cloud, std::vector <PointCloudT <PointT> >& clusters) const { ExtractClusters <PointT>::compute (cloud, clusters); };
     void compute (const PointCloudT <PointT>& cloud, std::vector <PointIndices>& clusters) const;
 
     SearchT <PointT> getSearchMethod () const;
@@ -50,64 +52,13 @@ ExtractEuclideanClusters <PointT>::~ExtractEuclideanClusters ()
 
 template <class PointT>
 void
-ExtractEuclideanClusters <PointT>::compute (const PointCloudT <PointT>& cloud, std::vector <PointCloudT <PointT> >& clusters) const
-{
-  m_search->setInputCloud (cloud);
-
-  std::vector <Boolean> processed (cloud.size (), false);
-
-  PointIndices nn_indices;
-  std::vector <Float64> nn_distances;
-
-  for (UInt32 i = 0; i < cloud.size (); ++i) {
-    if (processed[i]) {
-      continue;
-    }
-    else {
-      std::vector <UInt32> seed_queue;
-
-      int sq_idx = 0;
-      seed_queue.push_back (i);
-      
-      processed[i] = true;
-      
-      while (sq_idx < seed_queue.size ()) {
-        if (!m_search->radiusSearch (cloud[seed_queue[sq_idx]], m_max_distance, nn_indices, nn_distances)) {
-          ++sq_idx;
-          continue;
-        }
-        
-        for (UInt32 j = 1; j < nn_indices.size (); ++j) {
-          if (processed[nn_indices[j]]) {
-            continue;
-          }
-          else {
-            processed[nn_indices[j]] = true;
-            seed_queue.push_back (nn_indices[j]);
-          }
-        }
-        ++sq_idx;
-      }
-      if (seed_queue.size () >= m_min_points_per_cluster && seed_queue.size () <= m_max_points_per_cluster) {
-        PointCloudT <PointT> cluster;
-
-        for (UInt32 j = 0; j < seed_queue.size (); ++j) {
-          cluster.push_back (cloud[seed_queue[j]]);
-        }
-        
-        clusters.push_back (cluster);
-      }
-    }
-  }
-}
-
-template <class PointT>
-void
 ExtractEuclideanClusters <PointT>::compute (const PointCloudT <PointT>& cloud, std::vector <PointIndices>& clusters) const
 {
   m_search->setInputCloud (cloud);
 
-  std::vector <Boolean> processed (cloud.size (), false);
+  std::vector <Boolean> processed;
+
+  processed = std::vector <Boolean> (cloud.size (), false);
 
   PointIndices nn_indices;
   std::vector <Float64> nn_distances;

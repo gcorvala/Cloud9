@@ -2,6 +2,7 @@
 #define __HOUGH_2D_H__
 
 #include "PointCloudT.h"
+#include "Point2D.h"
 #include "../2D/Matrix.h"
 
 template <typename T>
@@ -40,9 +41,14 @@ template <typename T>
 void
 Hough2D <T>::compute (const PointCloudT < Point2D <T> >& cloud, Matrix <UInt32>& output, std::vector <Float64>& rho_steps, std::vector <Float64>& theta_steps) const
 {
+#if 0
   typename PointCloudT < Point2D <T> >::const_iterator it;
 
+  rho_steps.clear ();
+  theta_steps.clear ();
+
   output.resize (m_n_theta, m_n_rho);
+  output.fill (0);
 
   Point2D <T> min (std::numeric_limits <T>::max (), std::numeric_limits <T>::max ());
   Point2D <T> max (std::numeric_limits <T>::min (), std::numeric_limits <T>::min ());
@@ -65,10 +71,6 @@ Hough2D <T>::compute (const PointCloudT < Point2D <T> >& cloud, Matrix <UInt32>&
   Float64 h = min.distanceTo (max);
   Float64 theta_step = M_PI/(m_n_theta-1);
   Float64 rho_step = 2*h/(m_n_rho-1);
-
-  std::cout << "theta step: " << theta_step << std::endl;
-  std::cout << "rho step: " << rho_step << std::endl;
-  std::cout << "h: " << h << std::endl;
 
   rho_steps.resize (m_n_rho);
   theta_steps.resize (m_n_theta);
@@ -93,6 +95,52 @@ Hough2D <T>::compute (const PointCloudT < Point2D <T> >& cloud, Matrix <UInt32>&
   for (UInt32 i = 0; i < m_n_theta; ++i) {
     theta_steps[i] = theta_step*i;
   }
+#else
+  typename PointCloudT < Point2D <T> >::const_iterator it;
+
+  rho_steps.clear ();
+  theta_steps.clear ();
+
+  output.resize (m_n_theta, m_n_rho);
+  output.fill (0);
+
+  Float64 h = 0;
+
+  for (it = cloud.begin (); it != cloud.end (); ++it) {
+    Float64 h_tmp = Point2D <T> (0, 0).distanceTo (*it);
+    if (h_tmp > h) {
+      h = h_tmp;
+    }
+  }
+
+  //Float64 h = min.distanceTo (max);
+  Float64 theta_step = M_PI/(m_n_theta-1);
+  Float64 rho_step = 2*h/(m_n_rho-1);
+
+  rho_steps.resize (m_n_rho);
+  theta_steps.resize (m_n_theta);
+
+  for (it = cloud.begin (); it != cloud.end (); ++it) {
+    for (UInt32 k = 0; k < m_n_theta; ++k) {
+      Float64 theta = k*theta_step;
+      if (theta >= 2.*M_PI) {
+        theta -= 2.*M_PI;
+      }
+
+      Float64 rho = it->x*cos (theta)+it->y*sin (theta)+h;
+      UInt32 l = rho/rho_step;
+
+      output (k, l) += 1;
+    }
+  }
+
+  for (UInt32 i = 0; i < m_n_rho; ++i) {
+    rho_steps[i] = rho_step*i-h;
+  }
+  for (UInt32 i = 0; i < m_n_theta; ++i) {
+    theta_steps[i] = theta_step*i;
+  }
+#endif
 }
 
 template <typename T>

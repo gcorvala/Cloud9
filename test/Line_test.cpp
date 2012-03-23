@@ -60,6 +60,23 @@ TEST_F (LineTest, GetYInterceptWorks) {
   ASSERT_LT (1e10, l5.getYIntercept ());
 }
 
+TEST_F (LineTest, GetPerpendicularWorks) {
+  l1 = Line (1, 0, 0);
+  ASSERT_EQ (Line (0, 1, 0), l1.getPerpendicular (Point (0, 0)));
+  ASSERT_EQ (Line (0, 1, -2), l1.getPerpendicular (Point (2, 2)));
+  l1 = Line (1, 2 , 3);
+  ASSERT_EQ (Line (-2, 1, 2), l1.getPerpendicular (Point (2, 2)));
+}
+
+TEST_F (LineTest, GetIntersectionWorks) {
+  l1 = Line (1, 0, 0);
+  l2 = Line (0, 1, 0);
+  ASSERT_EQ (Point (0, 0), l1.getIntersection (l2));
+  l1 = Line (0, -1, 2);
+  l2 = Line (-2, 1, 2);
+  ASSERT_EQ (Point (2, 2), l1.getIntersection (l2));
+}
+
 int main(int argc, char **argv) {
   ::testing::InitGoogleTest (&argc, argv);
   return RUN_ALL_TESTS ();
