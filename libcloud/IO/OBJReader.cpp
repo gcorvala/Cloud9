@@ -34,10 +34,12 @@ OBJReader::read (const std::string& file_name, PointCloud& cloud, bool binary) {
       StringSplit (line, " ", st);
       cloud.push_back (Point (strtod (st[1].c_str (), NULL),
                               strtod (st[2].c_str (), NULL),
-                              strtod (st[3].c_str (), NULL),
+                              strtod (st[3].c_str (), NULL)
+                              /*,
                               Color (atoi (st[4].c_str ()),
                                      atoi (st[5].c_str ()),
-                                     atoi (st[6].c_str ()))));
+                                     atoi (st[6].c_str ()))*/
+                                     ));
       st.clear ();
     }
   }

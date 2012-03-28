@@ -105,9 +105,10 @@ main (int argc, char** argv)
 
   ImageViewerWidget v;
   for (UInt32 i = 0; i < clusters.size (); ++i) {
-    Hough2D <Float32> h;
-    h.setNRho (2000);
-    h.setNTheta (3600);
+    std::cout << "i: " << i << std::endl;
+    /*Hough2D <Float32> h;
+    h.setNRho (20000);
+    h.setNTheta (180);
 
     rhos.clear (); thetas.clear ();
     h.compute (clusters[i], matrix, rhos, thetas);
@@ -115,19 +116,16 @@ main (int argc, char** argv)
     v.show ();
     UInt32 rho, theta;
     matrix.max (theta, rho);
-    std::cout << "rhos[0]: " << rhos[0] << std::endl;
-    std::cout << "rho idx: " << rho << " theta idx: " << theta << std::endl;
-    std::cout << "rho: " << rhos[rho] << " theta: " << thetas[theta] << std::endl;
     Line l;
-    l = Line (rhos[rho], thetas[theta]);
+    l = Line (rhos[rho], thetas[theta]);*/
     LineProjector <Float32> projector;
-    //projector.setLine (lines[i]);
-    projector.setLine (l);
+    projector.setLine (lines[i]);
+    //projector.setLine (l);
     PointCloudT < Point2D <Float32> > cloud_projected;
     projector.compute (clusters[i], cloud_projected);
     //viewer.add ("ok", &l);
-    //pointCloudConverter2 (clusters[i], cloud_);
-    pointCloudConverter2 (cloud_projected, cloud_);
+    pointCloudConverter2 (clusters[i], cloud_);
+    //pointCloudConverter2 (cloud_projected, cloud_);
     viewer.add ("cluster", &cloud_);
     //if (i==2) break;
   }

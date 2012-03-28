@@ -1,5 +1,5 @@
-#ifndef __XY_SLICER_T_H__
-#define __XY_SLICER_T_H__
+#ifndef __XZ_SLICER_T_H__
+#define __XZ_SLICER_T_H__
 
 #include "SlicerT.h"
 #include "../Common/Types.h"
@@ -9,28 +9,28 @@
 #include <math.h>
 
 template <class PointT>
-class XYSlicerT : public SlicerT <PointT> {
+class XZSlicerT : public SlicerT <PointT> {
   public:
-    XYSlicerT (Float64 thickness);
-    virtual ~XYSlicerT ();
+    XZSlicerT (Float64 thickness);
+    virtual ~XZSlicerT ();
 
     void compute (const PointCloudT <PointT>& input, std::vector < PointCloudT <PointT> >& output) const;
 };
 
 template <class PointT>
-XYSlicerT <PointT>::XYSlicerT (Float64 thickness)
+XZSlicerT <PointT>::XZSlicerT (Float64 thickness)
   :SlicerT <PointT> (thickness)
 {
 }
 
 template <class PointT>
-XYSlicerT <PointT>::~XYSlicerT ()
+XZSlicerT <PointT>::~XZSlicerT ()
 {
 }
 
 template <class PointT>
 void
-XYSlicerT <PointT>::compute (const PointCloudT <PointT>& input, std::vector < PointCloudT <PointT> >& output) const
+XZSlicerT <PointT>::compute (const PointCloudT <PointT>& input, std::vector < PointCloudT <PointT> >& output) const
 {
   typename PointCloudT <PointT>::const_iterator it;
 
@@ -40,11 +40,11 @@ XYSlicerT <PointT>::compute (const PointCloudT <PointT>& input, std::vector < Po
   Float64 max = std::numeric_limits <Float64>::min ();
 
   for (it = input.begin (); it != input.end (); ++it) {
-    if (it->z > max) {
-      max = it->z;
+    if (it->y > max) {
+      max = it->y;
     }
-    if (it->z < min) {
-      min = it->z;
+    if (it->y < min) {
+      min = it->y;
     }
   }
 
@@ -53,7 +53,7 @@ XYSlicerT <PointT>::compute (const PointCloudT <PointT>& input, std::vector < Po
   output.resize (nb_slice);
 
   for (it = input.begin (); it != input.end (); ++it) {
-    UInt32 slice_idx = floor ((it->z-min)/SlicerT <PointT>::m_thickness);
+    UInt32 slice_idx = floor ((it->y-min)/SlicerT <PointT>::m_thickness);
     output[slice_idx].push_back (*it);
   }
 }

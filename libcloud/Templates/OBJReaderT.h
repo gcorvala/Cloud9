@@ -2,6 +2,7 @@
 #define __OBJ_READER_T_H__
 
 #include "PointCloudT.h"
+#include "Point3D.h"
 #include "../Common/Utils.h"
 #include <string>
 #include <vector>
@@ -33,7 +34,7 @@ OBJReaderT <T>::read (const std::string& file_name, PointCloudT < Point3D <T> >&
 {
   std::ifstream input (file_name.c_str () , std::ifstream::in);
   std::string line;
-  std::vector<std::string> st;
+  std::vector <std::string> st;
   if (binary) {
     std::cerr << "Binary mode not supported by OBJ file format" << std::endl;
     return -1;

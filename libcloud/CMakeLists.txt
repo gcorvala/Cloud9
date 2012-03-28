@@ -192,4 +192,4 @@ add_library (cloud SHARED ${libcloud_sources} ${SRCS} ${INCS})
 target_link_libraries (cloud ${FLANN_LIBRARIES} ${FFTW3_LIBRARIES})
 
 install (DIRECTORY . DESTINATION include/libcloud FILES_MATCHING PATTERN "*.h")
-install (TARGETS cloud LIBRARY DESTINATION lib)
+install (TARGETS cloud DESTINATION lib)

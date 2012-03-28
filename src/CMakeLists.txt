@@ -1,6 +1,7 @@
 add_subdirectory (cloud)
 add_subdirectory (cube)
 add_subdirectory (converter)
+add_subdirectory (dwg)
 add_subdirectory (hough)
 add_subdirectory (hough3d)
 add_subdirectory (inliers)
