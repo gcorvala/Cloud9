@@ -13,6 +13,7 @@ enable_testing ()
 add_subdirectory (3rdparty)
 add_subdirectory (libcloud)
 add_subdirectory (libcloudui)
+add_subdirectory (libsvg)
 add_subdirectory (src)
 add_subdirectory (test)
 
