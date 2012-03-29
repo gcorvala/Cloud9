@@ -1,20 +1,22 @@
 #ifndef __LINE_H__
 #define __LINE_H__
 
-#include <libcloud/Templates/Point2D.h>
 #include "Shape.h"
+#include "Length.h"
 
 namespace SVG {
   class Line : public Shape {
     public:
-      Line (const Point2D <Float32>& start, const Point2D <Float32>& end);
+      Line (const Length& x1, const Length& y1, const Length& x2, const Length& y2);
       virtual ~Line ();
 
       std::string getSVGString () const;
 
     private:
-      Point2D <Float32> m_start;
-      Point2D <Float32> m_end;
+      Length m_x1;
+      Length m_y1;
+      Length m_x2;
+      Length m_y2;
   };
 }
 
