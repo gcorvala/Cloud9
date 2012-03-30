@@ -20,7 +20,7 @@ namespace SVG {
         Pc
       };
       
-      Length (const Float32 value, const Type type = Number);  
+      Length (const Float32 value = 0, const Type type = Number);  
       virtual ~Length ();
 
       std::string getSVGString () const;

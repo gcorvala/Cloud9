@@ -4,12 +4,13 @@ set (SRCS
 	Element.cpp
 	Length.cpp
 	Line.cpp
-	Node.cpp
 	Polyline.cpp
 	Shape.cpp
 	Text.cpp
 	TextContent.cpp
 	TextPositioning.cpp
+	XMLElement.cpp
+	XMLNode.cpp
 	)
 
 set (INCS
@@ -18,13 +19,14 @@ set (INCS
 	Element.h
 	Length.h
 	Line.h
-	Node.h
 	Polyline.h
 	Shape.h
 	Text.h
 	TextContent.h
 	TextPositioning.h
 	Types.h
+	XMLElement.h
+	XMLNode.h
 	)
 
 

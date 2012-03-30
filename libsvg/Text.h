@@ -1,10 +1,10 @@
 #ifndef __TEXT_H__
 #define __TEXT_H__
 
-#include "Shape.h"
+#include "TextPositioning.h"
 
 namespace SVG {
-  class Text : public Shape {
+  class Text : public TextPositioning {
     public:
       Text ();
       virtual ~Text ();

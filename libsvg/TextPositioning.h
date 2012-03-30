@@ -2,11 +2,12 @@
 #define __TEXT_POSITIONING_H__
 
 #include "TextContent.h"
+#include "Length.h"
 
 namespace SVG {
   class TextPositioning : public TextContent {
     public:
-      TextPositioning ();
+      TextPositioning (const Length& x, const Length& y, const Length& dx, const Length& dy, const std::string& id, const std::string& xml_base);
       virtual ~TextPositioning ();
 
     protected:

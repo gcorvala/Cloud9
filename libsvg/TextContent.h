@@ -7,7 +7,7 @@
 namespace SVG {
   class TextContent : public Element {
     public:
-      TextContent ();
+      TextContent (const std::string& id, const std::string& xml_base);
       virtual ~TextContent ();
 
     protected:

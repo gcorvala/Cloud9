@@ -2,6 +2,7 @@
 #include <libsvg/Line.h>
 #include <libsvg/Polyline.h>
 #include <libsvg/Circle.h>
+#include <libsvg/XMLElement.h>
 
 #include <string>
 
@@ -29,6 +30,8 @@ main (int argc, char** argv)
   document.add (circle);
 
   document.save ("test.svg");
+
+  XML::Element element ("Hello");
 
   return 0;
 }
