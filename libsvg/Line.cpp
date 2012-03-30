@@ -20,13 +20,11 @@ namespace SVG {
   {
     std::stringstream ss;
 
-    ss << "<g stroke=\"green\" >"
-       << "<line x1=\"" << m_x1.getSVGString ()
+    ss << "<line x1=\"" << m_x1.getSVGString ()
        << "\" y1=\"" << m_y1.getSVGString ()
        << "\" x2=\"" << m_x2.getSVGString ()
        << "\" y2=\"" << m_y2.getSVGString ()
-       << "\" stroke-width=\"10\" />"
-       << "</g>" << std::endl;
+       << "\" stroke=\"black\" stroke-width=\"10\" />" << std::endl;
 
     return ss.str();
   }

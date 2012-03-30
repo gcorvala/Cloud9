@@ -18,10 +18,13 @@ namespace SVG {
     std::stringstream ss;
     std::vector < std::pair <Float32, Float32> >::const_iterator it;
 
-    ss << "<polyline fill=\"none\" stroke=\"blue\" stroke-width=\"10\" points=\"";
+    ss << "<polyline fill=\"none\" stroke=\"black\" stroke-width=\"10\" points=\"";
 
     for (it = m_points.begin (); it != m_points.end (); ++it) {
-      ss << it->first << ',' << it->second << ' ';
+      if (it != m_points.begin ()) {
+        ss << ' ';
+      }
+      ss << it->first << ',' << it->second;
     }
 
     ss << "\" />" <<  std::endl;
