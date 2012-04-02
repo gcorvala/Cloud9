@@ -1,5 +1,5 @@
-#ifndef __CIRCLE_H__
-#define __CIRCLE_H__
+#ifndef __SVG_CIRCLE_H__
+#define __SVG_CIRCLE_H__
 
 #include "Shape.h"
 #include "Length.h"

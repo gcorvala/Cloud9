@@ -1,13 +1,13 @@
-#ifndef __ELEMENT_H__
-#define __ELEMENT_H__
+#ifndef __SVG_ELEMENT_H__
+#define __SVG_ELEMENT_H__
 
-#include "XMLElement.h"
+#include <libxml/Element.h>
 #include <string>
 
 namespace SVG {
   class Element : public XML::Element {
     public:
-      Element (const std::string& name, const std::string& id, const std::string& xml_base);
+      Element (const std::string& name, const std::string& id = "", const std::string& xml_base = "");
       virtual ~Element ();
 
     protected:

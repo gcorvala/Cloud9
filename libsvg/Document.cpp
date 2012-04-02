@@ -5,7 +5,10 @@
 
 namespace SVG {
   Document::Document ()
+    :XML::Document ()
+    //:m_root_element (new SVGElement ())
   {
+    //m_doc_type = new XML::DocumentType ("xml");
   }
   
   Document::~Document ()

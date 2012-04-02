@@ -1,5 +1,5 @@
-#ifndef __POLYLINE_H__
-#define __POLYLINE_H__
+#ifndef __SVG_POLYLINE_H__
+#define __SVG_POLYLINE_H__
 
 #include "Shape.h"
 #include "Types.h"

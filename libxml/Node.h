@@ -1,5 +1,5 @@
-#ifndef __NODE_H__
-#define __NODE_H__
+#ifndef __XML_NODE_H__
+#define __XML_NODE_H__
 
 // FIXME
 
@@ -9,7 +9,9 @@
 #include "Types.h"
 
 namespace XML {
+  class Document;
   class Node {
+    friend class Document;
     public:
       enum Type {
         Element,
@@ -26,7 +28,7 @@ namespace XML {
         Notation
       };
       
-      Node ();
+      Node (Type type);
       virtual ~Node ();
 
       // DOM Level 1
@@ -40,7 +42,7 @@ namespace XML {
       Node* getPreviousSibling () const;
       Node* getNextSibling () const;
       std::map <std::string, std::string>* getAttributes () const;
-      //XMLDocument* getOwnerDocument () const;
+      XML::Document* getOwnerDocument () const;
       Node* cloneNode (Boolean deep) const;
       Node* insertChildBefore (Node* child, Node* ref);
       Node* replaceChild (Node* child, Node* old);
@@ -48,9 +50,13 @@ namespace XML {
       Node* appendChild (Node* child);
       Boolean hasChildNodes () const;
       void setNodeValue (const std::string& value);
-
+      
     protected:
       std::string m_node_name;
+      std::string m_node_value;
+      XML::Document* m_owner_document;
+      Type m_node_type;
+      std::vector <Node*> m_child_nodes;
   };
 }
 

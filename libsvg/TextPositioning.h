@@ -1,5 +1,5 @@
-#ifndef __TEXT_POSITIONING_H__
-#define __TEXT_POSITIONING_H__
+#ifndef __SVG_TEXT_POSITIONING_H__
+#define __SVG_TEXT_POSITIONING_H__
 
 #include "TextContent.h"
 #include "Length.h"

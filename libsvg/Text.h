@@ -1,5 +1,5 @@
-#ifndef __TEXT_H__
-#define __TEXT_H__
+#ifndef __SVG_TEXT_H__
+#define __SVG_TEXT_H__
 
 #include "TextPositioning.h"
 

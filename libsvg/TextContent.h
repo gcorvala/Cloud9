@@ -1,7 +1,7 @@
-#ifndef __TEXT_CONTENT_H__
-#define __TEXT_CONTENT_H__
+#ifndef __SVG_TEXT_CONTENT_H__
+#define __SVG_TEXT_CONTENT_H__
 
-#include "Element.h"
+#include "SVGElement.h"
 #include "Length.h"
 
 namespace SVG {

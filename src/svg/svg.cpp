@@ -2,14 +2,18 @@
 #include <libsvg/Line.h>
 #include <libsvg/Polyline.h>
 #include <libsvg/Circle.h>
-#include <libsvg/XMLElement.h>
+#include <libxml/Element.h>
+#include <libxml/Document.h>
+#include <libxml/DOMImplementation.h>
+#include <libxml/DocumentType.h>
 
 #include <string>
+#include <iostream>
 
 int
 main (int argc, char** argv)
 {
-  SVG::Document document;
+/*  SVG::Document document;
   SVG::Line line (10, 20, 100, 200);
   std::vector < std::pair <Float32, Float32> > points;
 
@@ -31,7 +35,29 @@ main (int argc, char** argv)
 
   document.save ("test.svg");
 
-  XML::Element element ("Hello");
+  std::cout << document.getString () << std::endl;
+
+  XML::Element element ("Hello");*/
+
+  XML::DOMImplementation dom;
+
+  XML::DocumentType* doc_type;
+  doc_type = dom.createDocumentType ("svg");
+  XML::Document* doc = dom.createDocument ("svg", "svg", *doc_type);
+  XML::Element* root = doc->getDocumentElement ();
+  XML::Element* test;
+
+  test = doc->createElement ("test1");
+  root->appendChild (test);
+
+  test = doc->createElement ("test2");
+  root->appendChild (test);
+
+  std::cout << doc->getString () << std::endl;
+
+//  XML::Element* root = doc.createElement ("abc");
+
+//  doc.appendChild (root);
 
   return 0;
 }

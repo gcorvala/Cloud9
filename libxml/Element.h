@@ -1,7 +1,7 @@
 #ifndef __XML_ELEMENT_H__
 #define __XML_ELEMENT_H__
 
-#include "XMLNode.h"
+#include "Node.h"
 #include <map>
 #include <vector>
 
@@ -20,6 +20,8 @@ namespace XML {
       //Attr* setAttributeNode (Attr* attribute);
       //Attr* removeAttributeNode (Attr* attribute);
       std::vector <Node*> getElementsByTagName (const std::string& name) const;
+
+      std::string getString () const;
 
     protected:
       std::string m_tag_name;

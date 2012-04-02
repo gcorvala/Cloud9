@@ -1,5 +1,5 @@
-#ifndef __LENGTH_H__
-#define __LENGTH_H__
+#ifndef __SVG_LENGTH_H__
+#define __SVG_LENGTH_H__
 
 #include "Types.h"
 #include <string>

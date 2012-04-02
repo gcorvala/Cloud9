@@ -1,11 +1,14 @@
-#ifndef __LINE_H__
-#define __LINE_H__
+#ifndef __SVG_LINE_H__
+#define __SVG_LINE_H__
 
 #include "Shape.h"
 #include "Length.h"
+#include "Element.h"
 
 namespace SVG {
-  class Line : public Shape {
+  class Line
+    : public Shape
+    , public SVG::Element {
     public:
       Line (const Length& x1, const Length& y1, const Length& x2, const Length& y2);
       virtual ~Line ();
