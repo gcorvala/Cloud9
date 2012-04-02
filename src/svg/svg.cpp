@@ -50,14 +50,16 @@ main (int argc, char** argv)
   test = doc->createElement ("test1");
   root->appendChild (test);
 
+  test->appendChild (doc->createElement ("a"));
+  test->appendChild (doc->createElement ("b"));
+  test->appendChild (doc->createElement ("c"));
+
   test = doc->createElement ("test2");
   root->appendChild (test);
 
   std::cout << doc->getString () << std::endl;
 
-//  XML::Element* root = doc.createElement ("abc");
-
-//  doc.appendChild (root);
+  delete doc;
 
   return 0;
 }

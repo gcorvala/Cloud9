@@ -26,16 +26,21 @@ namespace XML {
     std::vector <Node*>::const_iterator it;
     std::stringstream ss;
 
-    ss << "<" << m_tag_name << ">" << std::endl;
-
-    for (it = m_child_nodes.begin (); it != m_child_nodes.end (); ++it) {
-      if ((*it)->getNodeType () == Node::Element) {
-        Element* elem = static_cast <Element*> (*it);
-        ss << elem->getString ();
+    ss << "<" << m_tag_name;
+    if (hasChildNodes ()) {
+      ss << ">" << std::endl;
+      for (it = m_child_nodes.begin (); it != m_child_nodes.end (); ++it) {
+        if ((*it)->getNodeType () == Node::Element) {
+          Element* elem = static_cast <Element*> (*it);
+          ss << elem->getString ();
+        }
       }
-    }
 
-    ss << "</" << m_tag_name << ">" << std::endl;
+      ss << "</" << m_tag_name << ">" << std::endl;
+    }
+    else {
+      ss << " />" << std::endl;
+    }
 
     return ss.str ();
   }

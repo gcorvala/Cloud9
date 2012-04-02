@@ -39,8 +39,8 @@ namespace XML {
       std::vector <Node*> getChildNodes () const;
       Node* getFirstChild () const;
       Node* getLastChild () const;
-      Node* getPreviousSibling () const;
-      Node* getNextSibling () const;
+      //Node* getPreviousSibling () const;
+      //Node* getNextSibling () const;
       std::map <std::string, std::string>* getAttributes () const;
       XML::Document* getOwnerDocument () const;
       Node* cloneNode (Boolean deep) const;
@@ -54,9 +54,11 @@ namespace XML {
     protected:
       std::string m_node_name;
       std::string m_node_value;
-      XML::Document* m_owner_document;
       Type m_node_type;
-      std::vector <Node*> m_child_nodes;
+      Node* m_parent_node;
+      std::vector <Node*> m_child_nodes;      
+      
+      XML::Document* m_owner_document;
   };
 }
 
