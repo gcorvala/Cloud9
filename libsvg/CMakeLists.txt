@@ -35,7 +35,6 @@ set (INCS
 	Types.h
 	)
 
-
 add_library (svg SHARED ${SRCS} ${INCS})
 target_link_libraries (svg xml)
 
