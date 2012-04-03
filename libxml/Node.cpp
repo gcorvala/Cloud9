@@ -35,7 +35,7 @@ namespace XML {
     return m_parent_node;
   }
 
-  std::vector <Node*>
+  NodeList
   Node::getChildNodes () const
   {
     return m_child_nodes;
@@ -44,23 +44,23 @@ namespace XML {
   Node*
   Node::getFirstChild () const
   {
-    if (m_child_nodes.size () == 0) {
+    if (m_child_nodes.getLength () == 0) {
       return NULL;
     }
     else {
-      return m_child_nodes[0];
+      return m_child_nodes.item (0);
     }
   }
 
   Node*
   Node::getLastChild () const
   {
-    UInt32 s = m_child_nodes.size ();
+    unsigned long s = m_child_nodes.getLength ();
     if (s == 0) {
       return NULL;
     }
     else {
-      return m_child_nodes[s-1];
+      return m_child_nodes.item (s-1);
     }
   }
 
@@ -68,14 +68,14 @@ namespace XML {
   Node::appendChild (Node* child)
   {
     child->m_parent_node = this;
-    m_child_nodes.push_back (child);
+    m_child_nodes.m_nodes.push_back (child);
     return child;
   }
 
-  Boolean
+  bool
   Node::hasChildNodes () const
   {
-    if (m_child_nodes.size () != 0) {
+    if (m_child_nodes.getLength () != 0) {
       return true;
     }
     else {

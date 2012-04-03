@@ -42,22 +42,32 @@ main (int argc, char** argv)
   XML::DOMImplementation dom;
 
   XML::DocumentType* doc_type;
-  doc_type = dom.createDocumentType ("svg");
-  XML::Document* doc = dom.createDocument ("svg", "svg", *doc_type);
+  doc_type = dom.createDocumentType ("svg", "-//W3C//DTD SVG 1.1//EN", "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd");
+  XML::Document* doc = dom.createDocument ("", "svg", *doc_type);
   XML::Element* root = doc->getDocumentElement ();
+  root->setAttribute ("xmlns", "http://www.w3.org/2000/svg");
+  root->setAttribute ("version", "1.1");
   XML::Element* test;
 
-  test = doc->createElement ("test1");
+/*  test = doc->createElement ("test1");
   root->appendChild (test);
 
+  test->setAttribute ("attr1", "val1");
+  test->setAttribute ("attr2", "val2");
   test->appendChild (doc->createElement ("a"));
   test->appendChild (doc->createElement ("b"));
   test->appendChild (doc->createElement ("c"));
 
   test = doc->createElement ("test2");
-  root->appendChild (test);
+  root->appendChild (test);*/
 
-  std::cout << doc->getString () << std::endl;
+  SVG::Line line (10, 20, 100, 200);
+  line.setAttribute ("stroke", "black");
+  line.setAttribute ("stroke-width", "20");
+
+  root->appendChild (&line);
+
+  std::cout << doc->getString ();
 
   delete doc;
 

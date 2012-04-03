@@ -3,6 +3,7 @@
 
 #include "Node.h"
 #include "DocumentType.h"
+#include "DOMImplementation.h"
 #include "Element.h"
 #include <string>
 
@@ -33,7 +34,7 @@ namespace XML {
       XML::DocumentType* m_doc_type;
       XML::DOMImplementation* m_implementation;
       XML::Element* m_document_element;
-      Boolean m_xml_standalone;
+      bool m_xml_standalone;
       std::string m_xml_version;
   };
 }

@@ -3,7 +3,6 @@
 
 #include "Document.h"
 #include "DocumentType.h"
-#include "Types.h"
 
 namespace XML {
   class DOMImplementation {
@@ -11,8 +10,8 @@ namespace XML {
       DOMImplementation ();
       virtual ~DOMImplementation ();
 
-      Boolean hasFeature (const std::string& feature, const std::string& version) const;
-      DocumentType* createDocumentType (const std::string& qualified_name, const std::string& public_id = "", const std::string& system_id = "") const;
+      bool hasFeature (const std::string& feature, const std::string& version) const;
+      DocumentType* createDocumentType (const std::string& qualified_name, const std::string& public_id, const std::string& system_id) const;
       Document* createDocument (const std::string& namespace_uri, const std::string& qualified_name, DocumentType& doc_type) const;
   };
 }

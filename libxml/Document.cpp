@@ -5,6 +5,7 @@
 namespace XML {
   Document::Document ()
     :Node (Node::Document)
+    ,m_doc_type (NULL)
     ,m_xml_standalone (false)
     ,m_xml_version ("1.0")
   {
@@ -22,6 +23,12 @@ namespace XML {
 
   Document::~Document ()
   {
+    if (m_doc_type) {
+      delete m_doc_type;
+    }
+    if (m_document_element) {
+      delete m_document_element;
+    }
   }
 
   XML::Element*
@@ -43,7 +50,10 @@ namespace XML {
   {
     std::stringstream ss;
 
-    ss << "<?xml version=\"" << m_xml_version << "\" standalone=\"" << (m_xml_standalone ? "yes" : "no") << "\" ?>";
+    ss << "<?xml version=\"" << m_xml_version << "\" standalone=\"" << (m_xml_standalone ? "yes" : "no") << "\" ?>" << std::endl;
+    if (m_doc_type != NULL) {
+      ss << m_doc_type->getString ();
+    }
     ss << m_document_element->getString () << std::endl;
 
     return ss.str ();

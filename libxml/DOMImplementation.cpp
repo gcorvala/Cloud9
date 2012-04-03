@@ -9,7 +9,7 @@ namespace XML {
   {
   }
 
-  Boolean
+  bool
   DOMImplementation::hasFeature (const std::string& feature, const std::string& version) const
   {
     return false;

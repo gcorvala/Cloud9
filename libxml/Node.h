@@ -4,9 +4,8 @@
 // FIXME
 
 #include <string>
-#include <vector>
 #include <map>
-#include "Types.h"
+#include "NodeList.h"
 
 namespace XML {
   class Document;
@@ -34,29 +33,29 @@ namespace XML {
       // DOM Level 1
       std::string getNodeName () const;
       std::string getNodeValue () const;
+      void setNodeValue (const std::string& value);
       Type getNodeType () const;
       Node* getParentNode () const;
-      std::vector <Node*> getChildNodes () const;
+      NodeList getChildNodes () const;
       Node* getFirstChild () const;
       Node* getLastChild () const;
       //Node* getPreviousSibling () const;
       //Node* getNextSibling () const;
       std::map <std::string, std::string>* getAttributes () const;
       XML::Document* getOwnerDocument () const;
-      Node* cloneNode (Boolean deep) const;
+      Node* cloneNode (bool deep) const;
       Node* insertChildBefore (Node* child, Node* ref);
       Node* replaceChild (Node* child, Node* old);
       Node* removeChild (Node* child);
       Node* appendChild (Node* child);
-      Boolean hasChildNodes () const;
-      void setNodeValue (const std::string& value);
+      bool hasChildNodes () const;
       
     protected:
       std::string m_node_name;
       std::string m_node_value;
       Type m_node_type;
       Node* m_parent_node;
-      std::vector <Node*> m_child_nodes;      
+      NodeList m_child_nodes;      
       
       XML::Document* m_owner_document;
   };

@@ -10,6 +10,8 @@ namespace XML {
       DocumentType (const std::string& name, const std::string& public_id, const std::string& system_id);
       virtual ~DocumentType ();
 
+      std::string getString () const;
+
     protected:
       std::string m_name;
       std::string m_public_id;

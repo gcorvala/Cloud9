@@ -23,6 +23,16 @@ namespace SVG {
       Length (const Float32 value = 0, const Type type = Number);  
       virtual ~Length ();
 
+      Type getUnitType () const;
+      Float32 getValue () const;
+      void setValue (Float32 value);
+      Float32 getValueInSpecifiedUnits () const;
+      void setValueInSpecifiedUnits (Float32 value);
+      std::string getValueAsString () const;
+      void setValueAsString (const std::string& value);
+      void newValueSpecifiedUnits (Type type, Float32 value);
+      void convertToSpecifiedUnits (Type type);
+
       std::string getSVGString () const;
 
     private:
