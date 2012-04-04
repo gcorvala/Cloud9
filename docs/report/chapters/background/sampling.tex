@@ -1,4 +1,4 @@
-\section{L'échantillonage}
+\chapter{L'échantillonage}
 
 \paragraph
 Après l'acquisition \ref{acquisition}, suivi d'une éventuelle phase de recalage \ref{registration}, la quantité d'information recueillie peut rapidement croître.
@@ -34,12 +34,28 @@ Afin de faciliter la présentation de différentes méthodes liées au sous-éch
   Consiste à diviser l'ensemble des points en un ensemble de sous-ensemble. Ensuite chacun de ceux-ci est remplacé par un point représentatif.
 \end{definition}
 
-\subsection*{Méthode iterative}
+Une solution simple permettant d'obtenir des \emph{grappes} consiste à diviser la boite englobante du nuage de point en cellule à l'aide d'un maillage régulier. Chacune d'elle contiendra un ensemble de points, qu'il faudra remplacer par un nouveau point représentatif.
+Le problème de cette méthode est lié au maillage régulier. En effet, celui-ci ne peut pas s'adapter au irrégularité dans la répartition des points. De plus, si la taille du maillage est trop grande, il est possible que la surface sous-échantillonnée connecte des éléments qui devraient être disjoints.
+
+Afin d'éviter ce genre de problème, il est nécessaire de grouper les points en respectant certains critères liés aux propriétés de la surface. Il s'agit d'une étape de \emph{segmentation} \index{segmentation}. \'{A} cette fin, on peut distinguer deux approches:
+
+\begin{itemize}
+  \item Incrémentale;
+  \item Hiérarchique.
+\end{itemize}
+
+\subsubsection{Méthode par grappe incrémentale}
+
+Ces méthodes se basent sur le principe de \emph{croissance de région} \index{Croissance de région}.
+
+\subsubsection{Méthode par grappe hiérarchique}
+
+\subsection{Méthode iterative}
 \begin{definition}[Sous-échantillonnage par simplification itérative]
   Méthode d'échantillonnage consistant à fusionner successivement des pairs de points dans un nuage de points en fonction d'une mesure d'erreur quadratique.
 \end{definition}
 
-\subsection*{Methode par simulation}
+\subsection{Methode par simulation}
 \begin{definition}[Sous-échantillonnage par simulation de particule]
   Méthode d'échantillonnage consistant a calculer les nouvelles positions des points de l'ensemble $P'$ sur la surface $S$ en respectant des forces inter-particules.
 \end{definition}
