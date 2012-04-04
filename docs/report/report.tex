@@ -10,6 +10,11 @@
 \usepackage[francais]{babel}
 \usepackage{url}
 
+% Theorem, Definition...
+\usepackage{amsthm}
+
+\newtheorem*{definition}{Définition}
+
 \pagestyle{myheadings}
 \fancyhf{}
 \rhead[\leftmark]{thepage}
@@ -30,11 +35,11 @@
 \vspace*{\fill}}
 {\vspace*{\fill}\par\pagebreak}
 
-\include{frontmatter/dedication}
+%\include{frontmatter/dedication}
 
-\include{frontmatter/quotation}
+%\include{frontmatter/quotation}
 
-\include{frontmatter/thanks}
+%\include{frontmatter/thanks}
 
 \thispagestyle{empty} 
 \setcounter{page}{0}
@@ -43,11 +48,11 @@
 % start numbering with 1, 2, ...
 \mainmatter 
 
-\include{chapters/introduction}
+%\include{chapters/introduction}
 
-\include{chapters/stateoftheart}
+%\include{chapters/stateoftheart}
 
-\include{chapters/background}
+\include{chapters/background/main}
 
 \include{chapters/methodology}
 

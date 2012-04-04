@@ -1,0 +1,45 @@
+\section{L'échantillonage}
+
+\paragraph
+Après l'acquisition \ref{acquisition}, suivi d'une éventuelle phase de recalage \ref{registration}, la quantité d'information recueillie peut rapidement croître.
+
+En effet les nuages de points \index{nuage de points} décrivent souvent des surfaces complexe, et de ce fait, ceux-ci contiennent plusieurs millions, voir des milliards de points~\cite{Levoy}.
+
+En fonction du but recherché, cette masse de donnée peut handicaper le traitement futur, en effet, beaucoup d'algorithmes de traitement d'image n'ont pas une complexité en $O(n)$ et de ce fait, peuvent être trop lent.
+
+Réduire la complexité de ces nuages de points \index{nuage de points} est une étapes importante afin de préparer ces informations a être traité plus ou moins rapidement, en fonction de l'objectif recherché. Le sous-échantillonnage consiste à déterminer un ensemble de points réduit approchant au mieux le nuage de points \index{nuage de points} original.
+
+Voici une définition possible du sous-échantillonnage \index{échantillonnage} \cite{Pauly2003}:
+
+\begin{definition}[Sous-échantillonnage]
+  Soit $S$ une surface définie par un nuage de points $P$.
+  Soit $n$ le nombre de point dans le nuage sous-échantillonné tel que $n<|P|$, trouver un nuage de points $P'$ tel que $|P'|=n$ de tel sorte que la distance $\epsilon = d(S,S')$ de la surface correspondante $S'$ à la surface originale $S$ est minimale.
+\end{definition}
+
+Cette définition peut-être inversée, de façon à chercher un sous ensemble minimal de point tel que la distance entre les deux surfaces $S$ et $S'$ soit minimale.
+
+L'approximation optimale d'une surface est un problème \emph{NP-Complet} \cite{Agarwal1994}, et de ce fait, la plupart des recherches dans le domaine sont orientés vers des heuristiques.
+
+\paragraph
+Afin de faciliter la présentation de différentes méthodes liées au sous-échantillonnage de nuage de points, on distinguera différentes approches ~\cite{Pauly2002}:
+
+\begin{itemize}
+  \item Par grappe;
+  \item Par simplification itérative;
+  \item Par simulation de particule.
+\end{itemize}
+
+\subsection{Méthode par grappe}
+\begin{definition}[Sous-échantillonnage par grappe]
+  Consiste à diviser l'ensemble des points en un ensemble de sous-ensemble. Ensuite chacun de ceux-ci est remplacé par un point représentatif.
+\end{definition}
+
+\subsection*{Méthode iterative}
+\begin{definition}[Sous-échantillonnage par simplification itérative]
+  Méthode d'échantillonnage consistant à fusionner successivement des pairs de points dans un nuage de points en fonction d'une mesure d'erreur quadratique.
+\end{definition}
+
+\subsection*{Methode par simulation}
+\begin{definition}[Sous-échantillonnage par simulation de particule]
+  Méthode d'échantillonnage consistant a calculer les nouvelles positions des points de l'ensemble $P'$ sur la surface $S$ en respectant des forces inter-particules.
+\end{definition}

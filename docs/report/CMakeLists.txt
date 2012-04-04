@@ -6,8 +6,13 @@ set (FRONT_MATTER_INCS
 	frontmatter/thanks.tex
 	)
 
+set (BACKGROUND_INCS
+	chapters/background/main.tex
+	chapters/background/sampling.tex
+	)
+
 set (CHAPTERS_INCS
-	chapters/background.tex
+	${BACKGROUND_INCS}
 	chapters/conception.tex
 	chapters/conclusion.tex
 	chapters/introduction.tex
