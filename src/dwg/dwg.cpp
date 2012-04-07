@@ -46,6 +46,9 @@ main (int argc, char** argv)
 
   OdDbDatabasePtr pDb = svcs.createDatabase();
 
+  //pDb->deleteLayout (L"Layout1");
+  //pDb->deleteLayout (L"Layout2");
+
   // Add layout
   OdDbObjectId layout_id = pDb->createLayout ("Gab Layout");
   OdDbLayoutPtr pLayout = layout_id.safeOpenObject ();
@@ -58,6 +61,11 @@ main (int argc, char** argv)
   pLayer->setColorIndex (123);
   OdDbObjectId layer_id = pLayers->add (pLayer);
 
+  OdDbLayerTableRecordPtr pLayer2 = OdDbLayerTableRecord::createObject ();
+  pLayer2->setName ("Hello World 2");
+  //pLayer2->setColorIndex (321);
+  OdDbObjectId layer_id2 = pLayers->add (pLayer2);
+
   // Add block
   OdDbBlockTablePtr pBlocks = pDb->getBlockTableId ().safeOpenObject (OdDb::kForWrite);
   OdDbBlockTableRecordPtr pBlock = OdDbBlockTableRecord::createObject();
@@ -66,7 +74,7 @@ main (int argc, char** argv)
 
   // Add line
   OdGePoint3d start (0.0, 0.0, 0.0);
-  OdGePoint3d end (100.0, 100.0, 0.0);
+  OdGePoint3d end (100.0, 200.0, 0.0);
   OdDbLinePtr pLine = OdDbLine::createObject();
   OdDbObjectId id = pDb->getModelSpaceId ();
   pBlock = id.safeOpenObject (OdDb::kForWrite);
@@ -74,6 +82,33 @@ main (int argc, char** argv)
   pBlock->appendOdDbEntity (pLine);
   pLine->setStartPoint (start);
   pLine->setEndPoint (end);
+
+  OdGePoint3d start2 (100.0, 200.0, 0.0);
+  OdGePoint3d end2 (-100.0, 150.0, 0.0);
+  OdDbLinePtr pLine2 = OdDbLine::createObject();
+  pLine2->setDatabaseDefaults (pBlock->database());
+  pBlock->appendOdDbEntity (pLine2);
+  pLine2->setStartPoint (start2);
+  pLine2->setEndPoint (end2);
+
+  OdDbViewportPtr pOverallViewport = pLayout->overallVportId().safeOpenObject();
+  OdGePoint3d overallCenter   = pOverallViewport->centerPoint();
+  const double margin = 0.25;
+  double overallWidth         = pOverallViewport->width()  / 1.058 - 2 * margin;
+  double overallHeight        = pOverallViewport->height() / 1.058 - 2 * margin;
+  OdGePoint3d overallLLCorner = overallCenter -                         
+    OdGeVector3d( 0.5 * overallWidth, 0.5 * overallHeight, 0.0 );
+  OdDbBlockTableRecordPtr pPS = pLayout->getBlockTableRecordId().safeOpenObject(OdDb::kForWrite);
+  
+  OdDbViewportPtr pViewport = OdDbViewport::createObject();
+  pViewport->setDatabaseDefaults(pDb);
+  pPS->appendOdDbEntity(pViewport);
+
+  pViewport->setWidth         (overallWidth);
+  pViewport->setHeight        (overallHeight);
+  pViewport->setCenterPoint   (overallCenter);
+  pViewport->setViewCenter    (pOverallViewport->viewCenter());
+  pViewport->zoomExtents();
 
   pDb->writeFile(&fb, OdDb::kDwg, OdDb::vAC24, false);
 

@@ -1,5 +1,9 @@
 \documentclass[11pt,a4paper,oneside]{book}
-\usepackage[hmargin={1.25in,1.25in},vmargin={1.25in,1.25in}]{geometry}
+%\usepackage[hmargin={1.25in,1.25in},vmargin={1.25in,1.25in}]{geometry}
+%\renewcommand{\baselinestretch}{1.0}
+
+\usepackage[hmargin={1.50in,1.50in},vmargin={1.50in,1.50in}]{geometry}
+\renewcommand{\baselinestretch}{1.2}
 
 \makeindex
 
@@ -9,11 +13,13 @@
 \usepackage[utf8]{inputenc}
 \usepackage[francais]{babel}
 \usepackage{url}
-
+\usepackage{graphicx}
+\graphicspath{{figures/}}
+\usepackage[numbers]{natbib}
 % Theorem, Definition...
 \usepackage{amsthm}
 
-\newtheorem*{definition}{Définition}
+\newtheorem{definition}{Définition}
 
 \pagestyle{myheadings}
 \fancyhf{}
@@ -24,7 +30,7 @@
 % start numbering with i, ii, ...
 \frontmatter
 
-%\include{titlepage}
+\include{titlepage}
 
 %\include{frontmatter/dedication}
 
@@ -39,22 +45,22 @@
 % start numbering with 1, 2, ...
 \mainmatter 
 
-%\include{chapters/introduction}
+\include{chapters/introduction}
 
 \include{chapters/stateoftheart}
 
 \include{chapters/background/main}
 
-%\include{chapters/methodology}
+\include{chapters/methodology}
 
-%\include{chapters/conception}
+\include{chapters/conception}
 
-%\include{chapters/conclusion}
+\include{chapters/conclusion}
 
 % start index and biblio
 \backmatter
 \printindex
-\bibliographystyle{plain}
+\bibliographystyle{plainnat}
 \bibliography{bibliography}
 
 \end{document}

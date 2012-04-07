@@ -26,10 +26,17 @@ set (INCS
 	${CHAPTERS_INCS}
 	)
 
+set (FIGURES
+	figures/hierarchical_clustering.png
+	figures/incremental_clustering.png
+	)
+
 add_latex_document (
 	report.tex 
 	INPUTS ${INCS}
-	DEFAULT_PDF
+	IMAGES ${FIGURES}
+	DEFAULT_SAFEPDF
+#	DEFAULT_PDF
 	USE_INDEX
 	BIBFILES bibliography.bib
 	)
