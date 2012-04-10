@@ -1,0 +1,47 @@
+\chapter{Extraction de caractéristiques}
+
+Afin de reconnaître des objets, il est nécessaire de les décrire à l'aide de caractéristiques. Une fois celle-ci définie, il suffit de prendre une image quelconque, extraire ces caractéristiques, et les comparer avec celles recherchées.
+
+Un tel processus est appelé \emph{détecteur}. Ils sont eux même subdivisés en plusieurs catégorie en fonction du type de caractéristique recherché.
+\begin{itemize}
+  \item détecteur de bord;
+  \item détecteur de coin;
+  \item détecteur paramétrique.
+\end{itemize}
+
+\section{Transformée de Hough (HT)}
+La transformée de Hough est une méthode de détection de modèle paramétrique introduite par \citeauthor{Hough1962}~\cite{Hough1962}. Le principe sous-jacent est la transformation de chaque point en une courbe dans un \emph{espace paramétrique}, représentant l'ensemble des modèles auxquelles ce point appartient. Dès lors, la détection du modèle dans l'image se résume a trouver des courbes concourantes dans l'espace paramétrique.
+
+La transformée de Hough a été déclinée en de nombreuses variantes telles que:
+\begin{itemize}
+  \item standard;
+  \item probabiliste;
+  \item probabiliste adaptative;
+  \item probabiliste progressive;
+  \item aléatoire.
+\end{itemize}
+
+\subsection{Paramétrisation}
+\paragraph{Droite en deux dimensions}
+Initiallement, \citeauthor{Hough1962}~\cite{Hough1962} considéra la forme affine d'une droite:
+$$y = m \cdot x + p$$
+où $m$ représente la \emph{pente} de la droite et $p$ l'\emph{ordonnée à l'origine}.
+
+La transformée construit un nouvel espace paramétrique $(m,p)$. Le problème inhérent à cette représentation est que ces deux paramètres $m$ et $p$ ont un domaine non borné.
+
+Afin de palier ce défaut, \citeauthor{Duda1972}~\cite{Duda1972} propose d'exprimer la droite par sa forme polaire:
+$$\rho = x \cdot cos~\theta + y \cdot sin~\theta \Leftrightarrow y=\left(-\frac{cos~\theta}{sin~\theta}\right) \cdot x + \left(\frac{\rho}{sin~\theta}\right)$$
+Un point dans l'image représente une courbe sinusoïdale dans le domaine paramétrique, et un point dans cet espace représente une droite dans l'image.
+De plus, à l'aide de cette représentation, il est possible de représenter toutes les droites de façon unique en restreignant les domaine de $\theta$ et $\rho$ : $\theta \in [0, \pi)$ et $\rho \in \mathbb{R}$ ou alors $\theta \in [0, 2 \pi)$ et $\rho \in \mathbb{R}^+$. Cette approche introduite par \citeauthor{Duda1972} est appelée la \emph{transformée de Hough généralisée} car elle permet d'exprimer d'avantage de modèle que la méthode de \cite{Hough1962} qui se limite à la détection de droite.
+
+\paragraph{Cercle en deux dimensions}
+\paragraph{Plan en trois dimensions}
+\paragraph{Cylindre en trois dimensions}
+
+\subsection{Accumulateur}
+En pratique, il n'est pas possible de représenter cet espace paramétrique de façon continue, une quantification est donc appliquée. Cet espace paramétrique quantifié est appelé \emph{accumulateur}. Ce nom est choisi car pour chaque point de l'image, la courbe sinusoïdale correspondante dans l'espace paramétrique quantifié est incrimenté.
+Il faut noter que cet accumulateur est une matrice à $n$-dimensions, où $n$ est le nombre de paramètre de la représentation du modèle.
+
+\subsection{Transformée de Hough aléatoire (RHT)}
+
+\section{Random Sample Consensus}

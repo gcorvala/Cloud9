@@ -1,4 +1,4 @@
-\section{L'échantillonnage}
+\chapter{L'échantillonnage}
 
 Après l'acquisition \ref{acquisition}, suivi d'une éventuelle phase de recalage \ref{registration}, la quantité d'information recueillie peut rapidement croître.
 
@@ -11,8 +11,7 @@ Réduire la complexité de ces nuages de points \index{nuage de points} est une 
 Voici une définition possible du sous-échantillonnage \index{échantillonnage} \cite{Pauly2003}:
 
 \begin{definition}[Sous-échantillonnage]
-  Soit $S$ une surface définie par un nuage de points $P$.
-  Soit $n$ le nombre de point dans le nuage sous-échantillonné tel que $n<|P|$, trouver un nuage de points $P'$ tel que $|P'|=n$ de tel sorte que la distance $\epsilon = d(S,S')$ de la surface correspondante $S'$ à la surface originale $S$ est minimale.
+  Soit $S$ une surface définie par un nuage de points $P$. Soit $n$ le nombre de point dans le nuage sous-échantillonné tel que $n<|P|$, trouver un nuage de points $P'$ tel que $|P'|=n$ de tel sorte que la distance $\epsilon = d(S,S')$ de la surface correspondante $S'$ à la surface originale $S$ est minimale.
 \end{definition}
 
 Cette définition peut-être inversée, de façon à chercher un sous ensemble minimal de point tel que la distance entre les deux surfaces $S$ et $S'$ soit minimale.
@@ -27,7 +26,7 @@ Afin de faciliter la présentation de différentes méthodes liées au sous-éch
   \item Par simulation de particule.
 \end{itemize}
 
-\subsection{Méthode par classification}
+\section{Méthode par classification}
 \begin{definition}[Sous-échantillonnage par classification]
   Consiste à diviser l'ensemble des points en un ensemble de sous-ensemble noté. Ensuite chacun de ceux-ci est remplacé par un point ou un ensemble de points représentatifs.
 \end{definition}
@@ -48,7 +47,7 @@ Afin d'éviter ce genre de problème, il est nécessaire de grouper les points e
   \item Hiérarchique.
 \end{itemize}
 
-\subsubsection{Classification incrémentale}
+\subsection{Classification incrémentale}
 Ces méthodes se basent sur le principe de \emph{croissance de région} \index{Croissance de région}.
 
 \begin{definition}[Croissance de région]
@@ -70,7 +69,7 @@ De cette façon, les classes peuvent avoir une taille similaire. Afin d'éviter 
   \label{fig:sampling_incremental_fragmentation}
 \end{figure}
 
-\subsubsection{Classification hiérarchique}
+\subsection{Classification hiérarchique}
 
 La notion hiérarchique fait référence à un procédé de segmentation \emph{division-fusion} exécuté de haut en bas.
 
@@ -91,7 +90,7 @@ L'opération de division doit être définie. Pour ce faire, il faut utiliser un
 
 Afin de diviser l'espace, il est possible de faire appel à des structures de données tel que les \emph{Octrees} ou les \emph{Kd-Trees}, qui sont des cas particuliers de \emph{BSP}.
 
-\subsection{Méthode iterative}
+\section{Méthode iterative}
 \begin{definition}[Sous-échantillonnage par simplification itérative]
   Méthode d'échantillonnage consistant à effectuer successivement l'une des étapes cités ci-dessous en fonction d'une mesure d'erreur quadratique:
   \begin{itemize}
@@ -102,19 +101,19 @@ Afin de diviser l'espace, il est possible de faire appel à des structures de do
 
 La première méthode génère une solution composé uniquement d'un sous-ensemble de points de $P$, autrement dit $P' \subseteq P$. Ceci peut engendré des effets indésirable sur la surface [FIXME]. Pour palier à ce problème, il est préférable de fusionner des pairs de points.
 
-\subsubsection{Méthode par suppression}
+\subsection{Méthode par suppression}
 Une méthode présenté par \citeauthor{Alexa2001}~\cite{Alexa2001} consiste à évaluer la contribution d'un point $p_i$ à la surface $S$ issue du nuage de points $P$. Pour ce faire il faut comparer la surface $S$ et la surface $S'$ correspondant au nuage de points $P-\{p_i\}$. Une façon de procéder consisterait à calculer la distance de \emph{Hausdorff} [FIXME], mais pour des nuages contenant plusieurs millions de points, cela peut être trop coûteux en temps. Une approximation consiste à calculer la différence entre $p_i$ et sa projection sur $S'$ noté $p_i'$.\\
 
 Une autre méthode proposé par \citeauthor{Linsen2001}~\cite{Linsen2001} est basé sur le même principe, mais détermine la contribution d'un point $p_i$ à l'aide d'une fonction pondérée $M(p_i)$ représentant la quantité d'information contenu par ce point.
 $$M(p) := \alpha_d \cdot M_d(p)+\alpha_p \cdot M_p(p)+\alpha_c \cdot M_c(p)+\alpha_u \cdot M_u(p)+\alpha_{colour} \cdot M_{colour}(p)$$
 où $M_d$ dépend de la distance de $p$ à ces voisins, $M_p$ de la non-planarité, $M_c$ de la variation des normales, $M_u$ de la variation non-uniforme de ces dernières, et $M_{colour}$ représentent la variation de couleur entre $p$ et son voisinage.
 
-\subsubsection{Méthode par fusion}
+\subsection{Méthode par fusion}
 Cette méthode est une adaptation de celle présenté pour les maillages polygonaux~\cite{Hoppe1996}. Le principe consiste à placer les opérations de fusion dans une file de priorité suivant une mesure d'erreur. L'opération de fusion remplace deux point $p_1$ et $p_2$ par un nouveau point $\overline{p}$.
 
 La mesure d'erreur présenté par \citeauthor{Pauly2002}~\cite{Pauly2002} est définie comme la somme des distances au carré entre le point $\overline{p}$ et l'ensemble des plans engendrés par $p_1$, $p_2$ et leurs voisins.
 
-\subsection{Methode par simulation}
+\section{Methode par simulation}
 \begin{definition}[Sous-échantillonnage par simulation de particule]
   Méthode d'échantillonnage consistant a calculer les nouvelles positions des points de l'ensemble $P'$ sur la surface $S$ en respectant des forces inter-particules.
 \end{definition}

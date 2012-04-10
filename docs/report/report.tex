@@ -17,13 +17,32 @@
 \graphicspath{{figures/}}
 \usepackage[numbers]{natbib}
 % Theorem, Definition...
-\usepackage{amsthm}
+\usepackage{ntheorem}
+\usepackage{amssymb}
+\usepackage{color}
+\usepackage{hyperref}
+%\usepackage{pstricks}
+%\usepackage{pst-plot}
+%\usepackage{auto-pst-pdf}
 
-\newtheorem{definition}{Définition}
+\theoremstyle{break}
+\newtheorem*{definition}{Définition}
 
+% header
 \pagestyle{myheadings}
 \fancyhf{}
 \rhead[\leftmark]{thepage}
+
+\definecolor{ulbleu}{rgb}{0, .3, .57}
+\hypersetup{
+    pdftitle={Extraction de plan d'architectes à partir de données de numérisation 3D},
+    pdfauthor={Gabriel Corvalan Cornejo},
+    colorlinks=true,
+    linkcolor=ulbleu,
+    urlcolor=ulbleu,
+    citecolor=ulbleu,
+    linktoc=all
+    }
 
 \begin{document}
 
@@ -44,6 +63,14 @@
 
 % start numbering with 1, 2, ...
 \mainmatter 
+
+\pagenumbering{arabic} \setcounter{page}{1}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[LO]{\leftmark}
+\fancyhead[RO]{\bfseries\thepage}
+\renewcommand{\headrulewidth}{0.5pt}
+\addtolength{\headheight}{14.5pt}
 
 \include{chapters/introduction}
 

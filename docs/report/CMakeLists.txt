@@ -8,6 +8,10 @@ set (FRONT_MATTER_INCS
 
 set (BACKGROUND_INCS
 	chapters/background/main.tex
+	chapters/background/acquisition.tex
+	chapters/background/featureextraction.tex
+	chapters/background/patternrecognition.tex
+	chapters/background/reconstruction.tex
 	chapters/background/sampling.tex
 	)
 
