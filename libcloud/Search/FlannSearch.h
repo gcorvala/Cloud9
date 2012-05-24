@@ -1,3 +1,4 @@
+#if 0
 #ifndef __FLANN_SEARCH_H__
 #define __FLANN_SEARCH_H__
 
@@ -17,4 +18,5 @@ class FlannSearch : public Search {
     flann::Index<flann::L2<float> > *index; // FIXME : L2 ?
 };
 
+#endif
 #endif

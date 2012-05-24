@@ -185,11 +185,12 @@ include (../cmake/FindFlann.cmake)
 include (../cmake/FindFftw3.cmake)
 
 #find_package (flann)
-include_directories (${FLANN_INCLUDE_DIRS})
+#include_directories (${FLANN_INCLUDE_DIRS})
 
 add_library (cloud SHARED ${libcloud_sources} ${SRCS} ${INCS})
 
-target_link_libraries (cloud ${FLANN_LIBRARIES} ${FFTW3_LIBRARIES})
+#target_link_libraries (cloud ${FLANN_LIBRARIES} ${FFTW3_LIBRARIES})
+target_link_libraries (cloud ${FFTW3_LIBRARIES})
 
 install (DIRECTORY . DESTINATION include/libcloud FILES_MATCHING PATTERN "*.h")
 install (TARGETS cloud DESTINATION lib)

@@ -88,6 +88,7 @@ main (int argc, char** argv)
 
   QApplication app (argc, argv);
   Viewer3dWidget viewer;
+  ImageViewerWidget view;
 
   std::vector < PointCloudT < Point3D <Float32> > > slices;
   std::vector < PointCloudT < Point3D <Float32> > >::const_iterator slice_it;
@@ -102,7 +103,7 @@ main (int argc, char** argv)
     reader.read (argv[i], slices[i-3]);
   }
 
-  hough.setNRho (2000);
+  hough.setNRho (1000);
   hough.setNTheta (720);
 
   hough_clusters.setDistanceThreshold (10);
@@ -120,6 +121,9 @@ main (int argc, char** argv)
     cloud3DTo2DXY (slices[i], slice);
 
     hough.compute (slice, matrix, rhos, thetas);
+
+    view.setMatrix (&matrix);
+    view.show ();
 
     hough_clusters.setAccumulator (matrix);
     hough_clusters.setRhoSteps (rhos);

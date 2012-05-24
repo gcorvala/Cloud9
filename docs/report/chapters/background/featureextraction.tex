@@ -1,47 +1,51 @@
-\chapter{Extraction de caractéristiques}
+\section{Extraction de caractéristiques}
 
-Afin de reconnaître des objets, il est nécessaire de les décrire à l'aide de caractéristiques. Une fois celle-ci définie, il suffit de prendre une image quelconque, extraire ces caractéristiques, et les comparer avec celles recherchées.
+Afin de reconnaître des objets, il est nécessaire de les décrire à l'aide de caractéristiques. Une fois celle-ci définies, il suffit de prendre une image quelconque, extraire ces caractéristiques, et les comparer avec celles recherchées.
 
-Un tel processus est appelé \emph{détecteur}. Ils sont eux même subdivisés en plusieurs catégorie en fonction du type de caractéristique recherché.
+Un tel processus est appelé \emph{détecteur}. Ils sont eux-même subdivisés en plusieurs catégories en fonction du type de caractéristique recherché.
 \begin{itemize}
   \item détecteur de bord;
   \item détecteur de coin;
   \item détecteur paramétrique.
 \end{itemize}
 
-\section{Transformée de Hough (HT)}
-La transformée de Hough est une méthode de détection de modèle paramétrique introduite par \citeauthor{Hough1962}~\cite{Hough1962}. Le principe sous-jacent est la transformation de chaque point en une courbe dans un \emph{espace paramétrique}, représentant l'ensemble des modèles auxquelles ce point appartient. Dès lors, la détection du modèle dans l'image se résume a trouver des courbes concourantes dans l'espace paramétrique.
+\subsection{Transformée de Hough}
+La \emph{transformée de Hough} est une méthode de détection de modèle paramétrique introduite par \citeauthor{Hough1962}~\cite{Hough1962}. Le principe sous-jacent est la transformation de chaque point en une courbe dans un \emph{espace paramétrique}, représentant l'ensemble des modèles auquel ce point appartient. Dès lors, la détection du modèle dans l'image se résume a trouver des courbes concourantes dans l'espace paramétrique.
 
-La transformée de Hough a été déclinée en de nombreuses variantes telles que:
+La \emph{transformée de Hough} originale est habituellement dénomée \emph{transformée de Hough standard}, de façon à la distinguer des déclinaisons successives telles que:
 \begin{itemize}
-  \item standard;
-  \item probabiliste;
-  \item probabiliste adaptative;
-  \item probabiliste progressive;
-  \item aléatoire.
+  \item probabiliste~\cite{Kiryati1991};
+  \item probabiliste adaptative~\cite{Yla-Jaaski1994};
+  \item probabiliste progressive~\cite{Matas1998};
+  \item aléatoire~\cite{Xu1990}.
 \end{itemize}
 
-\subsection{Paramétrisation}
+\subsubsection{Paramétrisation}
 \paragraph{Droite en deux dimensions}
 Initiallement, \citeauthor{Hough1962}~\cite{Hough1962} considéra la forme affine d'une droite:
 $$y = m \cdot x + p$$
 où $m$ représente la \emph{pente} de la droite et $p$ l'\emph{ordonnée à l'origine}.
 
-La transformée construit un nouvel espace paramétrique $(m,p)$. Le problème inhérent à cette représentation est que ces deux paramètres $m$ et $p$ ont un domaine non borné.
+La transformée construit un nouvel espace paramétrique $(m,p)$. Le problème inhérent à cette représentation est que ces deux paramètres $m$ et $p$ ont un domaine non borné. En effet, dans le cas d'une droite verticale, la pente sera infinie.
 
 Afin de palier ce défaut, \citeauthor{Duda1972}~\cite{Duda1972} propose d'exprimer la droite par sa forme polaire:
 $$\rho = x \cdot cos~\theta + y \cdot sin~\theta \Leftrightarrow y=\left(-\frac{cos~\theta}{sin~\theta}\right) \cdot x + \left(\frac{\rho}{sin~\theta}\right)$$
 Un point dans l'image représente une courbe sinusoïdale dans le domaine paramétrique, et un point dans cet espace représente une droite dans l'image.
-De plus, à l'aide de cette représentation, il est possible de représenter toutes les droites de façon unique en restreignant les domaine de $\theta$ et $\rho$ : $\theta \in [0, \pi)$ et $\rho \in \mathbb{R}$ ou alors $\theta \in [0, 2 \pi)$ et $\rho \in \mathbb{R}^+$. Cette approche introduite par \citeauthor{Duda1972} est appelée la \emph{transformée de Hough généralisée} car elle permet d'exprimer d'avantage de modèle que la méthode de \cite{Hough1962} qui se limite à la détection de droite.
+De plus, à l'aide de cette représentation, il est possible de représenter toutes les droites de façon unique en restreignant les domaines de $\theta$ et $\rho$ : $\theta \in [0, \pi)$ et $\rho \in \mathbb{R}$ ou alors $\theta \in [0, 2 \pi)$ et $\rho \in \mathbb{R}^+$. Cette approche introduite par \citeauthor{Duda1972} est appelée la \emph{transformée de Hough généralisée} car elle permet d'exprimer d'avantage de modèle que la méthode de \cite{Hough1962} qui se limite à la détection de droite.
 
 \paragraph{Cercle en deux dimensions}
 \paragraph{Plan en trois dimensions}
 \paragraph{Cylindre en trois dimensions}
 
-\subsection{Accumulateur}
+\subsubsection{Accumulateur}
 En pratique, il n'est pas possible de représenter cet espace paramétrique de façon continue, une quantification est donc appliquée. Cet espace paramétrique quantifié est appelé \emph{accumulateur}. Ce nom est choisi car pour chaque point de l'image, la courbe sinusoïdale correspondante dans l'espace paramétrique quantifié est incrimenté.
-Il faut noter que cet accumulateur est une matrice à $n$-dimensions, où $n$ est le nombre de paramètre de la représentation du modèle.
 
-\subsection{Transformée de Hough aléatoire (RHT)}
+Comme énoncé précédemment, la détection d'un modèle consiste à déterminer les courbes sinusoïdales concourante. De ce fait, à l'aide d'un \emph{accumulateur}, cette étape se résume à trouver les maxima locaux dans cette structure.
 
-\section{Random Sample Consensus}
+La détermination de maxima dans un accumulateur n'est pas une étape triviale. Cette étape sera discutée dans la section \ref{sec:maxima}.
+
+Il faut noter que généralement, cet accumulateur est une matrice à $n$-dimensions, où $n$ est le nombre de paramètre de la représentation du modèle. Mais il est aussi possible de créer des accumulateurs avec des formes particulières afin d'éviter certains effets de bord~\cite{Borrmann2011}.
+
+\subsubsection{Transformée de Hough aléatoire (RHT)}
+
+\subsection{Random Sample Consensus}

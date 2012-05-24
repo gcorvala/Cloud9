@@ -12,6 +12,7 @@ set (BACKGROUND_INCS
 	chapters/background/featureextraction.tex
 	chapters/background/patternrecognition.tex
 	chapters/background/reconstruction.tex
+	chapters/background/registration.tex
 	chapters/background/sampling.tex
 	)
 

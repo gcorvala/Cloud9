@@ -3,7 +3,7 @@
 #include <QMenuBar>
 #include <QToolBar>
 #include <QFileDialog>
-#include <libcloud/IO/OBJReader.h>
+#include <libcloud/IO/PCDReader.h>
 #include <libcloud/Filters/TranslateFilter.h>
 #include <libcloud/Filters/ScaleFilter.h>
 #include <libcloud/Filters/CropBoxFilter.h>
@@ -36,11 +36,11 @@ void
 CloudWindow::load ()
 {
   QFileDialog *dialog;
-  OBJReader reader;
+  PCDReader reader;
 
   std::cout << "load" << std::endl;
 
-  QString file = QFileDialog::getOpenFileName (this, "Load a OBJ file", "~", "Point clouds (*.obj)");
+  QString file = QFileDialog::getOpenFileName (this, "Load a PCD file", "~", "Point clouds (*.pcd)");
   reader.read (file.toStdString (), cloud, false);
 
   viewer.add ("new", &cloud);

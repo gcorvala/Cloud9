@@ -50,10 +50,11 @@ void
 ImageViewerWidget::setMatrix (const Matrix<UInt32>* matrix)
 {
   QImage im (matrix->getCols (), matrix->getRows (), QImage::Format_RGB888);
+  UInt32 max = matrix->max ();
 
   for (unsigned int i = 0; i < matrix->getRows (); ++i) {
     for (unsigned int j = 0; j < matrix->getCols (); ++j) {
-      UInt32 value = matrix->at (i, j);
+      UInt32 value = 255.*matrix->at (i, j)/max;
       im.setPixel (j, i, qRgb (value, value, value));
     }
   }

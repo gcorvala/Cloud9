@@ -1,9 +1,9 @@
 \documentclass[11pt,a4paper,oneside]{book}
-%\usepackage[hmargin={1.25in,1.25in},vmargin={1.25in,1.25in}]{geometry}
-%\renewcommand{\baselinestretch}{1.0}
-
-\usepackage[hmargin={1.50in,1.50in},vmargin={1.50in,1.50in}]{geometry}
+\usepackage[hmargin={1.35in,1.35in},vmargin={1.35in,1.35in}]{geometry}
 \renewcommand{\baselinestretch}{1.2}
+
+%\usepackage[hmargin={1.50in,1.50in},vmargin={1.50in,1.50in}]{geometry}
+%\renewcommand{\baselinestretch}{1.2}
 
 \makeindex
 
@@ -16,15 +16,12 @@
 \usepackage{graphicx}
 \graphicspath{{figures/}}
 \usepackage[numbers]{natbib}
-% Theorem, Definition...
-\usepackage{ntheorem}
 \usepackage{amssymb}
 \usepackage{color}
 \usepackage{hyperref}
-%\usepackage{pstricks}
-%\usepackage{pst-plot}
-%\usepackage{auto-pst-pdf}
 
+% Theorem, Definition...
+\usepackage{ntheorem}
 \theoremstyle{break}
 \newtheorem*{definition}{Définition}
 
@@ -43,6 +40,19 @@
     citecolor=ulbleu,
     linktoc=all
     }
+
+%\setlength{\parskip}{.3cm}
+
+\makeatletter
+\renewcommand\paragraph{
+   \@startsection{paragraph}{4}{0mm}
+      {-\baselineskip}
+      {.5\baselineskip}
+      {\normalfont\bfseries}}
+
+\setcounter{secnumdepth}{3}
+
+%\defbibheading{bibliography}{\chapter{Bibliography}}
 
 \begin{document}
 

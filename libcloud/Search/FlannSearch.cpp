@@ -1,3 +1,4 @@
+#if 0
 #include "FlannSearch.h"
 
 #include <flann/flann.hpp>
@@ -62,3 +63,4 @@ FlannSearch::initIndex ()
   index = new flann::Index<flann::L2<float> > (dataset, flann::KDTreeSingleIndexParams ());
   index->buildIndex ();
 }
+#endif

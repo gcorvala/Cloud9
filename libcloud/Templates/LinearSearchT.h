@@ -21,7 +21,7 @@ LinearSearchT <PointT>::LinearSearchT ()
 }
 
 template <class PointT>
-LinearSearchT <PointT>::~LinearSearch ()
+LinearSearchT <PointT>::~LinearSearchT ()
 {
 }
 
