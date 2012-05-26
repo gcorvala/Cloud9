@@ -1,5 +1,8 @@
 #ifndef __TYPES_H__
 
+#include <string>
+#include <iostream>
+
 typedef signed char SInt8;
 typedef signed short int SInt16;
 typedef signed int SInt32;
@@ -15,4 +18,11 @@ typedef double Float64;
 
 typedef bool Boolean;
 
+#if 0
+#define ERROR(text) throw std::string (__PRETTY_FUNCTION__) + ": " + text;
+#define PRINT(val) std::cout << #val << ": " << val << std::endl;
+#else
+#define ERROR(text)
+#define PRINT(val)
+#endif
 #endif

@@ -14,7 +14,7 @@ class HoughTransform3D {
 
     void run ();
 
-    const Accumulator& getOutput () const;
+    const Accumulator& getAccumulator () const;
 
   protected:
     Accumulator m_accumulator;

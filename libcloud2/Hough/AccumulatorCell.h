@@ -2,6 +2,7 @@
 #define __ACCUMULATOR_CELL_H__
 
 #include "../Common/Types.h"
+#include "../Common/Range.h"
 #include "AccumulatorVote.h"
 #include <vector>
 
@@ -15,6 +16,7 @@ class AccumulatorCell {
     UInt32 getVotes () const;
     void getVoterIds (std::vector <UInt32>& voter_ids) const;
     void removeId (UInt32 id);
+    Boolean containsId (UInt32 id) const;
 
   protected:
     std::vector <AccumulatorVote> m_votes;

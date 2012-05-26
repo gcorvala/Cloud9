@@ -1,25 +1,22 @@
 #include "HoughTransform3D.h"
 
+#include "../Common/Range.h"
 #include <math.h>
 #include <iostream>
 
 HoughTransform3D::HoughTransform3D ()
 {
-  std::vector <Float32> min;
-  std::vector <Float32> max;
-  std::vector <Float32> bin_sizes;
+  std::vector <Range> parameters;
 
-  min.push_back (0);
-  min.push_back (0);
-  min.push_back (0);
-  max.push_back (M_PI*2);
-  max.push_back (M_PI*2);
-  max.push_back (1000);
-  bin_sizes.push_back (M_PI*2./100.);
-  bin_sizes.push_back (M_PI*2./100.);
-  bin_sizes.push_back (10);
+  Range rho (-2000., 2000., 200);
+  Range phi (0., M_PI*2., 45);
+  Range theta (0., M_PI*2., 45);
 
-  m_accumulator = Accumulator (min, max, bin_sizes);
+  parameters.push_back (rho);
+  parameters.push_back (phi);
+  parameters.push_back (theta);
+
+  m_accumulator = Accumulator (parameters);
 }
 
 HoughTransform3D::~HoughTransform3D ()
@@ -41,28 +38,28 @@ HoughTransform3D::getInput () const
 void
 HoughTransform3D::run ()
 {
-  std::vector <Float32> parameters;
-  std::cout << "start processing" << std::endl;
-  UInt32 ii = 0;
-  for (PointCloud::const_iterator it = m_cloud->begin (); it != m_cloud->end (); ++it) {
-    const Point &p = *it;
-//    parameters.clear ();
-/*    for (UInt32 i = 0; i < n_theta; ++i) {
-      for (UInt32 j = 0; j < n_phi; ++j) {
-        AccumulatorVote vote;
-        double rho = p.x * cos (i * theta_step) * sin (j * phi_step);
-        rho += p.y * sin (j * phi_step) * sin (i * theta_step);
-        rho += p.z * cos (j * phi_step);
-        UInt32 k = round (rho/rho_step);
-        accumulator[i][j][k]++;
+  for (UInt32 vertex_id = 0; vertex_id < m_cloud->size (); ++vertex_id) {
+    const Point& p = m_cloud->at(vertex_id);
+    //std::cout << "---------" << vertex_id << std::endl;
+    for (UInt32 i = 0; i < m_accumulator.getRanges ()[2].getSteps (); ++i) {
+      for (UInt32 j = 0; j < m_accumulator.getRanges ()[1].getSteps (); ++j) {
+        Float32 theta = m_accumulator.getRanges ()[2][i].getCenter ();
+        Float32 phi = m_accumulator.getRanges ()[1][j].getCenter ();
+        Float32 rho = p.x * cos (theta) * sin (phi);
+        rho += p.y * sin (phi) * sin (theta);
+        rho += p.z * cos (phi);
+        std::vector <Float32> parameters;
+        parameters.push_back (rho);
+        parameters.push_back (phi);
+        parameters.push_back (theta);
+        m_accumulator.vote (AccumulatorVote (parameters, vertex_id));
       }
-    }*/
-    //if (++ii % 1000 == 0) std::cout << ii << std::endl;
+    }
   }
 }
 
 const Accumulator&
-HoughTransform3D::getOutput () const
+HoughTransform3D::getAccumulator () const
 {
   return m_accumulator;
 }

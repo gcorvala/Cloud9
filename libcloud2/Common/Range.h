@@ -2,10 +2,15 @@
 #define __RANGE_H__
 
 #include "Types.h"
+#include "Interval.h"
 
+// Range type : [min;max[
 class Range {
   public:
-    Range (Float32 min, Float32 max, Float32 step);
+    typedef Range* ptr;
+    typedef const Range* const_ptr;
+
+    Range (Float32 min, Float32 max, UInt32 steps);
     virtual ~Range ();
 
     Float32 getMin () const;
@@ -14,16 +19,21 @@ class Range {
     Float32 getMax () const;
     void setMax (Float32 max);
 
-    Float32 getStep () const;
-    void setStep (Float32 step);
-
     UInt32 getSteps () const;
+    void setSteps (UInt32 steps);
+
+    Float32 getStep () const;
+
     UInt32 getValueIndex (Float32 value) const;
+
+    Boolean contains (Float32 value) const;
+
+    Interval operator[] (UInt32 index) const; 
 
   protected:
     Float32 m_min;
     Float32 m_max;
-    Float32 m_step;
+    UInt32 m_steps;
 };
 
 #endif

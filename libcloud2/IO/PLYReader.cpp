@@ -64,7 +64,8 @@ PLYReader::readBody (std::ifstream& file, PointCloud& cloud, const Header& heade
   Float32 x, y, z;
   UInt32 empty;
 
-  for (UInt32 i = 0; i < header.n_vertices; ++i) {
+  //for (UInt32 i = 0; i < header.n_vertices; ++i) {
+  for (UInt32 i = 0; i < 200; ++i) {
     file.read ((char*) &x, sizeof (x));
     file.read ((char*) &y, sizeof (x));
     file.read ((char*) &z, sizeof (x));

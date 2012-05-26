@@ -18,6 +18,6 @@ add_subdirectory (libcloudui)
 add_subdirectory (libsvg)
 add_subdirectory (libxml)
 add_subdirectory (src)
-#add_subdirectory (test)
+add_subdirectory (test)
 
 include (CPack)

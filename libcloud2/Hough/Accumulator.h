@@ -9,20 +9,13 @@
 
 class Accumulator {
   public:
-    Accumulator (const std::vector <Range>& ranges);
-    Accumulator (const std::vector <Float32> min = std::vector <Float32> (), const std::vector <Float32> max = std::vector <Float32> (), const std::vector <Float32> bin_size = std::vector <Float32> ());
+    Accumulator (const std::vector <Range>& ranges = std::vector <Range> ());
     virtual ~Accumulator ();
 
     void clear ();
 
-    void setMin (const std::vector <Float32> min);
-    const std::vector <Float32> getMin () const;
-
-    void setMax (const std::vector <Float32> max);
-    const std::vector <Float32> getMax () const;
-
-    void setBinSize (const std::vector <Float32> bin_size);
-    const std::vector <Float32> getBinSize () const;
+    std::vector <Range> getRanges () const;
+    void setRanges (const std::vector <Range>& ranges);
 
     void findMaxima (Float32 threshold, std::vector <Float32>& maxima_values, std::vector < std::vector <UInt32> >& maxima_voter_ids) const;
     void vote (const AccumulatorVote& vote);

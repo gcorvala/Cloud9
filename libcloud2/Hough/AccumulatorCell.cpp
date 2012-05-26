@@ -27,6 +27,10 @@ AccumulatorCell::getValue () const
 void
 AccumulatorCell::addVote (const AccumulatorVote& vote)
 {
+  if (containsId (vote.getVoterId ())) {
+    PRINT (vote.getVoterId ());
+    ERROR ("id already in this cell");
+  }
   m_votes.push_back (vote);
 }
 
@@ -58,4 +62,17 @@ AccumulatorCell::removeId (UInt32 id)
       it = m_votes.erase (it) - 1;
     }
   }
+}
+
+Boolean
+AccumulatorCell::containsId (UInt32 id) const
+{
+  std::vector <AccumulatorVote>::const_iterator it;
+
+  for (it = m_votes.begin (); it != m_votes.end (); ++it) {
+    if (it->getVoterId () == id) {
+      return true;
+    }
+  }
+  return false;
 }
