@@ -18,11 +18,13 @@ typedef double Float64;
 
 typedef bool Boolean;
 
-#if 0
+#if 1
 #define ERROR(text) throw std::string (__PRETTY_FUNCTION__) + ": " + text;
-#define PRINT(val) std::cout << #val << ": " << val << std::endl;
+#define PRINT(val) std::cout << "DEBUG (" << __PRETTY_FUNCTION__ << "): " << #val << ": " << val << std::endl;
+#define DEBUG(text) std::cout << "DEBUG (" << __PRETTY_FUNCTION__ << "): " << text << std::endl;
 #else
 #define ERROR(text)
 #define PRINT(val)
+#define DEBUG(text)
 #endif
 #endif

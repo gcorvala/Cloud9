@@ -48,6 +48,7 @@ Accumulator::findMaxima (Float32 threshold, std::vector <Float32>& maxima_values
   while (true) {
     it = max_element (space.begin (), space.end (), Accumulator::cellComparator);
     value = it->getValue ();
+    PRINT (value);
 
     if (value < threshold) {
       break;
@@ -79,9 +80,22 @@ Accumulator::vote (const AccumulatorVote& vote)
     idx += parameter;
   }
 
-  PRINT (idx);
-
   m_space[idx].addVote (vote);
+}
+
+Float32
+Accumulator::getValue (const std::vector <UInt32>& parameters)
+{
+  UInt32 idx = 0;
+  UInt32 size = 1;
+
+  for (UInt8 i = 0; i < parameters.size (); ++i) {
+    UInt32 parameter = parameters[i];
+    parameter *= size;
+    size *= m_ranges[i].getSteps ();
+    idx += parameter;
+  }
+  return m_space[idx].getValue ();
 }
 
 void

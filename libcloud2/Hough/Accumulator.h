@@ -6,6 +6,7 @@
 #include "AccumulatorVote.h"
 #include "AccumulatorCell.h"
 #include <vector>
+#include <map>
 
 class Accumulator {
   public:
@@ -16,9 +17,10 @@ class Accumulator {
 
     std::vector <Range> getRanges () const;
     void setRanges (const std::vector <Range>& ranges);
-
+    
     void findMaxima (Float32 threshold, std::vector <Float32>& maxima_values, std::vector < std::vector <UInt32> >& maxima_voter_ids) const;
     void vote (const AccumulatorVote& vote);
+    Float32 getValue (const std::vector <UInt32>& parameters);
 
   protected:
     void init ();

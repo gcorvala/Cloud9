@@ -9,13 +9,13 @@ OBJReader::~OBJReader ()
 }
 
 void
-OBJReader::readHeader (std::ifstream& file, PointCloud& cloud) const
+OBJReader::readHeader (std::ifstream& file, PointCloud3D& cloud) const
 {
 
 }
 
 void
-OBJReader::readBody (std::ifstream& file, PointCloud& cloud) const
+OBJReader::readBody (std::ifstream& file, PointCloud3D& cloud) const
 {
   
 }

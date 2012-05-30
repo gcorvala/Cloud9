@@ -13,7 +13,7 @@ PLYReader::~PLYReader ()
 }
 
 void
-PLYReader::readHeader (std::ifstream& file, PointCloud& cloud, Header& header) const
+PLYReader::readHeader (std::ifstream& file, PointCloud3D& cloud, Header& header) const
 {
   std::string line;
   std::string token;
@@ -59,19 +59,19 @@ PLYReader::readHeader (std::ifstream& file, PointCloud& cloud, Header& header) c
 }
 
 void
-PLYReader::readBody (std::ifstream& file, PointCloud& cloud, const Header& header) const
+PLYReader::readBody (std::ifstream& file, PointCloud3D& cloud, const Header& header) const
 {
   Float32 x, y, z;
   UInt32 empty;
 
-  //for (UInt32 i = 0; i < header.n_vertices; ++i) {
-  for (UInt32 i = 0; i < 200; ++i) {
+  for (UInt32 i = 0; i < header.n_vertices; ++i) {
+  //for (UInt32 i = 0; i < 200; ++i) {
     file.read ((char*) &x, sizeof (x));
     file.read ((char*) &y, sizeof (x));
     file.read ((char*) &z, sizeof (x));
     file.read ((char*) &empty, 4);
 
-    cloud += Point (x, y, z);
+    cloud += Point3D (x, y, z);
   }
 }
 

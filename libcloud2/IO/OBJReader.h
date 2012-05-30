@@ -9,8 +9,8 @@ class OBJReader : public Reader {
     ~OBJReader ();
 
   protected:
-    void readHeader (std::ifstream& file, PointCloud& cloud) const;
-    void readBody (std::ifstream& file, PointCloud& cloud) const;
+    void readHeader (std::ifstream& file, PointCloud3D& cloud) const;
+    void readBody (std::ifstream& file, PointCloud3D& cloud) const;
 };
 
 #endif
