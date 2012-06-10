@@ -13,6 +13,8 @@ class Range {
     Range (Float32 min, Float32 max, UInt32 steps);
     virtual ~Range ();
 
+    Boolean operator== (const Range& r) const;
+
     Float32 getMin () const;
     void setMin (Float32 min);
 

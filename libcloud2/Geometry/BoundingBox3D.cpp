@@ -19,10 +19,10 @@ BoundingBox3D::~BoundingBox3D ()
 void
 BoundingBox3D::add (const Point3D& p)
 {
-  m_min.x = p.x < m_min.x ? p.x : m_min.x;
-  m_min.y = p.y < m_min.y ? p.y : m_min.y;
-  m_min.z = p.z < m_min.z ? p.z : m_min.z;
-  m_max.x = p.x > m_max.x ? p.x : m_max.x;
-  m_max.y = p.y > m_max.y ? p.y : m_max.y;
-  m_max.z = p.z > m_max.z ? p.z : m_max.z;
+  m_min.x = (p.x < m_min.x) ? p.x : m_min.x;
+  m_min.y = (p.y < m_min.y) ? p.y : m_min.y;
+  m_min.z = (p.z < m_min.z) ? p.z : m_min.z;
+  m_max.x = (p.x > m_max.x) ? p.x : m_max.x;
+  m_max.y = (p.y > m_max.y) ? p.y : m_max.y;
+  m_max.z = (p.z > m_max.z) ? p.z : m_max.z;
 }

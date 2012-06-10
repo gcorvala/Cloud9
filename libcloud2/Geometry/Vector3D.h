@@ -19,8 +19,8 @@ class Vector3D : public Vector2D {
     Vector3D operator+ (const Vector3D& v) const;
     Vector3D operator- (const Vector3D& v) const;
 
-    Vector3D operator* (Float32 s) const;
-    Vector3D operator/ (Float32 s) const;
+    //Vector3D operator* (Float32 s) const;
+    //Vector3D operator/ (Float32 s) const;
 
     Float32 distanceTo (const Vector3D& v) const;
 

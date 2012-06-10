@@ -7,12 +7,18 @@ Range::Range (Float32 min, Float32 max, UInt32 steps)
   ,m_max (max)
   ,m_steps (steps)
 {
-  if (m_min >= m_max) throw "Range error (min >= max)";
-  if (m_steps == 0) throw "Range error (steps == 0)";
+  ASSERT (m_min <= m_max, "min >= max");
+  ASSERT (m_steps > 0, "steps == 0");
 }
 
 Range::~Range ()
 {
+}
+
+Boolean
+Range::operator== (const Range& r) const
+{
+  return (m_min == r.m_min) && (m_max == r.m_max) && (m_steps == r.m_steps);
 }
 
 Float32
@@ -60,12 +66,8 @@ Range::getStep () const
 UInt32
 Range::getValueIndex (Float32 value) const
 {
-  if (!contains (value)) {
-    PRINT (m_min);
-    PRINT (m_max);
-    PRINT (value);
-    ERROR ("value is out of range");
-  }
+  ASSERT (contains (value), "value is out of range");
+
   return floor ((value - m_min) / (m_max - m_min) * m_steps);
 }
 

@@ -4,9 +4,7 @@ Interval::Interval (Float32 min, Float32 max)
   :m_min (min)
   ,m_max (max)
 {
-  if (m_min > m_max) {
-    ERROR ("min > max");
-  }
+  ASSERT (m_min <= m_max, "min > max");
 }
 
 Interval::~Interval ()
@@ -22,10 +20,9 @@ Interval::getMin () const
 void
 Interval::setMin (Float32 min)
 {
+  ASSERT (min <= m_max, "min > max");
+
   m_min = min;
-  if (m_min > m_max) {
-    ERROR ("min > max");
-  }
 }
 
 Float32
@@ -37,10 +34,9 @@ Interval::getMax () const
 void
 Interval::setMax (Float32 max)
 {
+  ASSERT (max >= m_min, "min > max");
+
   m_max = max;
-  if (m_min > m_max) {
-    ERROR ("min > max");
-  }
 }
 
 Float32

@@ -1,5 +1,5 @@
 #include "FourierEstimator.h"
-#include <fftw3.h>
+//#include <fftw3.h>
 
 FourierEstimator::FourierEstimator ()
 {
@@ -12,7 +12,7 @@ FourierEstimator::~FourierEstimator ()
 void
 FourierEstimator::compute (const Matrix<Float64>& input, Matrix<std::complex<Float64> >& output) const
 {
-  Float64* in;
+/*  Float64* in;
   fftw_complex* out;
   fftw_plan p;
 
@@ -56,5 +56,5 @@ FourierEstimator::compute (const Matrix<Float64>& input, Matrix<std::complex<Flo
 
   fftw_destroy_plan(p);
   fftw_free(in);
-  fftw_free(out);
+  fftw_free(out);*/
 }

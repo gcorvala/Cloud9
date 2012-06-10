@@ -61,6 +61,5 @@ Vector3D operator/ (Float32 s) const;*/
 Float32
 Vector3D::distanceTo (const Vector3D& v) const
 {
-  std::cout << "Vector3D" << std::endl;
   return (*this - v).norm ();
 }

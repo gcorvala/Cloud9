@@ -15,7 +15,7 @@ HoughTransform3D::HoughTransform3D ()
   parameters.push_back (phi);
   parameters.push_back (theta);
 
-  m_accumulator = Accumulator (parameters);
+//  m_accumulator = Accumulator2D (parameters);
 }
 
 HoughTransform3D::~HoughTransform3D ()
@@ -25,6 +25,8 @@ HoughTransform3D::~HoughTransform3D ()
 void
 HoughTransform3D::run ()
 {
+/*  ModelCoefficients model (3);
+
   for (UInt32 vertex_id = 0; vertex_id < m_cloud->size (); ++vertex_id) {
     const Point3D& p = m_cloud->at(vertex_id);
     for (UInt32 i = 0; i < m_accumulator.getRanges ()[2].getSteps (); ++i) {
@@ -34,12 +36,16 @@ HoughTransform3D::run ()
         Float32 rho = p.x * cos (theta) * sin (phi);
         rho += p.y * sin (phi) * sin (theta);
         rho += p.z * cos (phi);
+        model[0] = rho;
+        model[1] = phi;
+        model[2] = theta;
         std::vector <Float32> parameters;
         parameters.push_back (rho);
         parameters.push_back (phi);
         parameters.push_back (theta);
-        m_accumulator.vote (AccumulatorVote (parameters, vertex_id));
+        //m_accumulator.vote (AccumulatorVote (parameters, vertex_id));
+        m_accumulator.vote (model);
       }
     }
-  }
+  }*/
 }

@@ -71,7 +71,6 @@ Vector2D::operator+ (const Vector2D& v) const
 Vector2D
 Vector2D::operator- (const Vector2D& v) const
 {
-  PRINT (1);
   return Vector2D (v.x - x, v.y - y);
 }
 

@@ -3,34 +3,40 @@
 
 #include "../Common/Types.h"
 #include "../Common/Range.h"
-#include "AccumulatorVote.h"
-#include "AccumulatorCell.h"
+#include "../Common/ModelCoefficients.h"
 #include <vector>
-#include <map>
 
 class Accumulator {
   public:
-    Accumulator (const std::vector <Range>& ranges = std::vector <Range> ());
+    typedef Accumulator* ptr;
+    typedef const Accumulator* const_ptr;
+
+    Accumulator ();
     virtual ~Accumulator ();
 
-    void clear ();
+    virtual Accumulator& operator= (const Accumulator& accumulator) = 0;
+    virtual Accumulator& operator-= (const Accumulator& accumulator) = 0;
 
-    std::vector <Range> getRanges () const;
-    void setRanges (const std::vector <Range>& ranges);
+    virtual Accumulator::ptr copy () const = 0;
+
+    UInt32 getDimension () const;
+    std::vector <UInt32> getDimensions () const;
+
+    const std::vector <Range>& getRanges () const;
     
-    void findMaxima (Float32 threshold, std::vector <Float32>& maxima_values, std::vector < std::vector <UInt32> >& maxima_voter_ids) const;
-    void vote (const AccumulatorVote& vote);
-    Float32 getValue (const std::vector <UInt32>& parameters);
+    virtual UInt32 getValue (const Indices& parameters) const = 0;
+
+    virtual void vote (const ModelCoefficients& coeffs) = 0;
+
+    virtual Indices getMaxValue () const = 0;
+
+    virtual void reset () = 0;
 
   protected:
-    void init ();
-    static Boolean cellComparator (const AccumulatorCell& c1, const AccumulatorCell& c2);
+    virtual void alloc () = 0;
+    virtual void free () = 0;
 
-    std::vector <AccumulatorCell> m_space;
     std::vector <Range> m_ranges;
-    std::vector <Float32> m_min;
-    std::vector <Float32> m_max;
-    std::vector <Float32> m_bin_size;
 };
 
 #endif
